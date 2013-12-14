@@ -63,6 +63,7 @@
     <TypeScriptCompile Include="Enumerable.ts" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Select.ts" />
     <TypeScriptCompile Include="Where.ts" />
     <TypeScriptCompile Include="Array.ts" />
     <Content Include="arrayex.d.ts" />

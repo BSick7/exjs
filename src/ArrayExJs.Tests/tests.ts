@@ -117,6 +117,19 @@ test("min", () => {
     strictEqual(_<IMock>(arr2).min(t => t.i), 1);
 });
 
+test("select", () => {
+    var arr = [];
+    var res = _(arr).select(t => t).toArray();
+    strictEqual(res.length, 0);
+
+    arr = [1, 2, 3];
+    res = _<number>(arr).select(t => t * 2).toArray();
+    strictEqual(res.length, 3);
+    strictEqual(res[0], 2);
+    strictEqual(res[1], 4);
+    strictEqual(res[2], 6);
+});
+
 test("sum", () => {
     var arr = [];
     strictEqual(_(arr).sum(), 0);
