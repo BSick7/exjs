@@ -18,7 +18,7 @@ module arrayexjs {
         min(selector?: (t: T) => number): number;
         //orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         //orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
-        //reverse(): IEnumerable<T>;
+        reverse(): IEnumerable<T>;
         select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult>;
         //selectMany(): IEnumerable<T>;
         skip(count: number): IEnumerable<T>;
@@ -173,8 +173,11 @@ module arrayexjs {
         //}
         //orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
         //}
-        //reverse(): IEnumerable<T> {
-        //}
+        reverse(): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => reverseEnumerator(this);
+            return e;
+        }
         select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult> {
             var e = new Enumerable<TResult>();
             e.getEnumerator = () => selectEnumerator(this, selector);
