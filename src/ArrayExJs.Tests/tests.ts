@@ -143,6 +143,28 @@ test("select", () => {
     strictEqual(res[2], 6);
 });
 
+test("selectMany", () => {
+    var arr = [];
+    var res = _<IMock2>(arr).selectMany(t => _(t.i)).toArray();
+    strictEqual(res.length, 0);
+
+    var arr2: IMock2[] = [
+        { i: [1, 2, 3] },
+        { i: [] },
+        { i: [4] },
+        { i: [] },
+        { i: [5, 6] }
+    ];
+    var res2  = _<IMock2>(arr2).selectMany(t => _(t.i)).toArray();
+    strictEqual(res2.length, 6);
+    strictEqual(res2[0], 1);
+    strictEqual(res2[1], 2);
+    strictEqual(res2[2], 3);
+    strictEqual(res2[3], 4);
+    strictEqual(res2[4], 5);
+    strictEqual(res2[5], 6);
+});
+
 test("skip", () => {
     var arr = [];
     var res = _(arr).skip(1).toArray();
@@ -225,3 +247,4 @@ test("where", () => {
 });
 
 interface IMock { i: number; }
+interface IMock2 { i: number[] }

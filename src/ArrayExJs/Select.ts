@@ -14,4 +14,25 @@ module arrayexjs {
         };
         return e;
     }
+
+    export function selectManyEnumerator<T, TResult>(prev: IEnumerable<T>, selector: (t: T) => IEnumerable<TResult>): IEnumerator<TResult> {
+        var t: IEnumerator<T>;
+        var j = 0;
+        var active: IEnumerator<TResult>;
+        var e = {
+            current: undefined,
+            moveNext: function (): boolean {
+                e.current = undefined;
+                if (!t) t = prev.getEnumerator();
+                while (!active || !active.moveNext()) {
+                    if (!t.moveNext())
+                        return false;
+                    active = selector(t.current).getEnumerator();
+                }
+                e.current = active.current;
+                return true;
+            }
+        };
+        return e;
+    }
 }
