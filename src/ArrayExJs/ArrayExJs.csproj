@@ -63,6 +63,7 @@
     <TypeScriptCompile Include="Enumerable.ts" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Take.ts" />
     <TypeScriptCompile Include="Skip.ts" />
     <TypeScriptCompile Include="Select.ts" />
     <TypeScriptCompile Include="Where.ts" />

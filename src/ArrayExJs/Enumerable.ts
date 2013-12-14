@@ -24,8 +24,8 @@ module arrayexjs {
         skip(count: number): IEnumerable<T>;
         skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         sum(selector?: (t: T) => number): number;
-        //take(count: number): IEnumerable<T>;
-        //takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
+        take(count: number): IEnumerable<T>;
+        takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         toArray(): T[];
         //toDictionary();
         //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean);
@@ -204,10 +204,16 @@ module arrayexjs {
             }
             return sum;
         }
-        //take(count: number): IEnumerable<T> {
-        //}
-        //takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
-        //}
+        take(count: number): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => takeEnumerator(this, count);
+            return e;
+        }
+        takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => takeWhileEnumerator(this, predicate);
+            return e;
+        }
         toArray(): T[] {
             var arr: T[] = [];
             var enumerator = this.getEnumerator();

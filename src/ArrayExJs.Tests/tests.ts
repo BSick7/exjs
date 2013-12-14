@@ -172,6 +172,37 @@ test("sum", () => {
     strictEqual(_<IMock>(arr2).sum(t => t.i), 6);
 });
 
+test("take", () => {
+    var arr = [];
+    var res = _(arr).take(1).toArray();
+    strictEqual(res.length, 0);
+
+    arr = [1, 2, 3];
+    res = _(arr).take(2).toArray();
+    strictEqual(res.length, 2);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+});
+
+test("takeWhile", () => {
+    var arr = [];
+    var res = _(arr).takeWhile(t => true).toArray();
+    strictEqual(res.length, 0);
+
+    arr = [1, 2, 3];
+    res = _(arr).takeWhile(t => t > 0).toArray();
+    strictEqual(res.length, 3);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+    strictEqual(res[2], 3);
+
+    arr = [1, 2, 3];
+    res = _(arr).takeWhile(t => t < 3).toArray();
+    strictEqual(res.length, 2);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+});
+
 test("where", () => {
     var arr = [1, 2, 3];
     var r = _(arr).where(t => t > 1).toArray();
