@@ -3,17 +3,17 @@ module arrayexjs {
         getEnumerator(): IEnumerator<T>;
         all(predicate?: (t: T, index?: number) => boolean): boolean;
         any(predicate?: (t: T, index?: number) => boolean): boolean;
+        at(index: number): T;
         average(selector?: (t: T) => number): number;
         //concat(): IEnumerable<T>;
         count(predicate?: (t: T) => boolean): number;
         //distinct(): IEnumerable<T>;
-        //at(index: number): T;
         //except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
-        //first(match?: (t: T) => boolean): T;
+        first(match?: (t: T) => boolean): T;
         //groupBy<TKey>(): IGrouping<TKey, T>;
         //intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         //join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult): IEnumerable<TResult>;
-        //last(match?: (t: T) => boolean): T;
+        last(match?: (t: T) => boolean): T;
         max(selector?: (t: T) => number): number;
         min(selector?: (t: T) => number): number;
         //orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
@@ -78,6 +78,16 @@ module arrayexjs {
             }
             return i === 0;
         }
+        at(index: number): T {
+            var e = this.getEnumerator();
+            var i = 0;
+            while (e.moveNext()) {
+                if (i === index)
+                    return e.current;
+                i++;
+            }
+            return undefined;
+        }
         average(selector?: (t: T) => number): number {
             var count = 0;
             var total = 0;
@@ -106,20 +116,31 @@ module arrayexjs {
         }
         //distinct(): IEnumerable<T> {
         //}
-        //at(index: number): T {
-        //}
         //except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
         //}
-        //first(match?: (t: T) => boolean): T {
-        //}
+        first(match?: (t: T) => boolean): T {
+            var e = this.getEnumerator();
+            while (e.moveNext()) {
+                if (!match || match(e.current))
+                    return e.current;
+            }
+            return undefined;
+        }
         //groupBy<TKey>(): IGrouping<TKey, T> {
         //}
         //intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
         //}
         //join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult): IEnumerable<TResult> {
         //}
-        //last(match?: (t: T) => boolean): T {
-        //}
+        last(match?: (t: T) => boolean): T {
+            var e = this.getEnumerator();
+            var l: T;
+            while (e.moveNext()) {
+                if (!match || match(e.current))
+                    l = e.current;
+            }
+            return l;
+        }
         max(selector?: (t: T) => number): number {
             var e = this.getEnumerator();
             if (!e.moveNext())

@@ -44,6 +44,15 @@ test("any", () => {
     ok(_(arr).any((n, i?) => n === i));
 });
 
+test("at", () => {
+    var arr = [];
+    strictEqual(_(arr).at(1), undefined);
+
+    arr = [1, 2, 3];
+    strictEqual(_(arr).at(1), 2);
+    strictEqual(_(arr).at(3), undefined);
+});
+
 test("average", () => {
     var arr = [];
     strictEqual(_(arr).average(), 0);
@@ -64,6 +73,26 @@ test("count", () => {
 
     arr = [1, 2, 3];
     strictEqual(_(arr).count(n => n > 1), 2);
+});
+
+test("first", () => {
+    var arr = [];
+    strictEqual(_(arr).first(), undefined);
+
+    arr = [1, 2, 3, 4];
+    strictEqual(_(arr).first(), 1);
+    strictEqual(_<number>(arr).first(n => n % 2 === 0), 2);
+    strictEqual(_<number>(arr).first(n => n > 5), undefined);
+});
+
+test("last", () => {
+    var arr = [];
+    strictEqual(_(arr).last(), undefined);
+
+    arr = [1, 2, 3, 4];
+    strictEqual(_(arr).last(), 4);
+    strictEqual(_<number>(arr).last(n => n % 2 === 1), 3);
+    strictEqual(_<number>(arr).last(n => n > 5), undefined);
 });
 
 test("max", () => {
