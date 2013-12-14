@@ -29,7 +29,7 @@ module arrayexjs {
         toArray(): T[];
         //toDictionary();
         //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean);
-        //where(comparer: (t: T) => boolean): IEnumerable<T>;
+        where(filter: (t: T) => boolean): IEnumerable<T>;
         //zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
     }
     export interface IEnumerator<T> {
@@ -190,8 +190,9 @@ module arrayexjs {
         //}
         //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean) {
         //}
-        //where(comparer: (t: T) => boolean): IEnumerable<T> {
-        //}
+        where(filter: (t: T) => boolean): IEnumerable<T> {
+            return new WhereEnumerable(this, filter);
+        }
         //zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
         //}
     }

@@ -99,4 +99,12 @@ test("sum", () => {
     strictEqual(_<IMock>(arr2).sum(t => t.i), 6);
 });
 
+test("where", () => {
+    var arr = [1, 2, 3];
+    var r = _(arr).where(t => t > 1).toArray();
+    strictEqual(r.length, 2);
+    strictEqual(r[0], 2);
+    strictEqual(r[1], 3);
+});
+
 interface IMock { i: number; }
