@@ -130,6 +130,37 @@ test("select", () => {
     strictEqual(res[2], 6);
 });
 
+test("skip", () => {
+    var arr = [];
+    var res = _(arr).skip(1).toArray();
+    strictEqual(res.length, 0);
+
+    arr = [1, 2, 3];
+    res = _(arr).skip(1).toArray();
+    strictEqual(res.length, 2);
+    strictEqual(res[0], 2);
+    strictEqual(res[1], 3);
+});
+
+test("skipWhile", () => {
+    var arr = [];
+    var res = _(arr).skipWhile(t => false).toArray();
+    strictEqual(res.length, 0);
+
+    arr = [1, 2, 3];
+    res = _(arr).skipWhile(t => t < 0).toArray();
+    strictEqual(res.length, 3);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+    strictEqual(res[2], 3);
+
+    arr = [1, 2, 3];
+    res = _(arr).skipWhile(t => t < 2).toArray();
+    strictEqual(res.length, 2);
+    strictEqual(res[0], 2);
+    strictEqual(res[1], 3);
+});
+
 test("sum", () => {
     var arr = [];
     strictEqual(_(arr).sum(), 0);

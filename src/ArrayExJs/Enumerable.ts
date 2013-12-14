@@ -21,8 +21,8 @@ module arrayexjs {
         //reverse(): IEnumerable<T>;
         select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult>;
         //selectMany(): IEnumerable<T>;
-        //skip(count: number): IEnumerable<T>;
-        //skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
+        skip(count: number): IEnumerable<T>;
+        skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         sum(selector?: (t: T) => number): number;
         //take(count: number): IEnumerable<T>;
         //takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
@@ -182,10 +182,16 @@ module arrayexjs {
         }
         //selectMany(): IEnumerable<T> {
         //}
-        //skip(count: number): IEnumerable<T> {
-        //}
-        //skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
-        //}
+        skip(count: number): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => skipEnumerator(this, count);
+            return e;
+        }
+        skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => skipWhileEnumerator(this, predicate);
+            return e;
+        }
         sum(selector?: (t: T) => number): number {
             var sum = 0;
             selector = selector || function (t: T): number {
