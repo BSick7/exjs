@@ -5,7 +5,7 @@ module arrayexjs {
         any(predicate?: (t: T, index?: number) => boolean): boolean;
         average(selector?: (t: T) => number): number;
         //concat(): IEnumerable<T>;
-        //count(selector?: (t: T) => number): number;
+        count(predicate?: (t: T) => boolean): number;
         //distinct(): IEnumerable<T>;
         //at(index: number): T;
         //except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
@@ -14,8 +14,8 @@ module arrayexjs {
         //intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         //join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult): IEnumerable<TResult>;
         //last(match?: (t: T) => boolean): T;
-        //max(selector?: (t: T) => number): number;
-        //min(selector?: (t: T) => number): number;
+        max(selector?: (t: T) => number): number;
+        min(selector?: (t: T) => number): number;
         //orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         //orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         //reverse(): IEnumerable<T>;
@@ -23,7 +23,7 @@ module arrayexjs {
         //selectMany(): IEnumerable<T>;
         //skip(count: number): IEnumerable<T>;
         //skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
-        //sum(selector?: (t: T) => number): number;
+        sum(selector?: (t: T) => number): number;
         //take(count: number): IEnumerable<T>;
         //takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         toArray(): T[];
@@ -95,8 +95,15 @@ module arrayexjs {
         }
         //concat(): IEnumerable<T> {
         //}
-        //count(selector?: (t: T) => number): number {
-        //}
+        count(predicate?: (t: T) => boolean): number {
+            var count = 0;
+            var e = this.getEnumerator();
+            while (e.moveNext()) {
+                if (!predicate || predicate(e.current))
+                    count++;
+            }
+            return count;
+        }
         //distinct(): IEnumerable<T> {
         //}
         //at(index: number): T {
@@ -113,10 +120,34 @@ module arrayexjs {
         //}
         //last(match?: (t: T) => boolean): T {
         //}
-        //max(selector?: (t: T) => number): number {
-        //}
-        //min(selector?: (t: T) => number): number {
-        //}
+        max(selector?: (t: T) => number): number {
+            var e = this.getEnumerator();
+            if (!e.moveNext())
+                return 0;
+            selector = selector || function (t: T): number {
+                if (typeof t !== "number") throw new Error("Object is not a number.");
+                return <number><any>t;
+            };
+            var max = selector(e.current);
+            while (e.moveNext()) {
+                max = Math.max(max, selector(e.current));
+            }
+            return max;
+        }
+        min(selector?: (t: T) => number): number {
+            var e = this.getEnumerator();
+            if (!e.moveNext())
+                return 0;
+            selector = selector || function (t: T): number {
+                if (typeof t !== "number") throw new Error("Object is not a number.");
+                return <number><any>t;
+            };
+            var min = selector(e.current);
+            while (e.moveNext()) {
+                min = Math.min(min, selector(e.current));
+            }
+            return min;
+        }
         //orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
         //}
         //orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
@@ -131,8 +162,18 @@ module arrayexjs {
         //}
         //skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
         //}
-        //sum(selector?: (t: T) => number): number {
-        //}
+        sum(selector?: (t: T) => number): number {
+            var sum = 0;
+            selector = selector || function (t: T): number {
+                if (typeof t !== "number") throw new Error("Object is not a number.");
+                return <number><any>t;
+            };
+            var e = this.getEnumerator();
+            while (e.moveNext()) {
+                sum += selector(e.current);
+            }
+            return sum;
+        }
         //take(count: number): IEnumerable<T> {
         //}
         //takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
