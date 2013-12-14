@@ -212,7 +212,9 @@ module arrayexjs {
         //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean) {
         //}
         where(filter: (t: T) => boolean): IEnumerable<T> {
-            return new WhereEnumerable(this, filter);
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => whereEnumerator(this, filter);
+            return e;
         }
         //zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
         //}

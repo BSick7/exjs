@@ -63,8 +63,8 @@
     <TypeScriptCompile Include="Enumerable.ts" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="WhereEnumerable.ts" />
-    <TypeScriptCompile Include="ArrayEnumerable.ts" />
+    <TypeScriptCompile Include="Where.ts" />
+    <TypeScriptCompile Include="Array.ts" />
     <Content Include="arrayex.d.ts" />
     <Content Include="arrayex.js.map" />
   </ItemGroup>
