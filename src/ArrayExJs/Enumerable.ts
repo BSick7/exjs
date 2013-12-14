@@ -1,9 +1,9 @@
 module arrayexjs {
     export interface IEnumerable<T> {
-        //getEnumerator(): IEnumerator<T>;
-        //all(predicate?: (t: T, index?: number) => boolean): boolean;
-        //any(predicate?: (t: T, index?: number) => boolean): boolean;
-        //average(selector?: (t: T) => number): number;
+        getEnumerator(): IEnumerator<T>;
+        all(predicate?: (t: T, index?: number) => boolean): boolean;
+        any(predicate?: (t: T, index?: number) => boolean): boolean;
+        average(selector?: (t: T) => number): number;
         //concat(): IEnumerable<T>;
         //count(selector?: (t: T) => number): number;
         //distinct(): IEnumerable<T>;
@@ -26,7 +26,7 @@ module arrayexjs {
         //sum(selector?: (t: T) => number): number;
         //take(count: number): IEnumerable<T>;
         //takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
-        //toArray(): T[];
+        toArray(): T[];
         //toDictionary();
         //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean);
         //where(comparer: (t: T) => boolean): IEnumerable<T>;
@@ -43,18 +43,56 @@ module arrayexjs {
     }
     
     export interface IGrouping<TKey, TElement> extends IEnumerable<TElement> {
-        //...
+        key: TKey;
     }
 
     export class Enumerable<T> implements IEnumerable<T> {
-        //getEnumerator(): IEnumerator<T> {
-        //}
-        //all(predicate?: (t: T, index?: number) => boolean): boolean {
-        //}
-        //any(predicate?: (t: T, index?: number) => boolean): boolean {
-        //}
-        //average(selector?: (t: T) => number): number {
-        //}
+        getEnumerator(): IEnumerator<T> {
+            return {
+                moveNext: function () {
+                    return false;
+                },
+                current: undefined
+            };
+        }
+        all(predicate?: (t: T, index?: number) => boolean): boolean {
+            if (predicate) {
+                var e = this.getEnumerator();
+                var i = 0;
+                while (e.moveNext()) {
+                    if (!predicate(e.current, i))
+                        return false;
+                    i++;
+                }
+            }
+            return true;
+        }
+        any(predicate?: (t: T, index?: number) => boolean): boolean {
+            predicate = predicate || function () { return true; };
+            var e = this.getEnumerator();
+            var i = 0;
+            while (e.moveNext()) {
+                if (predicate(e.current, i))
+                    return true;
+                i++;
+            }
+            return i === 0;
+        }
+        average(selector?: (t: T) => number): number {
+            var count = 0;
+            var total = 0;
+            selector = selector || function (t: T): number {
+                if (typeof t !== "number") throw new Error("Object is not a number.");
+                return <number><any>t;
+            };
+            var e = this.getEnumerator();
+            while (e.moveNext()) {
+                total += selector(e.current);
+                count++;
+            }
+            if (count === 0) return 0;
+            return total / count;
+        }
         //concat(): IEnumerable<T> {
         //}
         //count(selector?: (t: T) => number): number {
@@ -99,8 +137,14 @@ module arrayexjs {
         //}
         //takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
         //}
-        //toArray(): T[] {
-        //}
+        toArray(): T[] {
+            var arr: T[] = [];
+            var enumerator = this.getEnumerator();
+            while (enumerator.moveNext()) {
+                arr.push(enumerator.current);
+            }
+            return arr;
+        }
         //toDictionary() {
         //}
         //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean) {
@@ -110,6 +154,12 @@ module arrayexjs {
         //zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
         //}
     }
+
+    export function _<T>(o: any): IEnumerable<T> {
+        if (o && o instanceof Array)
+            return new ArrayEnumerable<T>(o);
+        return new Enumerable<T>();
+    }
 }
 
-var _ = arrayexjs.Enumerable;
+var _ = arrayexjs._;
