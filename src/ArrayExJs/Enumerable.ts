@@ -5,7 +5,7 @@ module arrayexjs {
         any(predicate?: (t: T, index?: number) => boolean): boolean;
         at(index: number): T;
         average(selector?: (t: T) => number): number;
-        //concat(): IEnumerable<T>;
+        concat(second: IEnumerable<T>): IEnumerable<T>;
         count(predicate?: (t: T) => boolean): number;
         distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         //except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
@@ -103,8 +103,11 @@ module arrayexjs {
             if (count === 0) return 0;
             return total / count;
         }
-        //concat(): IEnumerable<T> {
-        //}
+        concat(second: IEnumerable<T>): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => concatEnumerator(this, second);
+            return e;
+        }
         count(predicate?: (t: T) => boolean): number {
             var count = 0;
             var e = this.getEnumerator();

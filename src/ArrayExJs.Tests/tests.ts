@@ -64,6 +64,29 @@ test("average", () => {
     strictEqual(_<IMock>(arr2).average(t => t.i), 2);
 });
 
+test("concat", () => {
+    var arr1 = [1];
+    var arr2 = [];
+    var res = _(arr1).concat(_(arr2)).toArray();
+    strictEqual(res.length, 1);
+    strictEqual(res[0], 1);
+
+    arr1 = [];
+    arr2 = [1];
+    res = _(arr1).concat(_(arr2)).toArray();
+    strictEqual(res.length, 1);
+    strictEqual(res[0], 1);
+
+    arr1 = [1, 2];
+    arr2 = [3, 4];
+    res = _(arr1).concat(_(arr2)).toArray();
+    strictEqual(res.length, 4);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+    strictEqual(res[2], 3);
+    strictEqual(res[3], 4);
+});
+
 test("count", () => {
     var arr = [];
     strictEqual(_(arr).count(), 0);
