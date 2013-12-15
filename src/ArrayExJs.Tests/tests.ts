@@ -157,6 +157,32 @@ test("first", () => {
     strictEqual(_<number>(arr).first(n => n > 5), undefined);
 });
 
+test("intersect", () => {
+    var arr1 = [1];
+    var arr2 = [];
+    var res = _(arr1).intersect(_(arr2)).toArray();
+    strictEqual(res.length, 0);
+
+    arr1 = [];
+    arr2 = [1];
+    res = _(arr1).intersect(_(arr2)).toArray();
+    strictEqual(res.length, 0);
+
+    arr1 = [1, 2, 3, 4, 5];
+    arr2 = [4, 5, 6, 7, 8];
+    res = _(arr1).intersect(_(arr2)).toArray();
+    strictEqual(res.length, 2);
+    strictEqual(res[0], 4);
+    strictEqual(res[1], 5);
+
+    var ar1: IMock[] = [{ i: 0 }, { i: 1 }, { i: 2 }];
+    var ar2: IMock[] = [{ i: 1 }, { i: 2 }, { i: 3 }];
+    var res2 = _<IMock>(ar1).intersect(_<IMock>(ar2), (f, s) => f.i === s.i).toArray();
+    strictEqual(res2.length, 2);
+    strictEqual(res2[0].i, 1);
+    strictEqual(res2[1].i, 2);
+});
+
 test("last", () => {
     var arr = [];
     strictEqual(_(arr).last(), undefined);

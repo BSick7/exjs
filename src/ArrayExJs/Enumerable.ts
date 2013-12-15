@@ -11,7 +11,7 @@ module arrayexjs {
         except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         first(match?: (t: T) => boolean): T;
         //groupBy<TKey>(): IGrouping<TKey, T>;
-        //intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         //join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult): IEnumerable<TResult>;
         last(match?: (t: T) => boolean): T;
         max(selector?: (t: T) => number): number;
@@ -137,8 +137,11 @@ module arrayexjs {
         }
         //groupBy<TKey>(): IGrouping<TKey, T> {
         //}
-        //intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
-        //}
+        intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => intersectEnumerator(this, second, comparer);
+            return e;
+        }
         //join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult): IEnumerable<TResult> {
         //}
         last(match?: (t: T) => boolean): T {
