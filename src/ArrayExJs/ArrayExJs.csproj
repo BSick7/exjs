@@ -63,6 +63,7 @@
     <TypeScriptCompile Include="Enumerable.ts" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Distinct.ts" />
     <TypeScriptCompile Include="Reverse.ts" />
     <TypeScriptCompile Include="Take.ts" />
     <TypeScriptCompile Include="Skip.ts" />

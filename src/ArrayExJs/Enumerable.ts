@@ -7,7 +7,7 @@ module arrayexjs {
         average(selector?: (t: T) => number): number;
         //concat(): IEnumerable<T>;
         count(predicate?: (t: T) => boolean): number;
-        //distinct(): IEnumerable<T>;
+        distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         //except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         first(match?: (t: T) => boolean): T;
         //groupBy<TKey>(): IGrouping<TKey, T>;
@@ -114,8 +114,11 @@ module arrayexjs {
             }
             return count;
         }
-        //distinct(): IEnumerable<T> {
-        //}
+        distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => distinctEnumerator(this, comparer);
+            return e;
+        }
         //except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
         //}
         first(match?: (t: T) => boolean): T {

@@ -75,6 +75,26 @@ test("count", () => {
     strictEqual(_(arr).count(n => n > 1), 2);
 });
 
+test("distinct", () => {
+    var arr = [];
+    var res = _(arr).distinct().toArray();
+    strictEqual(res.length, 0);
+
+    arr = [1, 1, 2, 2, 3, 3, 4];
+    res = _(arr).distinct().toArray();
+    strictEqual(res.length, 4);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+    strictEqual(res[2], 3);
+    strictEqual(res[3], 4);
+
+    var arr2: IMock[] = [{ i: 0 }, { i: 0 }, { i: 1 }];
+    var res2 = _<IMock>(arr2).distinct((f, s) => f.i === s.i).toArray();
+    strictEqual(res2.length, 2);
+    strictEqual(res2[0].i, 0);
+    strictEqual(res2[1].i, 1);
+});
+
 test("first", () => {
     var arr = [];
     strictEqual(_(arr).first(), undefined);
