@@ -344,5 +344,33 @@ test("where", () => {
     strictEqual(r[1], 3);
 });
 
+test("zip", () => {
+    var arr1 = [1, 2, 3];
+    var arr2 = ["a"];
+    var res = _<number>(arr1).zip<string, IMock3>(_<string>(arr2), (f, s) => { return { i: f, j: s }; }).toArray();
+    strictEqual(res.length, 1);
+    strictEqual(res[0].i, 1);
+    strictEqual(res[0].j, "a");
+
+    arr1 = [1];
+    arr2 = ["a", "b", "c"];
+    res = _<number>(arr1).zip<string, IMock3>(_<string>(arr2), (f, s) => { return { i: f, j: s }; }).toArray();
+    strictEqual(res.length, 1);
+    strictEqual(res[0].i, 1);
+    strictEqual(res[0].j, "a");
+
+    arr1 = [1, 2, 3];
+    arr2 = ["a", "b", "c"];
+    res = _<number>(arr1).zip<string, IMock3>(_<string>(arr2), (f, s) => { return { i: f, j: s }; }).toArray();
+    strictEqual(res.length, 3);
+    strictEqual(res[0].i, 1);
+    strictEqual(res[0].j, "a");
+    strictEqual(res[1].i, 2);
+    strictEqual(res[1].j, "b");
+    strictEqual(res[2].i, 3);
+    strictEqual(res[2].j, "c");
+});
+
 interface IMock { i: number; }
-interface IMock2 { i: number[] }
+interface IMock2 { i: number[]; }
+interface IMock3 { i: number; j: string; }

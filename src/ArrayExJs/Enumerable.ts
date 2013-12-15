@@ -30,7 +30,7 @@ module arrayexjs {
         //toDictionary();
         //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean);
         where(filter: (t: T) => boolean): IEnumerable<T>;
-        //zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
+        zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
     }
     export interface IEnumerator<T> {
         current: T;
@@ -249,8 +249,11 @@ module arrayexjs {
             e.getEnumerator = () => whereEnumerator(this, filter);
             return e;
         }
-        //zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
-        //}
+        zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
+            var e = new Enumerable<TResult>();
+            e.getEnumerator = () => zipEnumerator<T, TSecond, TResult>(this, second, resultSelector);
+            return e;
+        }
     }
 
     export function _<T>(o: any): IEnumerable<T> {
