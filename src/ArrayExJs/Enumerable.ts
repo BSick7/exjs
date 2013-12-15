@@ -8,7 +8,7 @@ module arrayexjs {
         concat(second: IEnumerable<T>): IEnumerable<T>;
         count(predicate?: (t: T) => boolean): number;
         distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
-        //except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         first(match?: (t: T) => boolean): T;
         //groupBy<TKey>(): IGrouping<TKey, T>;
         //intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
@@ -122,8 +122,11 @@ module arrayexjs {
             e.getEnumerator = () => distinctEnumerator(this, comparer);
             return e;
         }
-        //except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
-        //}
+        except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => exceptEnumerator(this, second, comparer);
+            return e;
+        }
         first(match?: (t: T) => boolean): T {
             var e = this.getEnumerator();
             while (e.moveNext()) {

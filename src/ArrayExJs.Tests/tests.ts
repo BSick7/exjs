@@ -118,6 +118,35 @@ test("distinct", () => {
     strictEqual(res2[1].i, 1);
 });
 
+test("except", () => {
+    var arr1 = [];
+    var arr2 = [1, 2, 3];
+    var res = _(arr1).except(_(arr2)).toArray();
+    strictEqual(res.length, 0);
+
+    arr1 = [1, 2, 3];
+    arr2 = [];
+    res = _(arr1).except(_(arr2)).toArray();
+    strictEqual(res.length, 3);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+    strictEqual(res[2], 3);
+
+    arr1 = [1, 2, 3, 4];
+    arr2 = [1, 4];
+    res = _(arr1).except(_(arr2)).toArray();
+    strictEqual(res.length, 2);
+    strictEqual(res[0], 2);
+    strictEqual(res[1], 3);
+
+    var ar1: IMock[] = [{ i: 1 }, { i: 2 }, { i: 3 }, { i: 4 }];
+    var ar2: IMock[] = [{ i: 1 }, { i: 4 }];
+    var res2 = _<IMock>(ar1).except(_<IMock>(ar2), (f, s) => f.i === s.i).toArray();
+    strictEqual(res2.length, 2);
+    strictEqual(res2[0].i, 2);
+    strictEqual(res2[1].i, 3);
+});
+
 test("first", () => {
     var arr = [];
     strictEqual(_(arr).first(), undefined);
