@@ -336,6 +336,34 @@ test("takeWhile", () => {
     strictEqual(res[1], 2);
 });
 
+test("union", () => {
+    var arr1 = [1, 2];
+    var arr2 = [3, 4];
+    var res = _(arr1).union(_(arr2)).toArray();
+    strictEqual(res.length, 4);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+    strictEqual(res[2], 3);
+    strictEqual(res[3], 4);
+
+    arr1 = [1, 2, 2, 3];
+    arr2 = [2, 3, 4, 4];
+    var res = _(arr1).union(_(arr2)).toArray();
+    strictEqual(res.length, 4);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+    strictEqual(res[2], 3);
+    strictEqual(res[3], 4);
+
+    var ar1: IMock[] = [{ i: 0 }, { i: 1 }];
+    var ar2: IMock[] = [{ i: 1 }, { i: 2 }];
+    var res2 = _<IMock>(ar1).union(_<IMock>(ar2), (f, s) => f.i === s.i).toArray();
+    strictEqual(res2.length, 3);
+    strictEqual(res2[0].i, 0);
+    strictEqual(res2[1].i, 1);
+    strictEqual(res2[2].i, 2);
+});
+
 test("where", () => {
     var arr = [1, 2, 3];
     var r = _(arr).where(t => t > 1).toArray();

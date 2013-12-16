@@ -28,7 +28,7 @@ module arrayexjs {
         takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         toArray(): T[];
         //toDictionary();
-        //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean);
+        union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         where(filter: (t: T) => boolean): IEnumerable<T>;
         zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
     }
@@ -41,7 +41,7 @@ module arrayexjs {
         thenBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         thenByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
     }
-    
+
     export interface IGrouping<TKey, TElement> extends IEnumerable<TElement> {
         key: TKey;
     }
@@ -242,8 +242,11 @@ module arrayexjs {
         }
         //toDictionary() {
         //}
-        //union<TSecond>(second: IEnumerable<TSecond>, comparer?: (f: T, s: TSecond) => boolean) {
-        //}
+        union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => unionEnumerator(this, second, comparer);
+            return e;
+        }
         where(filter: (t: T) => boolean): IEnumerable<T> {
             var e = new Enumerable<T>();
             e.getEnumerator = () => whereEnumerator(this, filter);
