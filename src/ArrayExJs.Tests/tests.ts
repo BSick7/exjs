@@ -157,6 +157,42 @@ test("first", () => {
     strictEqual(_<number>(arr).first(n => n > 5), undefined);
 });
 
+test("groupBy", () => {
+    var arr: IMock3[] = [
+        { i: 0, j: "a" },
+        { i: 0, j: "b" },
+        { i: 0, j: "c" },
+        { i: 1, j: "d" }
+    ];
+    var res = _<IMock3>(arr).groupBy<number>(t => t.i).toArray();
+    strictEqual(res.length, 2);
+    var r1 = res[0].toArray();
+    var r2 = res[1].toArray();
+    strictEqual(r1.length, 3);
+    strictEqual(r1[0].j, "a");
+    strictEqual(r1[1].j, "b");
+    strictEqual(r1[2].j, "c");
+    strictEqual(r2.length, 1);
+    strictEqual(r2[0].j, "d");
+
+    arr = [
+        { i: 0, j: "a" },
+        { i: 1, j: "b" },
+        { i: 2, j: "c" },
+        { i: 3, j: "d" }
+    ];
+    res = _<IMock3>(arr).groupBy<number>(t => t.i, (k1,k2) => k1 % 2 === k2 % 2).toArray();
+    strictEqual(res.length, 2);
+    r1 = res[0].toArray();
+    r2 = res[1].toArray();
+    strictEqual(r1.length, 2);
+    strictEqual(r1[0].j, "a");
+    strictEqual(r1[1].j, "c");
+    strictEqual(r2.length, 2);
+    strictEqual(r2[0].j, "b");
+    strictEqual(r2[1].j, "d");
+});
+
 test("intersect", () => {
     var arr1 = [1];
     var arr2 = [];

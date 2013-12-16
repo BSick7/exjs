@@ -10,7 +10,7 @@ module arrayexjs {
         distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         first(match?: (t: T) => boolean): T;
-        //groupBy<TKey>(): IGrouping<TKey, T>;
+        groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>>;
         intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         //join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult): IEnumerable<TResult>;
         last(match?: (t: T) => boolean): T;
@@ -135,8 +135,11 @@ module arrayexjs {
             }
             return undefined;
         }
-        //groupBy<TKey>(): IGrouping<TKey, T> {
-        //}
+        groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>> {
+            var e = new Enumerable<T>();
+            e.getEnumerator = () => groupByEnumerator(this, keySelector, comparer);
+            return e;
+        }
         intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
             var e = new Enumerable<T>();
             e.getEnumerator = () => intersectEnumerator(this, second, comparer);

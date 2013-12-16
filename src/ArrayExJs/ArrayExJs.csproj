@@ -63,6 +63,7 @@
     <TypeScriptCompile Include="Enumerable.ts" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="GroupBy.ts" />
     <TypeScriptCompile Include="Union.ts" />
     <TypeScriptCompile Include="Zip.ts" />
     <TypeScriptCompile Include="Intersect.ts" />
