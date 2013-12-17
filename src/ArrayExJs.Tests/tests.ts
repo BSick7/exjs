@@ -7,6 +7,7 @@ interface IMock { i: number; }
 interface IMock2 { i: number[]; }
 interface IMock3 { i: number; j: string; }
 interface IMock4 { i1: number; i2: number; }
+interface IMock5 { i: number; j: string; k: Date; }
 
 test("array", () => {
     var arr = [1, 2, 3, 4, 5];
@@ -270,7 +271,7 @@ test("orderBy", () => {
     strictEqual(res[4], 12);
     strictEqual(res[5], 6346);
 
-    var arr2 = [{ i: 5 }, { i: 12 }, { i: 5 }, { i: 6346 }, { i: 2 }, { i: 1 }];
+    var arr2: IMock[] = [{ i: 5 }, { i: 12 }, { i: 5 }, { i: 6346 }, { i: 2 }, { i: 1 }];
     var res2 = _<IMock>(arr2).orderBy(x => x.i).toArray();
     strictEqual(res2.length, 6);
     strictEqual(res2[0].i, 1);
@@ -422,6 +423,30 @@ test("takeWhile", () => {
     strictEqual(res.length, 2);
     strictEqual(res[0], 1);
     strictEqual(res[1], 2);
+});
+
+test("thenBy", () => {
+    var m0: IMock5 = { i: 5, j: "aa", k: new Date("1/1/2013") };
+    var m1: IMock5 = { i: 12, j: "a", k: new Date("6/1/2013") };
+    var m2: IMock5 = { i: 5, j: "a", k: new Date("1/1/2013") };
+    var m3: IMock5 = { i: 12, j: "a", k: new Date("12/1/2013") };
+    var m4: IMock5 = { i: 2, j: "aa", k: new Date("1/1/2013") };
+    var m5: IMock5 = { i: 2, j: "a", k: new Date("1/1/2013") };
+    var m6: IMock5 = { i: 12, j: "a", k: new Date("1/1/2013") };
+    var arr: IMock5[] = [m0, m1, m2, m3, m4, m5, m6];
+    var res = _<IMock5>(arr)
+        .orderBy(x => x.i)
+        .thenBy(x => x.j, (f, s) => f.length - s.length)
+        .thenByDescending(x => x.k)
+        .toArray();
+    strictEqual(res.length, 7);
+    strictEqual(res[0], m5);
+    strictEqual(res[1], m4);
+    strictEqual(res[2], m2);
+    strictEqual(res[3], m0);
+    strictEqual(res[4], m3);
+    strictEqual(res[5], m1);
+    strictEqual(res[6], m6);
 });
 
 test("union", () => {
