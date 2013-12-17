@@ -16,8 +16,8 @@ module arrayexjs {
         last(match?: (t: T) => boolean): T;
         max(selector?: (t: T) => number): number;
         min(selector?: (t: T) => number): number;
-        //orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
-        //orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
+        orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
+        orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         reverse(): IEnumerable<T>;
         select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult>;
         selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult>;
@@ -187,10 +187,12 @@ module arrayexjs {
             }
             return min;
         }
-        //orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
-        //}
-        //orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
-        //}
+        orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
+            return orderByEnumerable(this, keySelector, false, comparer);
+        }
+        orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
+            return orderByEnumerable(this, keySelector, true, comparer);
+        }
         reverse(): IEnumerable<T> {
             var e = new Enumerable<T>();
             e.getEnumerator = () => reverseEnumerator(this);

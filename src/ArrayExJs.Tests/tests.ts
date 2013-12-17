@@ -259,6 +259,28 @@ test("last", () => {
     strictEqual(_<number>(arr).last(n => n > 5), undefined);
 });
 
+test("orderBy", () => {
+    var arr = [5, 12, 5, 6346, 2, 1];
+    var res = _<number>(arr).orderBy(x => x).toArray();
+    strictEqual(res.length, 6);
+    strictEqual(res[0], 1);
+    strictEqual(res[1], 2);
+    strictEqual(res[2], 5);
+    strictEqual(res[3], 5);
+    strictEqual(res[4], 12);
+    strictEqual(res[5], 6346);
+
+    var arr2 = [{ i: 5 }, { i: 12 }, { i: 5 }, { i: 6346 }, { i: 2 }, { i: 1 }];
+    var res2 = _<IMock>(arr2).orderBy(x => x.i).toArray();
+    strictEqual(res2.length, 6);
+    strictEqual(res2[0].i, 1);
+    strictEqual(res2[1].i, 2);
+    strictEqual(res2[2].i, 5);
+    strictEqual(res2[3].i, 5);
+    strictEqual(res2[4].i, 12);
+    strictEqual(res2[5].i, 6346);
+});
+
 test("max", () => {
     var arr = [];
     strictEqual(_(arr).max(), 0);
