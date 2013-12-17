@@ -3,6 +3,11 @@
 
 QUnit.module("arrayexjs");
 
+interface IMock { i: number; }
+interface IMock2 { i: number[]; }
+interface IMock3 { i: number; j: string; }
+interface IMock4 { i1: number; i2: number; }
+
 test("array", () => {
     var arr = [1, 2, 3, 4, 5];
     var arr2 = _(arr).toArray();
@@ -217,6 +222,31 @@ test("intersect", () => {
     strictEqual(res2.length, 2);
     strictEqual(res2[0].i, 1);
     strictEqual(res2[1].i, 2);
+});
+
+test("join", () => {
+    var arr1: IMock3[] = [];
+    var arr2: IMock3[] = [{ i: 0, j: "a" }];
+    var res = _<IMock3>(arr1).join(_<IMock3>(arr2), t => t.j, t => t.j, (o, i) => { return { i1: o.i, i2: i.i }; }).toArray();
+    strictEqual(res.length, 0);
+    
+    arr1 = [
+        { i: 9, j: "a" },
+        { i: 8, j: "b" },
+        { i: 7, j: "c" },
+        { i: 6, j: "d" }
+    ];
+    arr2 = [
+        { i: 1, j: "a" },
+        { i: 2, j: "c" },
+        { i: 3, j: "e" }
+    ];
+    res = _<IMock3>(arr1).join(_<IMock3>(arr2), t => t.j, t => t.j, (o, i) => { return { i1: o.i, i2: i.i }; }).toArray();
+    strictEqual(res.length, 2);
+    strictEqual(res[0].i1, 9);
+    strictEqual(res[0].i2, 1);
+    strictEqual(res[1].i1, 7);
+    strictEqual(res[1].i2, 2);
 });
 
 test("last", () => {
@@ -434,7 +464,3 @@ test("zip", () => {
     strictEqual(res[2].i, 3);
     strictEqual(res[2].j, "c");
 });
-
-interface IMock { i: number; }
-interface IMock2 { i: number[]; }
-interface IMock3 { i: number; j: string; }
