@@ -60,28 +60,29 @@
     <Content Include="arrayex.js" />
     <Content Include="Gruntfile.js" />
     <Content Include="gruntjs.d.ts" />
-    <Content Include="src\array.ts" />
-    <Content Include="src\concat.ts" />
-    <Content Include="src\distinct.ts" />
-    <Content Include="src\enumerable.ts" />
-    <Content Include="src\except.ts" />
-    <Content Include="src\groupBy.ts" />
-    <Content Include="src\intersect.ts" />
-    <Content Include="src\join.ts" />
-    <Content Include="src\orderBy.ts" />
-    <Content Include="src\reverse.ts" />
-    <Content Include="src\select.ts" />
-    <Content Include="src\skip.ts" />
-    <Content Include="src\take.ts" />
-    <Content Include="src\union.ts" />
-    <Content Include="src\where.ts" />
-    <Content Include="src\zip.ts" />
+    <Content Include="lib\qunit\qunit-1.12.0.js" />
+    <Content Include="lib\qunit\qunit.d.ts" />
+    <TypeScriptCompile Include="src\array.ts" />
+    <TypeScriptCompile Include="src\concat.ts" />
+    <TypeScriptCompile Include="src\distinct.ts" />
+    <TypeScriptCompile Include="src\enumerable.ts" />
+    <TypeScriptCompile Include="src\except.ts" />
+    <TypeScriptCompile Include="src\groupBy.ts" />
+    <TypeScriptCompile Include="src\intersect.ts" />
+    <TypeScriptCompile Include="src\join.ts" />
+    <TypeScriptCompile Include="src\orderBy.ts" />
+    <TypeScriptCompile Include="src\reverse.ts" />
+    <TypeScriptCompile Include="src\select.ts" />
+    <TypeScriptCompile Include="src\skip.ts" />
+    <TypeScriptCompile Include="src\take.ts" />
+    <TypeScriptCompile Include="src\union.ts" />
+    <TypeScriptCompile Include="src\where.ts" />
+    <TypeScriptCompile Include="src\zip.ts" />
+    <TypeScriptCompile Include="test\tests.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="test\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>
