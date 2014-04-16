@@ -2,14 +2,14 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <ProjectGuid>{0ED144F5-3C3F-4B3F-A0F7-0DC4DFB282C0}</ProjectGuid>
+    <ProjectGuid>{BBF7442F-1D66-48F3-A29A-143D2FE04BE5}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <OutputPath>bin</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>0.9</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -31,7 +31,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>32002</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:18149/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
@@ -48,45 +48,40 @@
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
-    <TypeScriptOutFile>arrayex.js</TypeScriptOutFile>
-    <TypeScriptGeneratesDeclarations>true</TypeScriptGeneratesDeclarations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
-    <TypeScriptOutFile>arrayex.js</TypeScriptOutFile>
-    <TypeScriptGeneratesDeclarations>true</TypeScriptGeneratesDeclarations>
   </PropertyGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Enumerable.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="OrderBy.ts" />
-    <TypeScriptCompile Include="Join.ts" />
-    <TypeScriptCompile Include="GroupBy.ts" />
-    <TypeScriptCompile Include="Union.ts" />
-    <TypeScriptCompile Include="Zip.ts" />
-    <TypeScriptCompile Include="Intersect.ts" />
-    <TypeScriptCompile Include="Except.ts" />
-    <TypeScriptCompile Include="Concat.ts" />
-    <TypeScriptCompile Include="Distinct.ts" />
-    <TypeScriptCompile Include="Reverse.ts" />
-    <TypeScriptCompile Include="Take.ts" />
-    <TypeScriptCompile Include="Skip.ts" />
-    <TypeScriptCompile Include="Select.ts" />
-    <TypeScriptCompile Include="Where.ts" />
-    <TypeScriptCompile Include="Array.ts" />
     <Content Include="arrayex.d.ts" />
-    <Content Include="arrayex.js.map" />
+    <Content Include="arrayex.js" />
+    <Content Include="Gruntfile.js" />
+    <Content Include="gruntjs.d.ts" />
+    <Content Include="src\array.ts" />
+    <Content Include="src\concat.ts" />
+    <Content Include="src\distinct.ts" />
+    <Content Include="src\enumerable.ts" />
+    <Content Include="src\except.ts" />
+    <Content Include="src\groupBy.ts" />
+    <Content Include="src\intersect.ts" />
+    <Content Include="src\join.ts" />
+    <Content Include="src\orderBy.ts" />
+    <Content Include="src\reverse.ts" />
+    <Content Include="src\select.ts" />
+    <Content Include="src\skip.ts" />
+    <Content Include="src\take.ts" />
+    <Content Include="src\union.ts" />
+    <Content Include="src\where.ts" />
+    <Content Include="src\zip.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="arrayex.js" />
+    <Content Include="package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
-  <PropertyGroup>
-    <PostBuildEvent>xcopy /y "$(ProjectDir)arrayex.js" "$(SolutionDir)ArrayExJs.Tests\scripts\"
-xcopy /y "$(ProjectDir)arrayex.d.ts" "$(SolutionDir)ArrayExJs.Tests\scripts\typings\arrayex\"</PostBuildEvent>
-  </PropertyGroup>
 </Project>

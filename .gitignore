@@ -11,3 +11,4 @@ src/ArrayExJs/arrayex.js
 src/ArrayExJs/arrayex.js.map
 src/ArrayExJs.Tests/scripts/arrayex.js
 src/ArrayExJs.Tests/scripts/typings/arrayex/arrayex.d.ts
+src/arrayexjs/node_modules/**/*

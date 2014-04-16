@@ -1,3 +1,21 @@
+/// <reference path="array.ts" />
+/// <reference path="concat.ts" />
+/// <reference path="distinct.ts" />
+/// <reference path="except.ts" />
+/// <reference path="groupBy.ts" />
+/// <reference path="intersect.ts" />
+/// <reference path="join.ts" />
+/// <reference path="orderBy.ts" />
+/// <reference path="reverse.ts" />
+/// <reference path="orderBy.ts" />
+/// <reference path="reverse.ts" />
+/// <reference path="select.ts" />
+/// <reference path="skip.ts" />
+/// <reference path="take.ts" />
+/// <reference path="union.ts" />
+/// <reference path="where.ts" />
+/// <reference path="zip.ts" />
+
 module arrayexjs {
     export interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
@@ -136,8 +154,8 @@ module arrayexjs {
             return undefined;
         }
         groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => groupByEnumerator(this, keySelector, comparer);
+            var e = new Enumerable<IGrouping<TKey, T>>();
+            e.getEnumerator = () => groupByEnumerator<T, TKey>(this, keySelector, comparer);
             return e;
         }
         intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {

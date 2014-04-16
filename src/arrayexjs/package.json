@@ -1,0 +1,30 @@
+{
+  "name": "arrayexjs",
+  "version": "0.1.0",
+  "description": "Extension library for arrays",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "array",
+    "linq",
+    "typescript"
+  ],
+  "author": "Brad Sickles",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BSick7/arrayexjs"
+  },
+  "bugs": {
+    "url": "https://github.com/BSick7/arrayexjs/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-typescript": "~0.3.0",
+    "grunt-contrib-qunit": "~0.4.0"
+  }
+}

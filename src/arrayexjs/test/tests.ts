@@ -1,5 +1,5 @@
-/// <reference path="scripts/typings/qunit/qunit.d.ts" />
-/// <reference path="scripts/typings/arrayex/arrayex.d.ts" />
+/// <reference path="../lib/qunit/qunit.d.ts" />
+/// <reference path="../arrayex.d.ts" />
 
 QUnit.module("arrayexjs");
 
