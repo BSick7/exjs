@@ -15,7 +15,6 @@
             },
             test: {
                 src: ['test/**/*.ts'],
-                dest: 'dist/arrayex.js',
                 options: {
                     target: 'es5',
                     declaration: true

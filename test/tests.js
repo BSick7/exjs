@@ -1,10 +1,8 @@
-/// <reference path="../lib/qunit/qunit.d.ts" />
-/// <reference path="../arrayex.d.ts" />
 QUnit.module("arrayexjs");
 
 test("array", function () {
     var arr = [1, 2, 3, 4, 5];
-    var arr2 = _(arr).toArray();
+    var arr2 = arr.en().toArray();
     notStrictEqual(arr2, arr);
     strictEqual(arr2.length, 5);
     strictEqual(arr2[0], 1);
@@ -16,67 +14,67 @@ test("array", function () {
 
 test("all", function () {
     var arr = [];
-    ok(_(arr).all(function (n) {
+    ok(arr.en().all(function (n) {
         return n > 0;
     }));
 
     arr = [1, 2, 3];
-    ok(_(arr).all(function (n) {
+    ok(arr.en().all(function (n) {
         return n > 0;
     }));
 
     arr = [-1, 0, 1];
-    ok(!_(arr).all(function (n) {
+    ok(!arr.en().all(function (n) {
         return n > 0;
     }));
 
     arr = [0, 1, 2, 3];
-    ok(_(arr).all(function (n, i) {
+    ok(arr.en().all(function (n, i) {
         return n === i;
     }));
 });
 
 test("any", function () {
     var arr = [];
-    ok(_(arr).any());
-    ok(_(arr).any(function (n) {
+    ok(arr.en().any());
+    ok(arr.en().any(function (n) {
         return n > 0;
     }));
 
     arr = [1, 2, 3];
-    ok(_(arr).any(function (n) {
+    ok(arr.en().any(function (n) {
         return n < 2;
     }));
 
     arr = [-1, 0, 1];
-    ok(_(arr).any(function (n) {
+    ok(arr.en().any(function (n) {
         return n < 0;
     }));
 
     arr = [0, 2, 3, 4];
-    ok(_(arr).any(function (n, i) {
+    ok(arr.en().any(function (n, i) {
         return n === i;
     }));
 });
 
 test("at", function () {
     var arr = [];
-    strictEqual(_(arr).at(1), undefined);
+    strictEqual(arr.en().at(1), undefined);
 
     arr = [1, 2, 3];
-    strictEqual(_(arr).at(1), 2);
-    strictEqual(_(arr).at(3), undefined);
+    strictEqual(arr.en().at(1), 2);
+    strictEqual(arr.en().at(3), undefined);
 });
 
 test("average", function () {
     var arr = [];
-    strictEqual(_(arr).average(), 0);
+    strictEqual(arr.en().average(), 0);
 
     arr = [1, 2, 3];
-    strictEqual(_(arr).average(), 2);
+    strictEqual(arr.en().average(), 2);
 
     var arr2 = [{ i: 1 }, { i: 2 }, { i: 3 }];
-    strictEqual(_(arr2).average(function (t) {
+    strictEqual(arr2.en().average(function (t) {
         return t.i;
     }), 2);
 });
@@ -84,19 +82,19 @@ test("average", function () {
 test("concat", function () {
     var arr1 = [1];
     var arr2 = [];
-    var res = _(arr1).concat(_(arr2)).toArray();
+    var res = arr1.en().concat(arr2).toArray();
     strictEqual(res.length, 1);
     strictEqual(res[0], 1);
 
     arr1 = [];
     arr2 = [1];
-    res = _(arr1).concat(_(arr2)).toArray();
+    res = arr1.en().concat(arr2).toArray();
     strictEqual(res.length, 1);
     strictEqual(res[0], 1);
 
     arr1 = [1, 2];
     arr2 = [3, 4];
-    res = _(arr1).concat(_(arr2)).toArray();
+    res = arr1.en().concat(arr2).toArray();
     strictEqual(res.length, 4);
     strictEqual(res[0], 1);
     strictEqual(res[1], 2);
@@ -106,24 +104,24 @@ test("concat", function () {
 
 test("count", function () {
     var arr = [];
-    strictEqual(_(arr).count(), 0);
+    strictEqual(arr.en().count(), 0);
 
     arr = [1, 2, 3];
-    strictEqual(_(arr).count(), 3);
+    strictEqual(arr.en().count(), 3);
 
     arr = [1, 2, 3];
-    strictEqual(_(arr).count(function (n) {
+    strictEqual(arr.en().count(function (n) {
         return n > 1;
     }), 2);
 });
 
 test("distinct", function () {
     var arr = [];
-    var res = _(arr).distinct().toArray();
+    var res = arr.en().distinct().toArray();
     strictEqual(res.length, 0);
 
     arr = [1, 1, 2, 2, 3, 3, 4];
-    res = _(arr).distinct().toArray();
+    res = arr.en().distinct().toArray();
     strictEqual(res.length, 4);
     strictEqual(res[0], 1);
     strictEqual(res[1], 2);
@@ -131,7 +129,7 @@ test("distinct", function () {
     strictEqual(res[3], 4);
 
     var arr2 = [{ i: 0 }, { i: 0 }, { i: 1 }];
-    var res2 = _(arr2).distinct(function (f, s) {
+    var res2 = arr2.en().distinct(function (f, s) {
         return f.i === s.i;
     }).toArray();
     strictEqual(res2.length, 2);
@@ -142,12 +140,12 @@ test("distinct", function () {
 test("except", function () {
     var arr1 = [];
     var arr2 = [1, 2, 3];
-    var res = _(arr1).except(_(arr2)).toArray();
+    var res = arr1.en().except(arr2).toArray();
     strictEqual(res.length, 0);
 
     arr1 = [1, 2, 3];
     arr2 = [];
-    res = _(arr1).except(_(arr2)).toArray();
+    res = arr1.en().except(arr2).toArray();
     strictEqual(res.length, 3);
     strictEqual(res[0], 1);
     strictEqual(res[1], 2);
@@ -155,14 +153,14 @@ test("except", function () {
 
     arr1 = [1, 2, 3, 4];
     arr2 = [1, 4];
-    res = _(arr1).except(_(arr2)).toArray();
+    res = arr1.en().except(arr2).toArray();
     strictEqual(res.length, 2);
     strictEqual(res[0], 2);
     strictEqual(res[1], 3);
 
     var ar1 = [{ i: 1 }, { i: 2 }, { i: 3 }, { i: 4 }];
     var ar2 = [{ i: 1 }, { i: 4 }];
-    var res2 = _(ar1).except(_(ar2), function (f, s) {
+    var res2 = ar1.en().except(ar2, function (f, s) {
         return f.i === s.i;
     }).toArray();
     strictEqual(res2.length, 2);
@@ -172,14 +170,14 @@ test("except", function () {
 
 test("first", function () {
     var arr = [];
-    strictEqual(_(arr).first(), undefined);
+    strictEqual(arr.en().first(), undefined);
 
     arr = [1, 2, 3, 4];
-    strictEqual(_(arr).first(), 1);
-    strictEqual(_(arr).first(function (n) {
+    strictEqual(arr.en().first(), 1);
+    strictEqual(arr.en().first(function (n) {
         return n % 2 === 0;
     }), 2);
-    strictEqual(_(arr).first(function (n) {
+    strictEqual(arr.en().first(function (n) {
         return n > 5;
     }), undefined);
 });
@@ -191,7 +189,7 @@ test("groupBy", function () {
         { i: 0, j: "c" },
         { i: 1, j: "d" }
     ];
-    var res = _(arr).groupBy(function (t) {
+    var res = arr.en().groupBy(function (t) {
         return t.i;
     }).toArray();
     strictEqual(res.length, 2);
@@ -210,7 +208,7 @@ test("groupBy", function () {
         { i: 2, j: "c" },
         { i: 3, j: "d" }
     ];
-    res = _(arr).groupBy(function (t) {
+    res = arr.en().groupBy(function (t) {
         return t.i;
     }, function (k1, k2) {
         return k1 % 2 === k2 % 2;
@@ -229,24 +227,24 @@ test("groupBy", function () {
 test("intersect", function () {
     var arr1 = [1];
     var arr2 = [];
-    var res = _(arr1).intersect(_(arr2)).toArray();
+    var res = arr1.en().intersect(arr2).toArray();
     strictEqual(res.length, 0);
 
     arr1 = [];
     arr2 = [1];
-    res = _(arr1).intersect(_(arr2)).toArray();
+    res = arr1.en().intersect(arr2).toArray();
     strictEqual(res.length, 0);
 
     arr1 = [1, 2, 3, 4, 5];
     arr2 = [4, 5, 6, 7, 8];
-    res = _(arr1).intersect(_(arr2)).toArray();
+    res = arr1.en().intersect(arr2).toArray();
     strictEqual(res.length, 2);
     strictEqual(res[0], 4);
     strictEqual(res[1], 5);
 
     var ar1 = [{ i: 0 }, { i: 1 }, { i: 2 }];
     var ar2 = [{ i: 1 }, { i: 2 }, { i: 3 }];
-    var res2 = _(ar1).intersect(_(ar2), function (f, s) {
+    var res2 = ar1.en().intersect(ar2, function (f, s) {
         return f.i === s.i;
     }).toArray();
     strictEqual(res2.length, 2);
@@ -257,7 +255,7 @@ test("intersect", function () {
 test("join", function () {
     var arr1 = [];
     var arr2 = [{ i: 0, j: "a" }];
-    var res = _(arr1).join(_(arr2), function (t) {
+    var res = arr1.en().join(arr2, function (t) {
         return t.j;
     }, function (t) {
         return t.j;
@@ -277,7 +275,7 @@ test("join", function () {
         { i: 2, j: "c" },
         { i: 3, j: "e" }
     ];
-    res = _(arr1).join(_(arr2), function (t) {
+    res = arr1.en().join(arr2, function (t) {
         return t.j;
     }, function (t) {
         return t.j;
@@ -293,21 +291,21 @@ test("join", function () {
 
 test("last", function () {
     var arr = [];
-    strictEqual(_(arr).last(), undefined);
+    strictEqual(arr.en().last(), undefined);
 
     arr = [1, 2, 3, 4];
-    strictEqual(_(arr).last(), 4);
-    strictEqual(_(arr).last(function (n) {
+    strictEqual(arr.en().last(), 4);
+    strictEqual(arr.en().last(function (n) {
         return n % 2 === 1;
     }), 3);
-    strictEqual(_(arr).last(function (n) {
+    strictEqual(arr.en().last(function (n) {
         return n > 5;
     }), undefined);
 });
 
 test("orderBy", function () {
     var arr = [5, 12, 5, 6346, 2, 1];
-    var res = _(arr).orderBy(function (x) {
+    var res = arr.en().orderBy(function (x) {
         return x;
     }).toArray();
     strictEqual(res.length, 6);
@@ -319,7 +317,7 @@ test("orderBy", function () {
     strictEqual(res[5], 6346);
 
     var arr2 = [{ i: 5 }, { i: 12 }, { i: 5 }, { i: 6346 }, { i: 2 }, { i: 1 }];
-    var res2 = _(arr2).orderBy(function (x) {
+    var res2 = arr2.en().orderBy(function (x) {
         return x.i;
     }).toArray();
     strictEqual(res2.length, 6);
@@ -333,37 +331,37 @@ test("orderBy", function () {
 
 test("max", function () {
     var arr = [];
-    strictEqual(_(arr).max(), 0);
+    strictEqual(arr.en().max(), 0);
 
     arr = [1, 2, 3];
-    strictEqual(_(arr).max(), 3);
+    strictEqual(arr.en().max(), 3);
 
     var arr2 = [{ i: 1 }, { i: 2 }, { i: 3 }];
-    strictEqual(_(arr2).max(function (t) {
+    strictEqual(arr2.en().max(function (t) {
         return t.i;
     }), 3);
 });
 
 test("min", function () {
     var arr = [];
-    strictEqual(_(arr).min(), 0);
+    strictEqual(arr.en().min(), 0);
 
     arr = [1, 2, 3];
-    strictEqual(_(arr).min(), 1);
+    strictEqual(arr.en().min(), 1);
 
     var arr2 = [{ i: 1 }, { i: 2 }, { i: 3 }];
-    strictEqual(_(arr2).min(function (t) {
+    strictEqual(arr2.en().min(function (t) {
         return t.i;
     }), 1);
 });
 
 test("reverse", function () {
     var arr = [];
-    var res = _(arr).reverse().toArray();
+    var res = arr.en().reverse().toArray();
     strictEqual(res.length, 0);
 
     arr = [1, 2, 3];
-    res = _(arr).reverse().toArray();
+    res = arr.en().reverse().toArray();
     strictEqual(res.length, 3);
     strictEqual(res[0], 3);
     strictEqual(res[1], 2);
@@ -372,13 +370,13 @@ test("reverse", function () {
 
 test("select", function () {
     var arr = [];
-    var res = _(arr).select(function (t) {
+    var res = arr.en().select(function (t) {
         return t;
     }).toArray();
     strictEqual(res.length, 0);
 
     arr = [1, 2, 3];
-    res = _(arr).select(function (t) {
+    res = arr.en().select(function (t) {
         return t * 2;
     }).toArray();
     strictEqual(res.length, 3);
@@ -389,8 +387,8 @@ test("select", function () {
 
 test("selectMany", function () {
     var arr = [];
-    var res = _(arr).selectMany(function (t) {
-        return _(t.i);
+    var res = arr.en().selectMany(function (t) {
+        return t.i.en();
     }).toArray();
     strictEqual(res.length, 0);
 
@@ -401,8 +399,8 @@ test("selectMany", function () {
         { i: [] },
         { i: [5, 6] }
     ];
-    var res2 = _(arr2).selectMany(function (t) {
-        return _(t.i);
+    var res2 = arr2.en().selectMany(function (t) {
+        return t.i.en();
     }).toArray();
     strictEqual(res2.length, 6);
     strictEqual(res2[0], 1);
@@ -415,11 +413,11 @@ test("selectMany", function () {
 
 test("skip", function () {
     var arr = [];
-    var res = _(arr).skip(1).toArray();
+    var res = arr.en().skip(1).toArray();
     strictEqual(res.length, 0);
 
     arr = [1, 2, 3];
-    res = _(arr).skip(1).toArray();
+    res = arr.en().skip(1).toArray();
     strictEqual(res.length, 2);
     strictEqual(res[0], 2);
     strictEqual(res[1], 3);
@@ -427,13 +425,13 @@ test("skip", function () {
 
 test("skipWhile", function () {
     var arr = [];
-    var res = _(arr).skipWhile(function (t) {
+    var res = arr.en().skipWhile(function (t) {
         return false;
     }).toArray();
     strictEqual(res.length, 0);
 
     arr = [1, 2, 3];
-    res = _(arr).skipWhile(function (t) {
+    res = arr.en().skipWhile(function (t) {
         return t < 0;
     }).toArray();
     strictEqual(res.length, 3);
@@ -442,7 +440,7 @@ test("skipWhile", function () {
     strictEqual(res[2], 3);
 
     arr = [1, 2, 3];
-    res = _(arr).skipWhile(function (t) {
+    res = arr.en().skipWhile(function (t) {
         return t < 2;
     }).toArray();
     strictEqual(res.length, 2);
@@ -452,24 +450,24 @@ test("skipWhile", function () {
 
 test("sum", function () {
     var arr = [];
-    strictEqual(_(arr).sum(), 0);
+    strictEqual(arr.en().sum(), 0);
 
     arr = [1, 2, 3];
-    strictEqual(_(arr).sum(), 6);
+    strictEqual(arr.en().sum(), 6);
 
     var arr2 = [{ i: 1 }, { i: 2 }, { i: 3 }];
-    strictEqual(_(arr2).sum(function (t) {
+    strictEqual(arr2.en().sum(function (t) {
         return t.i;
     }), 6);
 });
 
 test("take", function () {
     var arr = [];
-    var res = _(arr).take(1).toArray();
+    var res = arr.en().take(1).toArray();
     strictEqual(res.length, 0);
 
     arr = [1, 2, 3];
-    res = _(arr).take(2).toArray();
+    res = arr.en().take(2).toArray();
     strictEqual(res.length, 2);
     strictEqual(res[0], 1);
     strictEqual(res[1], 2);
@@ -477,13 +475,13 @@ test("take", function () {
 
 test("takeWhile", function () {
     var arr = [];
-    var res = _(arr).takeWhile(function (t) {
+    var res = arr.en().takeWhile(function (t) {
         return true;
     }).toArray();
     strictEqual(res.length, 0);
 
     arr = [1, 2, 3];
-    res = _(arr).takeWhile(function (t) {
+    res = arr.en().takeWhile(function (t) {
         return t > 0;
     }).toArray();
     strictEqual(res.length, 3);
@@ -492,7 +490,7 @@ test("takeWhile", function () {
     strictEqual(res[2], 3);
 
     arr = [1, 2, 3];
-    res = _(arr).takeWhile(function (t) {
+    res = arr.en().takeWhile(function (t) {
         return t < 3;
     }).toArray();
     strictEqual(res.length, 2);
@@ -509,7 +507,7 @@ test("thenBy", function () {
     var m5 = { i: 2, j: "a", k: new Date("1/1/2013") };
     var m6 = { i: 12, j: "a", k: new Date("1/1/2013") };
     var arr = [m0, m1, m2, m3, m4, m5, m6];
-    var res = _(arr).orderBy(function (x) {
+    var res = arr.en().orderBy(function (x) {
         return x.i;
     }).thenBy(function (x) {
         return x.j;
@@ -531,7 +529,7 @@ test("thenBy", function () {
 test("union", function () {
     var arr1 = [1, 2];
     var arr2 = [3, 4];
-    var res = _(arr1).union(_(arr2)).toArray();
+    var res = arr1.en().union(arr2).toArray();
     strictEqual(res.length, 4);
     strictEqual(res[0], 1);
     strictEqual(res[1], 2);
@@ -540,7 +538,7 @@ test("union", function () {
 
     arr1 = [1, 2, 2, 3];
     arr2 = [2, 3, 4, 4];
-    var res = _(arr1).union(_(arr2)).toArray();
+    var res = arr1.en().union(arr2).toArray();
     strictEqual(res.length, 4);
     strictEqual(res[0], 1);
     strictEqual(res[1], 2);
@@ -549,7 +547,7 @@ test("union", function () {
 
     var ar1 = [{ i: 0 }, { i: 1 }];
     var ar2 = [{ i: 1 }, { i: 2 }];
-    var res2 = _(ar1).union(_(ar2), function (f, s) {
+    var res2 = ar1.en().union(ar2, function (f, s) {
         return f.i === s.i;
     }).toArray();
     strictEqual(res2.length, 3);
@@ -560,7 +558,7 @@ test("union", function () {
 
 test("where", function () {
     var arr = [1, 2, 3];
-    var r = _(arr).where(function (t) {
+    var r = arr.en().where(function (t) {
         return t > 1;
     }).toArray();
     strictEqual(r.length, 2);
@@ -571,8 +569,8 @@ test("where", function () {
 test("zip", function () {
     var arr1 = [1, 2, 3];
     var arr2 = ["a"];
-    var res = _(arr1).zip(_(arr2), function (f, s) {
-        return { i: f, j: s };
+    var res = arr1.en().zip(arr2, function (f, s) {
+        return ({ i: f, j: s });
     }).toArray();
     strictEqual(res.length, 1);
     strictEqual(res[0].i, 1);
@@ -580,8 +578,8 @@ test("zip", function () {
 
     arr1 = [1];
     arr2 = ["a", "b", "c"];
-    res = _(arr1).zip(_(arr2), function (f, s) {
-        return { i: f, j: s };
+    res = arr1.en().zip(arr2, function (f, s) {
+        return ({ i: f, j: s });
     }).toArray();
     strictEqual(res.length, 1);
     strictEqual(res[0].i, 1);
@@ -589,8 +587,8 @@ test("zip", function () {
 
     arr1 = [1, 2, 3];
     arr2 = ["a", "b", "c"];
-    res = _(arr1).zip(_(arr2), function (f, s) {
-        return { i: f, j: s };
+    res = arr1.en().zip(arr2, function (f, s) {
+        return ({ i: f, j: s });
     }).toArray();
     strictEqual(res.length, 3);
     strictEqual(res[0].i, 1);
@@ -600,4 +598,3 @@ test("zip", function () {
     strictEqual(res[2].i, 3);
     strictEqual(res[2].j, "c");
 });
-//# sourceMappingURL=tests.js.map

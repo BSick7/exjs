@@ -1,17 +1,5 @@
 var arrayexjs;
 (function (arrayexjs) {
-    var enumerable = new Enumerable();
-    var enumerator = enumerable.getEnumerator();
-    while (enumerator.moveNext()) {
-        enumerator.current;
-    }
-
-    enumerable[0];
-    enumerable.first();
-
-    enumerable[4];
-    enumerable.skip(4).first();
-
     var Enumerable = (function () {
         function Enumerable() {
         }
@@ -958,7 +946,7 @@ var arrayexjs;
         var en = second instanceof Array ? second.en() : second;
         var e = new arrayexjs.Enumerable();
         e.getEnumerator = function () {
-            return zipEnumerator(_this, second, resultSelector);
+            return zipEnumerator(_this, en, resultSelector);
         };
         return e;
     };

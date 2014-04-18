@@ -43,18 +43,6 @@ module arrayexjs {
         moveNext(): boolean;
     }
 
-    var enumerable = new Enumerable<number>();
-    var enumerator = enumerable.getEnumerator();
-    while (enumerator.moveNext()) {
-        enumerator.current;
-    }
-
-    enumerable[0];
-    enumerable.first()
-
-    enumerable[4];
-    enumerable.skip(4).first();
-
     export interface IOrderedEnumerable<T> extends IEnumerable<T> {
         thenBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         thenByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
