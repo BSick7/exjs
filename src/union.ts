@@ -33,9 +33,10 @@ module arrayexjs {
         return e;
     }
 
-    Enumerable.prototype.union = function<T>(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+    Enumerable.prototype.union = function<T>(second: any, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+        var en:IEnumerable<T> = second instanceof Array ? second.en() : second;
         var e = new Enumerable<T>();
-        e.getEnumerator = () => unionEnumerator(<IEnumerable<T>>this, second, comparer);
+        e.getEnumerator = () => unionEnumerator(<IEnumerable<T>>this, en, comparer);
         return e;
     };
 }   

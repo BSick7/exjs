@@ -19,7 +19,8 @@ module arrayexjs {
         return e;
     }
 
-    Enumerable.prototype.zip = function<T, TSecond,TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
+    Enumerable.prototype.zip = function<T, TSecond,TResult>(second: any, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
+        var en:IEnumerable<T> = second instanceof Array ? second.en() : second;
         var e = new Enumerable<TResult>();
         e.getEnumerator = () => zipEnumerator<T, TSecond, TResult>(<IEnumerable<T>>this, second, resultSelector);
         return e;

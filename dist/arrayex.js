@@ -75,9 +75,11 @@ var arrayexjs;
                 return 0;
             return total / count;
         };
+
         Enumerable.prototype.concat = function (second) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.count = function (predicate) {
             var count = 0;
             var e = this.getEnumerator();
@@ -90,9 +92,11 @@ var arrayexjs;
         Enumerable.prototype.distinct = function (comparer) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.except = function (second, comparer) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.first = function (match) {
             var e = this.getEnumerator();
             while (e.moveNext()) {
@@ -104,12 +108,15 @@ var arrayexjs;
         Enumerable.prototype.groupBy = function (keySelector, comparer) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.intersect = function (second, comparer) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.join = function (inner, outerKeySelector, innerKeySelector, resultSelector, comparer) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.last = function (match) {
             var e = this.getEnumerator();
             var l;
@@ -201,9 +208,11 @@ var arrayexjs;
         Enumerable.prototype.union = function (second, comparer) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.where = function (filter) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.zip = function (second, resultSelector) {
             throw new Error("Not implemented");
         };
@@ -294,9 +303,10 @@ var arrayexjs;
 
     arrayexjs.Enumerable.prototype.concat = function (second) {
         var _this = this;
+        var en = second instanceof Array ? second.en() : second;
         var e = new arrayexjs.Enumerable();
         e.getEnumerator = function () {
-            return concatEnumerator(_this, second);
+            return concatEnumerator(_this, en);
         };
         return e;
     };
@@ -374,12 +384,12 @@ var arrayexjs;
         return e;
     }
 
-    var fn = arrayexjs.Enumerable.prototype;
-    fn.except = function (second, comparer) {
+    arrayexjs.Enumerable.prototype.except = function (second, comparer) {
         var _this = this;
+        var en = second instanceof Array ? second.en() : second;
         var e = new arrayexjs.Enumerable();
         e.getEnumerator = function () {
-            return exceptEnumerator(_this, second, comparer);
+            return exceptEnumerator(_this, en, comparer);
         };
         return e;
     };
@@ -493,9 +503,10 @@ var arrayexjs;
 
     arrayexjs.Enumerable.prototype.intersect = function (second, comparer) {
         var _this = this;
+        var en = second instanceof Array ? second.en() : second;
         var e = new arrayexjs.Enumerable();
         e.getEnumerator = function () {
-            return intersectEnumerator(_this, second, comparer);
+            return intersectEnumerator(_this, en, comparer);
         };
         return e;
     };
@@ -540,9 +551,10 @@ var arrayexjs;
 
     arrayexjs.Enumerable.prototype.join = function (inner, outerKeySelector, innerKeySelector, resultSelector, comparer) {
         var _this = this;
+        var en = inner instanceof Array ? inner.en() : inner;
         var e = new arrayexjs.Enumerable();
         e.getEnumerator = function () {
-            return joinEnumerator(_this, inner, outerKeySelector, innerKeySelector, resultSelector, comparer);
+            return joinEnumerator(_this, en, outerKeySelector, innerKeySelector, resultSelector, comparer);
         };
         return e;
     };
@@ -880,9 +892,10 @@ var arrayexjs;
 
     arrayexjs.Enumerable.prototype.union = function (second, comparer) {
         var _this = this;
+        var en = second instanceof Array ? second.en() : second;
         var e = new arrayexjs.Enumerable();
         e.getEnumerator = function () {
-            return unionEnumerator(_this, second, comparer);
+            return unionEnumerator(_this, en, comparer);
         };
         return e;
     };
@@ -942,6 +955,7 @@ var arrayexjs;
 
     arrayexjs.Enumerable.prototype.zip = function (second, resultSelector) {
         var _this = this;
+        var en = second instanceof Array ? second.en() : second;
         var e = new arrayexjs.Enumerable();
         e.getEnumerator = function () {
             return zipEnumerator(_this, second, resultSelector);

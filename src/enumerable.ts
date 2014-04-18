@@ -6,13 +6,17 @@ module arrayexjs {
         at(index: number): T;
         average(selector?: (t: T) => number): number;
         concat(second: IEnumerable<T>): IEnumerable<T>;
+        concat(second: T[]): IEnumerable<T>;
         count(predicate?: (t: T) => boolean): number;
         distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        except(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         first(match?: (t: T) => boolean): T;
         groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>>;
         intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        intersect(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult>;
+        join<TInner, TKey, TResult>(inner: TInner[], outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult>;
         last(match?: (t: T) => boolean): T;
         max(selector?: (t: T) => number): number;
         min(selector?: (t: T) => number): number;
@@ -29,8 +33,10 @@ module arrayexjs {
         toArray(): T[];
         //toDictionary();
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         where(filter: (t: T) => boolean): IEnumerable<T>;
         zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
+        zip<TSecond, TResult>(second: TSecond[], resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
     }
     export interface IEnumerator<T> {
         current: T;
@@ -117,7 +123,11 @@ module arrayexjs {
             if (count === 0) return 0;
             return total / count;
         }
-        concat(second: IEnumerable<T>): IEnumerable<T> { throw new Error("Not implemented"); }
+
+        concat(second: IEnumerable<T>): IEnumerable<T>;
+        concat(second: T[]): IEnumerable<T>;
+        concat(second: any): IEnumerable<T> { throw new Error("Not implemented"); }
+
         count(predicate?: (t: T) => boolean): number {
             var count = 0;
             var e = this.getEnumerator();
@@ -128,7 +138,11 @@ module arrayexjs {
             return count;
         }
         distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
-        except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+
+        except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        except(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        except(second: any, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+
         first(match?: (t: T) => boolean): T {
             var e = this.getEnumerator();
             while (e.moveNext()) {
@@ -138,8 +152,15 @@ module arrayexjs {
             return undefined;
         }
         groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>> { throw new Error("Not implemented"); }
-        intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
-        join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult> { throw new Error("Not implemented"); }
+
+        intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        intersect(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        intersect(second: any, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+
+        join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult>;
+        join<TInner, TKey, TResult>(inner: TInner[], outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult>;
+        join<TInner, TKey, TResult>(inner: any, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult> { throw new Error("Not implemented"); }
+
         last(match?: (t: T) => boolean): T {
             var e = this.getEnumerator();
             var l: T;
@@ -208,8 +229,15 @@ module arrayexjs {
         }
         //toDictionary() {
         //}
-        union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+
+        union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
+        union(second: any, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+
         where(filter: (t: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
-        zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> { throw new Error("Not implemented"); }
+
+        zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
+        zip<TSecond, TResult>(second: TSecond[], resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
+        zip<TSecond, TResult>(second: any, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> { throw new Error("Not implemented"); }
     }
 }
