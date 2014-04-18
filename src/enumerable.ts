@@ -1,21 +1,3 @@
-/// <reference path="array.ts" />
-/// <reference path="concat.ts" />
-/// <reference path="distinct.ts" />
-/// <reference path="except.ts" />
-/// <reference path="groupBy.ts" />
-/// <reference path="intersect.ts" />
-/// <reference path="join.ts" />
-/// <reference path="orderBy.ts" />
-/// <reference path="reverse.ts" />
-/// <reference path="orderBy.ts" />
-/// <reference path="reverse.ts" />
-/// <reference path="select.ts" />
-/// <reference path="skip.ts" />
-/// <reference path="take.ts" />
-/// <reference path="union.ts" />
-/// <reference path="where.ts" />
-/// <reference path="zip.ts" />
-
 module arrayexjs {
     export interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
@@ -55,6 +37,18 @@ module arrayexjs {
         moveNext(): boolean;
     }
 
+    var enumerable = new Enumerable<number>();
+    var enumerator = enumerable.getEnumerator();
+    while (enumerator.moveNext()) {
+        enumerator.current;
+    }
+
+    enumerable[0];
+    enumerable.first()
+
+    enumerable[4];
+    enumerable.skip(4).first();
+
     export interface IOrderedEnumerable<T> extends IEnumerable<T> {
         thenBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         thenByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
@@ -65,6 +59,8 @@ module arrayexjs {
     }
 
     export class Enumerable<T> implements IEnumerable<T> {
+        constructor() { }
+
         getEnumerator(): IEnumerator<T> {
             return {
                 moveNext: function () {
@@ -121,11 +117,7 @@ module arrayexjs {
             if (count === 0) return 0;
             return total / count;
         }
-        concat(second: IEnumerable<T>): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => concatEnumerator(this, second);
-            return e;
-        }
+        concat(second: IEnumerable<T>): IEnumerable<T> { throw new Error("Not implemented"); }
         count(predicate?: (t: T) => boolean): number {
             var count = 0;
             var e = this.getEnumerator();
@@ -135,16 +127,8 @@ module arrayexjs {
             }
             return count;
         }
-        distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => distinctEnumerator(this, comparer);
-            return e;
-        }
-        except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => exceptEnumerator(this, second, comparer);
-            return e;
-        }
+        distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+        except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
         first(match?: (t: T) => boolean): T {
             var e = this.getEnumerator();
             while (e.moveNext()) {
@@ -153,21 +137,9 @@ module arrayexjs {
             }
             return undefined;
         }
-        groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>> {
-            var e = new Enumerable<IGrouping<TKey, T>>();
-            e.getEnumerator = () => groupByEnumerator<T, TKey>(this, keySelector, comparer);
-            return e;
-        }
-        intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => intersectEnumerator(this, second, comparer);
-            return e;
-        }
-        join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult> {
-            var e = new Enumerable<TResult>();
-            e.getEnumerator = () => joinEnumerator<T, TInner, TKey, TResult>(this, inner, outerKeySelector, innerKeySelector, resultSelector, comparer);
-            return e;
-        }
+        groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>> { throw new Error("Not implemented"); }
+        intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+        join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult> { throw new Error("Not implemented"); }
         last(match?: (t: T) => boolean): T {
             var e = this.getEnumerator();
             var l: T;
@@ -205,37 +177,13 @@ module arrayexjs {
             }
             return min;
         }
-        orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
-            return orderByEnumerable(this, keySelector, false, comparer);
-        }
-        orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
-            return orderByEnumerable(this, keySelector, true, comparer);
-        }
-        reverse(): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => reverseEnumerator(this);
-            return e;
-        }
-        select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult> {
-            var e = new Enumerable<TResult>();
-            e.getEnumerator = () => selectEnumerator(this, selector);
-            return e;
-        }
-        selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult> {
-            var e = new Enumerable<TResult>();
-            e.getEnumerator = () => selectManyEnumerator<T, TResult>(this, selector);
-            return e;
-        }
-        skip(count: number): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => skipEnumerator(this, count);
-            return e;
-        }
-        skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => skipWhileEnumerator(this, predicate);
-            return e;
-        }
+        orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> { throw new Error("Not implemented"); }
+        orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> { throw new Error("Not implemented"); }
+        reverse(): IEnumerable<T> { throw new Error("Not implemented"); }
+        select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult> { throw new Error("Not implemented"); }
+        selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult> { throw new Error("Not implemented"); }
+        skip(count: number): IEnumerable<T> { throw new Error("Not implemented"); }
+        skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
         sum(selector?: (t: T) => number): number {
             var sum = 0;
             selector = selector || function (t: T): number {
@@ -248,16 +196,8 @@ module arrayexjs {
             }
             return sum;
         }
-        take(count: number): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => takeEnumerator(this, count);
-            return e;
-        }
-        takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => takeWhileEnumerator(this, predicate);
-            return e;
-        }
+        take(count: number): IEnumerable<T> { throw new Error("Not implemented"); }
+        takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
         toArray(): T[] {
             var arr: T[] = [];
             var enumerator = this.getEnumerator();
@@ -268,28 +208,8 @@ module arrayexjs {
         }
         //toDictionary() {
         //}
-        union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => unionEnumerator(this, second, comparer);
-            return e;
-        }
-        where(filter: (t: T) => boolean): IEnumerable<T> {
-            var e = new Enumerable<T>();
-            e.getEnumerator = () => whereEnumerator(this, filter);
-            return e;
-        }
-        zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
-            var e = new Enumerable<TResult>();
-            e.getEnumerator = () => zipEnumerator<T, TSecond, TResult>(this, second, resultSelector);
-            return e;
-        }
-    }
-
-    export function _<T>(o: any): IEnumerable<T> {
-        if (o && o instanceof Array)
-            return new ArrayEnumerable<T>(o);
-        return new Enumerable<T>();
+        union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+        where(filter: (t: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+        zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> { throw new Error("Not implemented"); }
     }
 }
-
-var _ = arrayexjs._;

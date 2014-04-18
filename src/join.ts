@@ -1,6 +1,10 @@
+/// <reference path="enumerable.ts" />
+
 module arrayexjs {
-    export function joinEnumerator<TOuter, TInner, TKey, TResult>(prev: IEnumerable<TOuter>, inner: IEnumerable<TInner>, outerKeySelector: (t: TOuter) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (tout: TOuter, tin: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<TResult> {
-        comparer = comparer || function (k1, k2) { return k1 === k2; };
+    function joinEnumerator<TOuter, TInner, TKey, TResult>(prev: IEnumerable<TOuter>, inner: IEnumerable<TInner>, outerKeySelector: (t: TOuter) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (tout: TOuter, tin: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<TResult> {
+        comparer = comparer || function (k1, k2) {
+            return k1 === k2;
+        };
         var s: IEnumerator<TOuter>;
         var ins: TInner[];
         var j = 0;
@@ -32,4 +36,10 @@ module arrayexjs {
         };
         return e;
     }
+
+    Enumerable.prototype.join = function<T,TInner,TKey,TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult> {
+        var e = new Enumerable<TResult>();
+        e.getEnumerator = () => joinEnumerator<T, TInner, TKey, TResult>(<IEnumerable<T>>this, inner, outerKeySelector, innerKeySelector, resultSelector, comparer);
+        return e;
+    };
 }

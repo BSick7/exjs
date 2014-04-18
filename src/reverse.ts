@@ -1,5 +1,7 @@
+/// <reference path="enumerable.ts" />
+
 module arrayexjs {
-    export function reverseEnumerator<T>(prev: IEnumerable<T>): IEnumerator<T> {
+    function reverseEnumerator<T>(prev: IEnumerable<T>): IEnumerator<T> {
         var a: T[];
         var i = 0;
         var e = {
@@ -16,4 +18,10 @@ module arrayexjs {
         };
         return e;
     }
+
+    Enumerable.prototype.reverse = function<T>(): IEnumerable<T> {
+        var e = new Enumerable<T>();
+        e.getEnumerator = () => reverseEnumerator(<IEnumerable<T>>this);
+        return e;
+    };
 }

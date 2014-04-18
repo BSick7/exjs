@@ -1,3 +1,9 @@
+/// <reference path="enumerable.ts" />
+
+interface Array<T> {
+    en():arrayexjs.IEnumerable<T>;
+}
+
 module arrayexjs {
     function arrayEnumerator<T>(arr: T[]): IEnumerator<T> {
         var len = arr.length;
@@ -15,8 +21,8 @@ module arrayexjs {
         return e;
     }
 
-    export class ArrayEnumerable<T> extends Enumerable<T> {
-        constructor(arr: T[]) {
+    class ArrayEnumerable<T> extends Enumerable<T> {
+        constructor (arr: T[]) {
             super();
 
             this.getEnumerator = function () {
@@ -27,4 +33,16 @@ module arrayexjs {
             };
         }
     }
-} 
+
+    export function _<T>(o: any): IEnumerable<T> {
+        if (o && o instanceof Array)
+            return new ArrayEnumerable<T>(o);
+        return new Enumerable<T>();
+    }
+
+    Array.prototype.en = function<T>() {
+        if (this && this instanceof Array)
+            return new ArrayEnumerable<T>(this);
+        return new Enumerable<T>();
+    };
+}

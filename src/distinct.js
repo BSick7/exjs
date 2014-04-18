@@ -1,13 +1,14 @@
 /// <reference path="enumerable.ts" />
-
-module arrayexjs {
-    function distinctEnumerator<T>(prev: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T> {
-        var t: IEnumerator<T>;
+var arrayexjs;
+(function (arrayexjs) {
+    function distinctEnumerator(prev, comparer) {
+        var t;
         var visited = [];
         var e = {
             current: undefined,
-            moveNext: function (): boolean {
-                if (!t) t = prev.getEnumerator();
+            moveNext: function () {
+                if (!t)
+                    t = prev.getEnumerator();
                 e.current = undefined;
                 if (!comparer) {
                     while (t.moveNext()) {
@@ -34,9 +35,13 @@ module arrayexjs {
         return e;
     }
 
-    Enumerable.prototype.distinct = function<T>(comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
-        var e = new Enumerable<T>();
-        e.getEnumerator = () => distinctEnumerator(<IEnumerable<T>>this, comparer);
+    arrayexjs.Enumerable.prototype.distinct = function (comparer) {
+        var _this = this;
+        var e = new arrayexjs.Enumerable();
+        e.getEnumerator = function () {
+            return distinctEnumerator(_this, comparer);
+        };
         return e;
     };
-}
+})(arrayexjs || (arrayexjs = {}));
+//# sourceMappingURL=distinct.js.map

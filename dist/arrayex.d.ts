@@ -1,54 +1,4 @@
 declare module arrayexjs {
-    class ArrayEnumerable<T> extends Enumerable<T> {
-        constructor(arr: T[]);
-    }
-}
-declare module arrayexjs {
-    function concatEnumerator<T>(prev: IEnumerable<T>, second: IEnumerable<T>): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function distinctEnumerator<T>(prev: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function exceptEnumerator<T>(prev: IEnumerable<T>, second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function groupByEnumerator<T, TKey>(prev: IEnumerable<T>, keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<IGrouping<TKey, T>>;
-}
-declare module arrayexjs {
-    function intersectEnumerator<T>(prev: IEnumerable<T>, second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function joinEnumerator<TOuter, TInner, TKey, TResult>(prev: IEnumerable<TOuter>, inner: IEnumerable<TInner>, outerKeySelector: (t: TOuter) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (tout: TOuter, tin: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<TResult>;
-}
-declare module arrayexjs {
-    function orderByEnumerable<T, TKey>(source: IEnumerable<T>, keySelector: (t: T) => TKey, isDescending: boolean, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
-}
-declare module arrayexjs {
-    function reverseEnumerator<T>(prev: IEnumerable<T>): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function selectEnumerator<T, TResult>(prev: IEnumerable<T>, selector: (t: T, index?: number) => TResult): IEnumerator<TResult>;
-    function selectManyEnumerator<T, TResult>(prev: IEnumerable<T>, selector: (t: T) => IEnumerable<TResult>): IEnumerator<TResult>;
-}
-declare module arrayexjs {
-    function skipEnumerator<T>(prev: IEnumerable<T>, count: number): IEnumerator<T>;
-    function skipWhileEnumerator<T>(prev: IEnumerable<T>, predicate: (t: T, index?: number) => boolean): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function takeEnumerator<T>(prev: IEnumerable<T>, count: number): IEnumerator<T>;
-    function takeWhileEnumerator<T>(prev: IEnumerable<T>, predicate: (t: T, index?: number) => boolean): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function unionEnumerator<T>(prev: IEnumerable<T>, second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function whereEnumerator<T>(prev: IEnumerable<T>, filter: (t: T) => boolean): IEnumerator<T>;
-}
-declare module arrayexjs {
-    function zipEnumerator<T, TSecond, TResult>(prev: IEnumerable<T>, second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerator<TResult>;
-}
-declare module arrayexjs {
     interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
         all(predicate?: (t: T, index?: number) => boolean): boolean;
@@ -93,6 +43,7 @@ declare module arrayexjs {
         key: TKey;
     }
     class Enumerable<T> implements IEnumerable<T> {
+        constructor();
         public getEnumerator(): IEnumerator<T>;
         public all(predicate?: (t: T, index?: number) => boolean): boolean;
         public any(predicate?: (t: T, index?: number) => boolean): boolean;
@@ -124,6 +75,38 @@ declare module arrayexjs {
         public where(filter: (t: T) => boolean): IEnumerable<T>;
         public zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
     }
+}
+interface Array<T> {
+    en(): arrayexjs.IEnumerable<T>;
+}
+declare module arrayexjs {
     function _<T>(o: any): IEnumerable<T>;
 }
-declare var _: typeof arrayexjs._;
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}
+declare module arrayexjs {
+}

@@ -1,5 +1,7 @@
+/// <reference path="enumerable.ts" />
+
 module arrayexjs {
-    export function whereEnumerator<T>(prev: IEnumerable<T>, filter: (t: T) => boolean): IEnumerator<T> {
+    function whereEnumerator<T>(prev: IEnumerable<T>, filter: (t: T) => boolean): IEnumerator<T> {
         var t: IEnumerator<T>;
         var e = {
             current: undefined,
@@ -17,4 +19,10 @@ module arrayexjs {
         };
         return e;
     }
+
+    Enumerable.prototype.where = function<T>(filter: (t: T) => boolean): IEnumerable<T> {
+        var e = new Enumerable<T>();
+        e.getEnumerator = () => whereEnumerator(<IEnumerable<T>>this, filter);
+        return e;
+    };
 }

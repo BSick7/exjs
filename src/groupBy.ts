@@ -1,5 +1,7 @@
+/// <reference path="enumerable.ts" />
+
 module arrayexjs {
-    export function groupByEnumerator<T, TKey>(prev: IEnumerable<T>, keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<IGrouping<TKey, T>> {
+    function groupByEnumerator<T, TKey>(prev: IEnumerable<T>, keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<IGrouping<TKey, T>> {
         var grps: IGrouping<TKey, T>[];
         var i = 0;
         var e = {
@@ -17,8 +19,10 @@ module arrayexjs {
         return e;
     }
 
-    function createGroups<TKey, TElement>(prev: IEnumerable<TElement>, keySelector: (t: TElement) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IGrouping<TKey, TElement>[]{
-        comparer = comparer || function (k1, k2) { return k1 === k2; };
+    function createGroups<TKey, TElement>(prev: IEnumerable<TElement>, keySelector: (t: TElement) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IGrouping<TKey, TElement>[] {
+        comparer = comparer || function (k1, k2) {
+            return k1 === k2;
+        };
         var grps: Group<TKey, TElement>[] = [];
         var keys: TKey[] = [];
 
@@ -45,14 +49,24 @@ module arrayexjs {
 
         return grps;
     }
-    class Group<TKey, TElement> extends Enumerable<TElement> implements IGrouping<TKey, TElement>{
+
+    class Group<TKey, TElement> extends Enumerable<TElement> implements IGrouping<TKey, TElement> {
         private _arr: TElement[] = [];
-        constructor(public key: TKey) {
+
+        constructor (public key: TKey) {
             super();
             this.getEnumerator = () => _<TElement>(this._arr).getEnumerator();
         }
-        _add(e: TElement) {
+
+        _add (e: TElement) {
             this._arr.push(e);
         }
     }
+
+    var fn = Enumerable.prototype;
+    fn.groupBy = function<T, TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>> {
+        var e = new Enumerable<IGrouping<TKey, T>>();
+        e.getEnumerator = () => groupByEnumerator<T, TKey>(<IEnumerable<T>>this, keySelector, comparer);
+        return e;
+    };
 }

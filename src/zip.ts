@@ -1,5 +1,7 @@
+/// <reference path="enumerable.ts" />
+
 module arrayexjs {
-    export function zipEnumerator<T, TSecond, TResult>(prev: IEnumerable<T>, second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerator<TResult> {
+    function zipEnumerator<T, TSecond, TResult>(prev: IEnumerable<T>, second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerator<TResult> {
         var s: IEnumerator<T>;
         var t: IEnumerator<TSecond>;
         var e = {
@@ -16,4 +18,10 @@ module arrayexjs {
         };
         return e;
     }
+
+    Enumerable.prototype.zip = function<T, TSecond,TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult> {
+        var e = new Enumerable<TResult>();
+        e.getEnumerator = () => zipEnumerator<T, TSecond, TResult>(<IEnumerable<T>>this, second, resultSelector);
+        return e;
+    };
 }

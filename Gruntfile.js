@@ -5,24 +5,32 @@
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         typescript: {
-            base: {
-                src: ['src/**/*.ts', 'test/**/*.ts'],
-                dest: 'arrayex.js',
+            build: {
+                src: ['src/**/*.ts'],
+                dest: 'dist/arrayex.js',
                 options: {
-                    module: 'amd',
+                    target: 'es5',
+                    declaration: true
+                }
+            },
+            test: {
+                src: ['test/**/*.ts'],
+                dest: 'dist/arrayex.js',
+                options: {
                     target: 'es5',
                     declaration: true
                 }
             }
         },
         qunit: {
-            all: ['test/**/*.js']
+            all: ['test/**/*.html']
         },
         watch: {
             files: '**/*.ts',
-            tasks: ['typescript']
+            tasks: ['typescript:build']
         }
     });
 
-    grunt.registerTask('default', ['typescript']);
+    grunt.registerTask('default', ['typescript:build']);
+    grunt.registerTask('test', ['typescript:build', 'typescript:test', 'qunit']);
 };

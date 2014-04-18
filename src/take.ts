@@ -1,5 +1,7 @@
- module arrayexjs {
-    export function takeEnumerator<T>(prev: IEnumerable<T>, count: number): IEnumerator<T> {
+/// <reference path="enumerable.ts" />
+
+module arrayexjs {
+    function takeEnumerator<T>(prev: IEnumerable<T>, count: number): IEnumerator<T> {
         var t: IEnumerator<T>;
         var i = 0;
         var e = {
@@ -19,9 +21,9 @@
         return e;
     }
 
-     export function takeWhileEnumerator<T>(prev: IEnumerable<T>, predicate: (t: T, index?: number) => boolean): IEnumerator<T> {
+    function takeWhileEnumerator<T>(prev: IEnumerable<T>, predicate: (t: T, index?: number) => boolean): IEnumerator<T> {
         var t: IEnumerator<T>;
-         var i = 0;
+        var i = 0;
         var e = {
             current: undefined,
             moveNext: function (): boolean {
@@ -38,5 +40,16 @@
             }
         };
         return e;
-     }
+    }
+
+    Enumerable.prototype.take = function<T>(count: number): IEnumerable<T> {
+        var e = new Enumerable<T>();
+        e.getEnumerator = () => takeEnumerator(<IEnumerable<T>>this, count);
+        return e;
+    };
+    Enumerable.prototype.takeWhile = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
+        var e = new Enumerable<T>();
+        e.getEnumerator = () => takeWhileEnumerator(<IEnumerable<T>>this, predicate);
+        return e;
+    };
 }

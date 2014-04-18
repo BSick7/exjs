@@ -1,21 +1,26 @@
+/// <reference path="enumerable.ts" />
+
 module arrayexjs {
-    export function orderByEnumerable<T, TKey>(source:IEnumerable<T>, keySelector: (t: T) => TKey, isDescending: boolean, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
+    function orderByEnumerable<T, TKey>(source: IEnumerable<T>, keySelector: (t: T) => TKey, isDescending: boolean, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
         return new OrderedEnumerable<T, TKey>(source, keySelector, isDescending, comparer);
     }
 
     class OrderedEnumerable<T, TKey> extends Enumerable<T> implements IOrderedEnumerable<T> {
         Source: IEnumerable<T>;
         Sorter: (a: T, b: T) => number;
-        constructor(source: IEnumerable<T>, keySelector: (t: T) => TKey, isDescending: boolean, keyComparer: (f: TKey, s: TKey) => number) {
+
+        constructor (source: IEnumerable<T>, keySelector: (t: T) => TKey, isDescending: boolean, keyComparer: (f: TKey, s: TKey) => number) {
             super();
 
             this.Source = source;
-            keyComparer = keyComparer || function (f: TKey, s: TKey) { return f > s ? 1 : (f < s ? -1 : 0); };
+            keyComparer = keyComparer || function (f: TKey, s: TKey) {
+                return f > s ? 1 : (f < s ? -1 : 0);
+            };
             var factor = (isDescending == true) ? -1 : 1;
             this.Sorter = (a, b) => factor * keyComparer(keySelector(a), keySelector(b));
         }
 
-        getEnumerator(): IEnumerator<T> {
+        getEnumerator (): IEnumerator<T> {
             var source = this.Source;
             var sorter = this.Sorter;
             var arr: T[];
@@ -37,16 +42,18 @@ module arrayexjs {
             };
             return e;
         }
+
         thenBy<TInnerKey>(keySelector: (t: T) => TInnerKey, comparer?: (f: TInnerKey, s: TInnerKey) => number): IOrderedEnumerable<T> {
             return new ThenEnumerable<T, TKey, TInnerKey>(this, keySelector, false, comparer);
         }
+
         thenByDescending<TInnerKey>(keySelector: (t: T) => TInnerKey, comparer?: (f: TInnerKey, s: TInnerKey) => number): IOrderedEnumerable<T> {
             return new ThenEnumerable<T, TKey, TInnerKey>(this, keySelector, true, comparer);
         }
     }
 
     class ThenEnumerable<T, TParentKey, TKey> extends OrderedEnumerable<T, TKey> {
-        constructor(source: OrderedEnumerable<T, TParentKey>, keySelector: (t: T) => TKey, isDescending: boolean, keyComparer: (f: TKey, s: TKey) => number) {
+        constructor (source: OrderedEnumerable<T, TParentKey>, keySelector: (t: T) => TKey, isDescending: boolean, keyComparer: (f: TKey, s: TKey) => number) {
             super(source, keySelector, isDescending, keyComparer);
 
             var parentSorter = source.Sorter;
@@ -54,4 +61,12 @@ module arrayexjs {
             this.Sorter = (a, b) => parentSorter(a, b) || thisSorter(a, b);
         }
     }
+
+    var fn = Enumerable.prototype;
+    fn.orderBy = function<T,TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
+        return orderByEnumerable(<IEnumerable<T>>this, keySelector, false, comparer);
+    };
+    fn.orderByDescending = function<T,TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
+        return orderByEnumerable(<IEnumerable<T>>this, keySelector, true, comparer);
+    };
 } 

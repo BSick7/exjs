@@ -1,15 +1,16 @@
 /// <reference path="enumerable.ts" />
-
-module arrayexjs {
-    function skipEnumerator<T>(prev: IEnumerable<T>, count: number): IEnumerator<T> {
-        var t: IEnumerator<T>;
+var arrayexjs;
+(function (arrayexjs) {
+    function skipEnumerator(prev, count) {
+        var t;
         var e = {
             current: undefined,
-            moveNext: function (): boolean {
+            moveNext: function () {
                 if (!t) {
                     t = prev.getEnumerator();
                     for (var i = 0; i < count; i++) {
-                        if (!t.moveNext()) return false;
+                        if (!t.moveNext())
+                            return false;
                     }
                 }
 
@@ -25,11 +26,11 @@ module arrayexjs {
         return e;
     }
 
-    function skipWhileEnumerator<T>(prev: IEnumerable<T>, predicate: (t: T, index?: number) => boolean): IEnumerator<T> {
-        var t: IEnumerator<T>;
+    function skipWhileEnumerator(prev, predicate) {
+        var t;
         var e = {
             current: undefined,
-            moveNext: function (): boolean {
+            moveNext: function () {
                 if (!t) {
                     t = prev.getEnumerator();
                     for (var i = 0; t.moveNext(); i++) {
@@ -52,14 +53,21 @@ module arrayexjs {
         return e;
     }
 
-    Enumerable.prototype.skip = function<T>(count: number): IEnumerable<T> {
-        var e = new Enumerable<T>();
-        e.getEnumerator = () => skipEnumerator(<IEnumerable<T>>this, count);
+    arrayexjs.Enumerable.prototype.skip = function (count) {
+        var _this = this;
+        var e = new arrayexjs.Enumerable();
+        e.getEnumerator = function () {
+            return skipEnumerator(_this, count);
+        };
         return e;
     };
-    Enumerable.prototype.skipWhile = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
-        var e = new Enumerable<T>();
-        e.getEnumerator = () => skipWhileEnumerator(<IEnumerable<T>>this, predicate);
+    arrayexjs.Enumerable.prototype.skipWhile = function (predicate) {
+        var _this = this;
+        var e = new arrayexjs.Enumerable();
+        e.getEnumerator = function () {
+            return skipWhileEnumerator(_this, predicate);
+        };
         return e;
     };
-}
+})(arrayexjs || (arrayexjs = {}));
+//# sourceMappingURL=skip.js.map

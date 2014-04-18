@@ -1,6 +1,10 @@
+/// <reference path="enumerable.ts" />
+
 module arrayexjs {
-    export function exceptEnumerator<T>(prev: IEnumerable<T>, second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T> {
-        comparer = comparer || function (f: T, s: T) { return f === s; };
+    function exceptEnumerator<T>(prev: IEnumerable<T>, second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T> {
+        comparer = comparer || function (f: T, s: T) {
+            return f === s;
+        };
         var t: IEnumerator<T>;
         var e = {
             current: undefined,
@@ -21,4 +25,11 @@ module arrayexjs {
         };
         return e;
     }
+
+    var fn = Enumerable.prototype;
+    fn.except = function<T>(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+        var e = new Enumerable<T>();
+        e.getEnumerator = () => exceptEnumerator(<IEnumerable<T>>this, second, comparer);
+        return e;
+    };
 } 
