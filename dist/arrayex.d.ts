@@ -100,6 +100,9 @@ declare module arrayexjs {
 }
 declare module arrayexjs {
 }
+interface Function {
+    fromJson<T>(o: any, mappingOverrides?: any): T;
+}
 declare module arrayexjs {
 }
 declare module arrayexjs {

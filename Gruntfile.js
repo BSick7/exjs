@@ -16,8 +16,7 @@
             test: {
                 src: ['test/**/*.ts'],
                 options: {
-                    target: 'es5',
-                    declaration: true
+                    target: 'es5'
                 }
             }
         },

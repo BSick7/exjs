@@ -1,7 +1,7 @@
 /// <reference path="../lib/qunit/qunit.d.ts" />
 /// <reference path="../dist/arrayex.d.ts" />
 
-QUnit.module("arrayexjs");
+QUnit.module("enumerable");
 
 interface IMock { i: number; }
 interface IMock2 { i: number[]; }

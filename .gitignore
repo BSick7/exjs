@@ -13,3 +13,4 @@ src/ArrayExJs.Tests/scripts/arrayex.js
 src/ArrayExJs.Tests/scripts/typings/arrayex/arrayex.d.ts
 node_modules/**/*
 .idea*
+test/*.js

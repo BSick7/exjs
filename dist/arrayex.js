@@ -382,6 +382,28 @@ var arrayexjs;
         return e;
     };
 })(arrayexjs || (arrayexjs = {}));
+Function.prototype.fromJson = function (o, mappingOverrides) {
+    var rv = new this();
+
+    var mapped = [];
+
+    for (var key in mappingOverrides) {
+        var j = o[key];
+        if (j === null)
+            rv[key] = null;
+        else if (j !== undefined)
+            rv[key] = mappingOverrides[key].fromJson(j);
+        mapped.push(key);
+    }
+
+    for (var key in o) {
+        if (mapped.indexOf(key) > -1)
+            continue;
+        rv[key] = o[key];
+    }
+
+    return rv;
+};
 var arrayexjs;
 (function (arrayexjs) {
     function groupByEnumerator(prev, keySelector, comparer) {
