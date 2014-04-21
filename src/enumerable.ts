@@ -1,4 +1,4 @@
-module arrayexjs {
+module exjs {
     export interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
         all(predicate?: (t: T, index?: number) => boolean): boolean;

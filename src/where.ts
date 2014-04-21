@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module arrayexjs {
+module exjs {
     function whereEnumerator<T>(prev: IEnumerable<T>, filter: (t: T) => boolean): IEnumerator<T> {
         var t: IEnumerator<T>;
         var e = {

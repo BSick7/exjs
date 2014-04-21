@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module arrayexjs {
+module exjs {
     function reverseEnumerator<T>(prev: IEnumerable<T>): IEnumerator<T> {
         var a: T[];
         var i = 0;

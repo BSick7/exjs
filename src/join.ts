@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module arrayexjs {
+module exjs {
     function joinEnumerator<TOuter, TInner, TKey, TResult>(prev: IEnumerable<TOuter>, inner: IEnumerable<TInner>, outerKeySelector: (t: TOuter) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (tout: TOuter, tin: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<TResult> {
         comparer = comparer || function (k1, k2) {
             return k1 === k2;

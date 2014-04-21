@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module arrayexjs {
+module exjs {
     function intersectEnumerator<T>(prev: IEnumerable<T>, second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T> {
         comparer = comparer || function (f: T, s: T) { return f === s; };
         var t: IEnumerator<T>;

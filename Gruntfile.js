@@ -7,7 +7,7 @@
         typescript: {
             build: {
                 src: ['src/**/*.ts'],
-                dest: 'dist/arrayex.js',
+                dest: 'dist/ex.js',
                 options: {
                     target: 'es5',
                     declaration: true

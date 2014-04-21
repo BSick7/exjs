@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module arrayexjs {
+module exjs {
     function concatEnumerator<T>(prev:IEnumerable<T>, second:IEnumerable<T>):IEnumerator<T> {
         var t:IEnumerator<T>;
         var s = false;

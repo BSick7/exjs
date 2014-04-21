@@ -1,5 +1,5 @@
-var arrayexjs;
-(function (arrayexjs) {
+var exjs;
+(function (exjs) {
     var Enumerable = (function () {
         function Enumerable() {
         }
@@ -206,8 +206,8 @@ var arrayexjs;
         };
         return Enumerable;
     })();
-    arrayexjs.Enumerable = Enumerable;
-})(arrayexjs || (arrayexjs = {}));
+    exjs.Enumerable = Enumerable;
+})(exjs || (exjs = {}));
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -215,8 +215,8 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 
-var arrayexjs;
-(function (arrayexjs) {
+var exjs;
+(function (exjs) {
     function arrayEnumerator(arr) {
         var len = arr.length;
         var e = { moveNext: undefined, current: undefined };
@@ -246,23 +246,23 @@ var arrayexjs;
             };
         }
         return ArrayEnumerable;
-    })(arrayexjs.Enumerable);
+    })(exjs.Enumerable);
 
     function _(o) {
         if (o && o instanceof Array)
             return new ArrayEnumerable(o);
-        return new arrayexjs.Enumerable();
+        return new exjs.Enumerable();
     }
-    arrayexjs._ = _;
+    exjs._ = _;
 
     Array.prototype.en = function () {
         if (this && this instanceof Array)
             return new ArrayEnumerable(this);
-        return new arrayexjs.Enumerable();
+        return new exjs.Enumerable();
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function concatEnumerator(prev, second) {
         var t;
         var s = false;
@@ -289,18 +289,18 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.concat = function (second) {
+    exjs.Enumerable.prototype.concat = function (second) {
         var _this = this;
         var en = second instanceof Array ? second.en() : second;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return concatEnumerator(_this, en);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function distinctEnumerator(prev, comparer) {
         var t;
         var visited = [];
@@ -335,17 +335,17 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.distinct = function (comparer) {
+    exjs.Enumerable.prototype.distinct = function (comparer) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return distinctEnumerator(_this, comparer);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function exceptEnumerator(prev, second, comparer) {
         comparer = comparer || function (f, s) {
             return f === s;
@@ -372,16 +372,16 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.except = function (second, comparer) {
+    exjs.Enumerable.prototype.except = function (second, comparer) {
         var _this = this;
         var en = second instanceof Array ? second.en() : second;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return exceptEnumerator(_this, en, comparer);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
+})(exjs || (exjs = {}));
 Function.prototype.fromJson = function (o, mappingOverrides) {
     var rv = new this();
 
@@ -404,8 +404,8 @@ Function.prototype.fromJson = function (o, mappingOverrides) {
 
     return rv;
 };
-var arrayexjs;
-(function (arrayexjs) {
+var exjs;
+(function (exjs) {
     function groupByEnumerator(prev, keySelector, comparer) {
         var grps;
         var i = 0;
@@ -464,27 +464,27 @@ var arrayexjs;
             this.key = key;
             this._arr = [];
             this.getEnumerator = function () {
-                return arrayexjs._(_this._arr).getEnumerator();
+                return exjs._(_this._arr).getEnumerator();
             };
         }
         Group.prototype._add = function (e) {
             this._arr.push(e);
         };
         return Group;
-    })(arrayexjs.Enumerable);
+    })(exjs.Enumerable);
 
-    var fn = arrayexjs.Enumerable.prototype;
+    var fn = exjs.Enumerable.prototype;
     fn.groupBy = function (keySelector, comparer) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return groupByEnumerator(_this, keySelector, comparer);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function intersectEnumerator(prev, second, comparer) {
         comparer = comparer || function (f, s) {
             return f === s;
@@ -511,18 +511,18 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.intersect = function (second, comparer) {
+    exjs.Enumerable.prototype.intersect = function (second, comparer) {
         var _this = this;
         var en = second instanceof Array ? second.en() : second;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return intersectEnumerator(_this, en, comparer);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function joinEnumerator(prev, inner, outerKeySelector, innerKeySelector, resultSelector, comparer) {
         comparer = comparer || function (k1, k2) {
             return k1 === k2;
@@ -559,18 +559,18 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.join = function (inner, outerKeySelector, innerKeySelector, resultSelector, comparer) {
+    exjs.Enumerable.prototype.join = function (inner, outerKeySelector, innerKeySelector, resultSelector, comparer) {
         var _this = this;
         var en = inner instanceof Array ? inner.en() : inner;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return joinEnumerator(_this, en, outerKeySelector, innerKeySelector, resultSelector, comparer);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function orderByEnumerable(source, keySelector, isDescending, comparer) {
         return new OrderedEnumerable(source, keySelector, isDescending, comparer);
     }
@@ -620,7 +620,7 @@ var arrayexjs;
             return new ThenEnumerable(this, keySelector, true, comparer);
         };
         return OrderedEnumerable;
-    })(arrayexjs.Enumerable);
+    })(exjs.Enumerable);
 
     var ThenEnumerable = (function (_super) {
         __extends(ThenEnumerable, _super);
@@ -636,16 +636,16 @@ var arrayexjs;
         return ThenEnumerable;
     })(OrderedEnumerable);
 
-    var fn = arrayexjs.Enumerable.prototype;
+    var fn = exjs.Enumerable.prototype;
     fn.orderBy = function (keySelector, comparer) {
         return orderByEnumerable(this, keySelector, false, comparer);
     };
     fn.orderByDescending = function (keySelector, comparer) {
         return orderByEnumerable(this, keySelector, true, comparer);
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function reverseEnumerator(prev) {
         var a;
         var i = 0;
@@ -664,17 +664,17 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.reverse = function () {
+    exjs.Enumerable.prototype.reverse = function () {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return reverseEnumerator(_this);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function selectEnumerator(prev, selector) {
         var t;
         var i = 0;
@@ -715,25 +715,25 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.select = function (selector) {
+    exjs.Enumerable.prototype.select = function (selector) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return selectEnumerator(_this, selector);
         };
         return e;
     };
-    arrayexjs.Enumerable.prototype.selectMany = function (selector) {
+    exjs.Enumerable.prototype.selectMany = function (selector) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return selectManyEnumerator(_this, selector);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function skipEnumerator(prev, count) {
         var t;
         var e = {
@@ -786,25 +786,25 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.skip = function (count) {
+    exjs.Enumerable.prototype.skip = function (count) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return skipEnumerator(_this, count);
         };
         return e;
     };
-    arrayexjs.Enumerable.prototype.skipWhile = function (predicate) {
+    exjs.Enumerable.prototype.skipWhile = function (predicate) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return skipWhileEnumerator(_this, predicate);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function takeEnumerator(prev, count) {
         var t;
         var i = 0;
@@ -848,25 +848,25 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.take = function (count) {
+    exjs.Enumerable.prototype.take = function (count) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return takeEnumerator(_this, count);
         };
         return e;
     };
-    arrayexjs.Enumerable.prototype.takeWhile = function (predicate) {
+    exjs.Enumerable.prototype.takeWhile = function (predicate) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return takeWhileEnumerator(_this, predicate);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function unionEnumerator(prev, second, comparer) {
         comparer = comparer || function (f, s) {
             return f === s;
@@ -900,18 +900,18 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.union = function (second, comparer) {
+    exjs.Enumerable.prototype.union = function (second, comparer) {
         var _this = this;
         var en = second instanceof Array ? second.en() : second;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return unionEnumerator(_this, en, comparer);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function whereEnumerator(prev, filter) {
         var t;
         var e = {
@@ -932,17 +932,17 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.where = function (filter) {
+    exjs.Enumerable.prototype.where = function (filter) {
         var _this = this;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return whereEnumerator(_this, filter);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
-var arrayexjs;
-(function (arrayexjs) {
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function zipEnumerator(prev, second, resultSelector) {
         var s;
         var t;
@@ -963,13 +963,13 @@ var arrayexjs;
         return e;
     }
 
-    arrayexjs.Enumerable.prototype.zip = function (second, resultSelector) {
+    exjs.Enumerable.prototype.zip = function (second, resultSelector) {
         var _this = this;
         var en = second instanceof Array ? second.en() : second;
-        var e = new arrayexjs.Enumerable();
+        var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return zipEnumerator(_this, en, resultSelector);
         };
         return e;
     };
-})(arrayexjs || (arrayexjs = {}));
+})(exjs || (exjs = {}));

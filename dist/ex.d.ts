@@ -1,4 +1,4 @@
-declare module arrayexjs {
+declare module exjs {
     interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
         all(predicate?: (t: T, index?: number) => boolean): boolean;
@@ -89,39 +89,39 @@ declare module arrayexjs {
     }
 }
 interface Array<T> {
-    en(): arrayexjs.IEnumerable<T>;
+    en(): exjs.IEnumerable<T>;
 }
-declare module arrayexjs {
+declare module exjs {
     function _<T>(o: any): IEnumerable<T>;
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
 interface Function {
     fromJson<T>(o: any, mappingOverrides?: any): T;
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }
-declare module arrayexjs {
+declare module exjs {
 }

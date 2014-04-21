@@ -4,13 +4,6 @@ obj/
 *.suo
 *.user
 src/packages
-src/ArrayExJs.Tests/tests.js
-src/ArrayExJs.Tests/tests.js.map
-src/ArrayExJs/arrayex.d.ts
-src/ArrayExJs/arrayex.js
-src/ArrayExJs/arrayex.js.map
-src/ArrayExJs.Tests/scripts/arrayex.js
-src/ArrayExJs.Tests/scripts/typings/arrayex/arrayex.d.ts
 node_modules/**/*
 .idea*
 test/*.js

@@ -1,10 +1,10 @@
 /// <reference path="enumerable.ts" />
 
 interface Array<T> {
-    en():arrayexjs.IEnumerable<T>;
+    en():exjs.IEnumerable<T>;
 }
 
-module arrayexjs {
+module exjs {
     function arrayEnumerator<T>(arr: T[]): IEnumerator<T> {
         var len = arr.length;
         var e = { moveNext: undefined, current: undefined };

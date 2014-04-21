@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module arrayexjs {
+module exjs {
     function skipEnumerator<T>(prev: IEnumerable<T>, count: number): IEnumerator<T> {
         var t: IEnumerator<T>;
         var e = {

@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module arrayexjs {
+module exjs {
     function distinctEnumerator<T>(prev: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerator<T> {
         var t: IEnumerator<T>;
         var visited = [];

@@ -1,7 +1,7 @@
-arrayexjs
+exjs
 =========
 
-Extension library for Array.
+Extension library for Javascript.
 
 This project is intended to provide deferred monads (LINQ) to javascript with strong Typescript support.
 
