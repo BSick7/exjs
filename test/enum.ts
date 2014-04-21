@@ -350,6 +350,15 @@ test("selectMany", () => {
     strictEqual(res2[3], 4);
     strictEqual(res2[4], 5);
     strictEqual(res2[5], 6);
+
+    res2  = arr2.en().selectMany(t => t.i).toArray();
+    strictEqual(res2.length, 6);
+    strictEqual(res2[0], 1);
+    strictEqual(res2[1], 2);
+    strictEqual(res2[2], 3);
+    strictEqual(res2[3], 4);
+    strictEqual(res2[4], 5);
+    strictEqual(res2[5], 6);
 });
 
 test("skip", () => {

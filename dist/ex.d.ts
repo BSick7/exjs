@@ -25,6 +25,7 @@ declare module exjs {
         reverse(): IEnumerable<T>;
         select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult>;
         selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult>;
+        selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerable<TResult>;
         skip(count: number): IEnumerable<T>;
         skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         sum(selector?: (t: T) => number): number;
@@ -75,6 +76,7 @@ declare module exjs {
         public reverse(): IEnumerable<T>;
         public select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult>;
         public selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult>;
+        public selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerable<TResult>;
         public skip(count: number): IEnumerable<T>;
         public skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         public sum(selector?: (t: T) => number): number;

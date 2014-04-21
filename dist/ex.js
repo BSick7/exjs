@@ -156,9 +156,11 @@ var exjs;
         Enumerable.prototype.select = function (selector) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.selectMany = function (selector) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.skip = function (count) {
             throw new Error("Not implemented");
         };
@@ -695,7 +697,6 @@ var exjs;
 
     function selectManyEnumerator(prev, selector) {
         var t;
-        var j = 0;
         var active;
         var e = {
             current: undefined,
@@ -706,7 +707,11 @@ var exjs;
                 while (!active || !active.moveNext()) {
                     if (!t.moveNext())
                         return false;
-                    active = selector(t.current).getEnumerator();
+                    var selected = selector(t.current);
+                    var en = selected;
+                    if (en instanceof Array)
+                        en = en.en();
+                    active = en.getEnumerator();
                 }
                 e.current = active.current;
                 return true;

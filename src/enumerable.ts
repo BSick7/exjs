@@ -25,6 +25,7 @@ module exjs {
         reverse(): IEnumerable<T>;
         select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult>;
         selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult>;
+        selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerable<TResult>;
         skip(count: number): IEnumerable<T>;
         skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         sum(selector?: (t: T) => number): number;
@@ -190,7 +191,11 @@ module exjs {
         orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> { throw new Error("Not implemented"); }
         reverse(): IEnumerable<T> { throw new Error("Not implemented"); }
         select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult> { throw new Error("Not implemented"); }
-        selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult> { throw new Error("Not implemented"); }
+
+        selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult>;
+        selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerable<TResult>;
+        selectMany<TResult>(selector: (t: T) => any): IEnumerable<TResult> { throw new Error("Not implemented"); }
+
         skip(count: number): IEnumerable<T> { throw new Error("Not implemented"); }
         skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
         sum(selector?: (t: T) => number): number {

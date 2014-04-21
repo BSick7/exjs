@@ -1,4 +1,5 @@
 /// <reference path="enumerable.ts" />
+/// <reference path="array.ts" />
 
 module exjs {
     function selectEnumerator<T, TResult>(prev: IEnumerable<T>, selector: (t: T, index?: number) => TResult): IEnumerator<TResult> {
@@ -17,9 +18,8 @@ module exjs {
         return e;
     }
 
-    function selectManyEnumerator<T, TResult>(prev: IEnumerable<T>, selector: (t: T) => IEnumerable<TResult>): IEnumerator<TResult> {
+    function selectManyEnumerator<T, TResult>(prev: IEnumerable<T>, selector: (t: T) => any): IEnumerator<TResult> {
         var t: IEnumerator<T>;
-        var j = 0;
         var active: IEnumerator<TResult>;
         var e = {
             current: undefined,
@@ -29,7 +29,11 @@ module exjs {
                 while (!active || !active.moveNext()) {
                     if (!t.moveNext())
                         return false;
-                    active = selector(t.current).getEnumerator();
+                    var selected = selector(t.current);
+                    var en:IEnumerable<TResult> = selected;
+                    if (en instanceof Array)
+                        en = (<TResult[]><any>en).en();
+                    active = en.getEnumerator();
                 }
                 e.current = active.current;
                 return true;
@@ -43,7 +47,7 @@ module exjs {
         e.getEnumerator = () => selectEnumerator(<IEnumerable<T>>this, selector);
         return e;
     };
-    Enumerable.prototype.selectMany = function<T,TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerable<TResult> {
+    (<any>Enumerable.prototype).selectMany = function<T,TResult>(selector: (t: T) => any): IEnumerable<TResult> {
         var e = new Enumerable<TResult>();
         e.getEnumerator = () => selectManyEnumerator<T, TResult>(<IEnumerable<T>>this, selector);
         return e;
