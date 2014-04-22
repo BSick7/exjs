@@ -1,3 +1,8 @@
+/*
+ * ExJs (https://github.com/BSick7/exjs)
+ * Version 0.1.1
+ */
+
 var exjs;
 (function (exjs) {
     var Enumerable = (function () {
@@ -11,6 +16,15 @@ var exjs;
                 current: undefined
             };
         };
+
+        Enumerable.prototype.aggregate = function (seed, accumulator) {
+            var active = seed;
+            for (var enumerator = this.getEnumerator(); enumerator.moveNext();) {
+                active = accumulator(active, enumerator.current);
+            }
+            return active;
+        };
+
         Enumerable.prototype.all = function (predicate) {
             if (predicate) {
                 var e = this.getEnumerator();
@@ -35,6 +49,9 @@ var exjs;
                 i++;
             }
             return i === 0;
+        };
+        Enumerable.prototype.apply = function (action) {
+            throw new Error("Not implemented");
         };
         Enumerable.prototype.at = function (index) {
             var e = this.getEnumerator();
@@ -209,6 +226,35 @@ var exjs;
         return Enumerable;
     })();
     exjs.Enumerable = Enumerable;
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
+    function applyEnumerator(prev, action) {
+        var t;
+        var i = 0;
+        var e = {
+            current: undefined,
+            moveNext: function () {
+                if (!t)
+                    t = prev.getEnumerator();
+                if (!t.moveNext())
+                    return false;
+                action(e.current = t.current, i);
+                i++;
+                return true;
+            }
+        };
+        return e;
+    }
+
+    exjs.Enumerable.prototype.apply = function (action) {
+        var _this = this;
+        var e = new exjs.Enumerable();
+        e.getEnumerator = function () {
+            return applyEnumerator(_this, action);
+        };
+        return e;
+    };
 })(exjs || (exjs = {}));
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

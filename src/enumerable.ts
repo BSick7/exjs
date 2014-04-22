@@ -1,8 +1,10 @@
 module exjs {
     export interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
+        aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate;
         all(predicate?: (t: T, index?: number) => boolean): boolean;
         any(predicate?: (t: T, index?: number) => boolean): boolean;
+        apply<T>(action: (t: T, index?: number) => void): IEnumerable<T>;
         at(index: number): T;
         average(selector?: (t: T) => number): number;
         concat(second: IEnumerable<T>): IEnumerable<T>;
@@ -64,6 +66,15 @@ module exjs {
                 current: undefined
             };
         }
+
+        aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate {
+            var active = seed;
+            for (var enumerator = this.getEnumerator(); enumerator.moveNext(); ) {
+                active = accumulator(active, enumerator.current);
+            }
+            return active;
+        }
+
         all(predicate?: (t: T, index?: number) => boolean): boolean {
             if (predicate) {
                 var e = this.getEnumerator();
@@ -87,6 +98,7 @@ module exjs {
             }
             return i === 0;
         }
+        apply<T>(action: (t: T, index?: number) => void): IEnumerable<T> { throw new Error("Not implemented"); }
         at(index: number): T {
             var e = this.getEnumerator();
             var i = 0;

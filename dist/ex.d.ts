@@ -1,8 +1,10 @@
 declare module exjs {
     interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
+        aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate;
         all(predicate?: (t: T, index?: number) => boolean): boolean;
         any(predicate?: (t: T, index?: number) => boolean): boolean;
+        apply<T>(action: (t: T, index?: number) => void): IEnumerable<T>;
         at(index: number): T;
         average(selector?: (t: T) => number): number;
         concat(second: IEnumerable<T>): IEnumerable<T>;
@@ -52,8 +54,10 @@ declare module exjs {
     class Enumerable<T> implements IEnumerable<T> {
         constructor();
         public getEnumerator(): IEnumerator<T>;
+        public aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate;
         public all(predicate?: (t: T, index?: number) => boolean): boolean;
         public any(predicate?: (t: T, index?: number) => boolean): boolean;
+        public apply<T>(action: (t: T, index?: number) => void): IEnumerable<T>;
         public at(index: number): T;
         public average(selector?: (t: T) => number): number;
         public concat(second: IEnumerable<T>): IEnumerable<T>;
@@ -89,6 +93,8 @@ declare module exjs {
         public zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
         public zip<TSecond, TResult>(second: TSecond[], resultSelector: (f: T, s: TSecond) => TResult): IEnumerable<TResult>;
     }
+}
+declare module exjs {
 }
 interface Array<T> {
     en(): exjs.IEnumerable<T>;
