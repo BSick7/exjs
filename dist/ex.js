@@ -1,6 +1,6 @@
 /*
  * ExJs (https://github.com/BSick7/exjs)
- * Version 0.1.1
+ * Version 0.1.2
  */
 
 var exjs;
@@ -694,6 +694,38 @@ var exjs;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
+    function rangeEnumerator(start, end, increment) {
+        var i = start - increment;
+        var e = {
+            current: undefined,
+            moveNext: function () {
+                i += increment;
+                if (i >= end)
+                    return false;
+                e.current = i;
+                return true;
+            }
+        };
+        return e;
+    }
+
+    function range(start, end, increment) {
+        start = start || 0;
+        end = end || 0;
+        if (start > end)
+            throw new Error("Start cannot be greater than end.");
+        if (increment == null)
+            increment = 1;
+        var e = new exjs.Enumerable();
+        e.getEnumerator = function () {
+            return rangeEnumerator(start, end, increment);
+        };
+        return e;
+    }
+    exjs.range = range;
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     function reverseEnumerator(prev) {
         var a;
         var i = 0;
@@ -1024,3 +1056,4 @@ var exjs;
         return e;
     };
 })(exjs || (exjs = {}));
+//# sourceMappingURL=ex.js.map

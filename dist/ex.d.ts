@@ -120,6 +120,9 @@ declare module exjs {
 declare module exjs {
 }
 declare module exjs {
+    function range(start: number, end: number, increment?: number): IEnumerable<number>;
+}
+declare module exjs {
 }
 declare module exjs {
 }

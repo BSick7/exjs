@@ -7,3 +7,5 @@ src/packages
 node_modules/**/*
 .idea*
 test/*.js
+test/*.js.map
+dist/*.js.map

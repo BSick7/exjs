@@ -10,13 +10,15 @@
                 dest: 'dist/ex.js',
                 options: {
                     target: 'es5',
-                    declaration: true
+                    declaration: true,
+                    sourceMap: true
                 }
             },
             test: {
                 src: ['test/**/*.ts'],
                 options: {
-                    target: 'es5'
+                    target: 'es5',
+                    sourceMap: true
                 }
             }
         },

@@ -26,6 +26,30 @@ test("array", () => {
     strictEqual(arr2[4], 5);
 });
 
+test("range", () => {
+    var arr = exjs.range(0, 1).toArray();
+    strictEqual(arr.length, 1, "#1");
+    strictEqual(arr[0], 0, "#1");
+
+    arr = exjs.range(5, 10).toArray();
+    strictEqual(arr.length, 5, "#2");
+    strictEqual(arr[0], 5, "#2");
+    strictEqual(arr[1], 6, "#2");
+    strictEqual(arr[2], 7, "#2");
+    strictEqual(arr[3], 8, "#2");
+    strictEqual(arr[4], 9, "#2");
+
+    arr = exjs.range(1, 36, 5).toArray();
+    strictEqual(arr.length, 7);
+    strictEqual(arr[0], 1, "#3");
+    strictEqual(arr[1], 6, "#3");
+    strictEqual(arr[2], 11, "#3");
+    strictEqual(arr[3], 16, "#3");
+    strictEqual(arr[4], 21, "#3");
+    strictEqual(arr[5], 26, "#3");
+    strictEqual(arr[6], 31, "#3");
+});
+
 test("aggregate", () => {
     var arr = [1, 2, 3, 4, 5, 6, 7, 8];
     strictEqual(arr.en().aggregate(0, (acc, cur) => acc + cur), 36);
