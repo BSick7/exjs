@@ -1,11 +1,11 @@
 interface Function {
-    fromJson<T>(o:any, mappingOverrides?:any): T;
+    fromJson<T>(o: any, mappingOverrides?: any): T;
 }
 
-Function.prototype.fromJson = function<T>(o:any, mappingOverrides?:any):T {
+Function.prototype.fromJson = function<T>(o: any, mappingOverrides?: any): T {
     var rv = new this();
 
-    var mapped:string[] = [];
+    var mapped: string[] = [];
 
     for (var key in mappingOverrides) {
         var j = o[key];

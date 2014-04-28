@@ -1,8 +1,3 @@
-/*
- * ExJs (https://github.com/BSick7/exjs)
- * Version 0.1.2
- */
-
 var exjs;
 (function (exjs) {
     var Enumerable = (function () {
@@ -512,7 +507,7 @@ var exjs;
             this.key = key;
             this._arr = [];
             this.getEnumerator = function () {
-                return exjs._(_this._arr).getEnumerator();
+                return _this._arr.en().getEnumerator();
             };
         }
         Group.prototype._add = function (e) {

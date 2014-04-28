@@ -1,4 +1,5 @@
 /// <reference path="enumerable.ts" />
+/// <reference path="array.ts" />
 
 module exjs {
     function groupByEnumerator<T, TKey>(prev: IEnumerable<T>, keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<IGrouping<TKey, T>> {
@@ -55,7 +56,7 @@ module exjs {
 
         constructor (public key: TKey) {
             super();
-            this.getEnumerator = () => _<TElement>(this._arr).getEnumerator();
+            this.getEnumerator = () => this._arr.en().getEnumerator();
         }
 
         _add (e: TElement) {
