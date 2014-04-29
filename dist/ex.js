@@ -460,14 +460,14 @@ Function.prototype.fromJson = function (o, mappingOverrides) {
         if (j == null)
             return j;
         if (mapping instanceof Function)
-            return mapping.fromJson(j);
+            return mapping(j);
         if (mapping instanceof Array) {
             mapping = mapping[0];
             if (!(mapping instanceof Function) || !(j instanceof Array))
                 return undefined;
             var arr = [];
             for (var i = 0; i < j.length; i++) {
-                arr.push(mapping.fromJson(j[i]));
+                arr.push(mapping(j[i]));
             }
             return arr;
         }

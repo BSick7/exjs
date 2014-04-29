@@ -29,20 +29,20 @@ class Address {
     street: string;
 }
 
-class Entry {
-    id: number;
-}
 class Batch {
     static $jsonMappings = {
-        'entries': [Entry]
+        'entries': [x => Entry.fromJson(x)]
     };
 
     entries: Entry[] = [];
 }
+class Entry {
+    id: number;
+}
 
 test("fromJson", () => {
     var bdate = new Date().getTime() - (35.5 * msToYears);
-    var person = Person.fromJson<Person>({ 'birthdate': bdate, 'address': { 'street': '123 Noob Lane' } }, { address: Address });
+    var person = Person.fromJson<Person>({ 'birthdate': bdate, 'address': { 'street': '123 Noob Lane' } }, { 'address': x => Address.fromJson(x) });
     ok(person instanceof Person);
     ok(person.address instanceof Address);
     strictEqual(person.age, 35);
@@ -62,7 +62,8 @@ test("fromJson", () => {
 
     //tests default mappings
     //also tests array mappings
-    var batch = Batch.fromJson<Batch>({ 'entries': [{ id: 1 }, { id: 2 }] });
+    //also tests that order of classes can be avoided if using a projection function
+    var batch = Batch.fromJson<Batch>({ 'entries': [{ 'id': 1 }, { 'id': 2 }] });
     ok(batch instanceof Batch);
     strictEqual(batch.entries.length, 2);
     ok(batch.entries[0] instanceof Entry);
