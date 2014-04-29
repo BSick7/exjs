@@ -29,6 +29,17 @@ class Address {
     street: string;
 }
 
+class Entry {
+    id: number;
+}
+class Batch {
+    static $jsonMappings = {
+        'entries': [Entry]
+    };
+
+    entries: Entry[] = [];
+}
+
 test("fromJson", () => {
     var bdate = new Date().getTime() - (35.5 * msToYears);
     var person = Person.fromJson<Person>({ 'birthdate': bdate, 'address': { 'street': '123 Noob Lane' } }, { address: Address });
@@ -47,4 +58,15 @@ test("fromJson", () => {
     person.note = 'new';
     strictEqual(person.note, 'new');
     ok(flag, 'should be notified of note change');
+
+
+    //tests default mappings
+    //also tests array mappings
+    var batch = Batch.fromJson<Batch>({ 'entries': [{ id: 1 }, { id: 2 }] });
+    ok(batch instanceof Batch);
+    strictEqual(batch.entries.length, 2);
+    ok(batch.entries[0] instanceof Entry);
+    strictEqual(batch.entries[0].id, 1);
+    ok(batch.entries[1] instanceof Entry);
+    strictEqual(batch.entries[1].id, 2);
 });

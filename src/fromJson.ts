@@ -8,11 +8,20 @@ Function.prototype.fromJson = function<T>(o: any, mappingOverrides?: any): T {
     var mapped: string[] = [];
 
     for (var key in mappingOverrides) {
-        var j = o[key];
-        if (j === null)
-            rv[key] = null;
-        else if (j !== undefined)
-            rv[key] = mappingOverrides[key].fromJson(j);
+        var j = mapSubProperty(o[key], mappingOverrides[key]);
+        if (j === undefined)
+            continue;
+        rv[key] = j;
+        mapped.push(key);
+    }
+
+    for (var key in this.$jsonMappings) {
+        if (mapped.indexOf(key) > -1)
+            continue;
+        var j = mapSubProperty(o[key], this.$jsonMappings[key]);
+        if (j === undefined)
+            continue;
+        rv[key] = j;
         mapped.push(key);
     }
 
@@ -23,4 +32,22 @@ Function.prototype.fromJson = function<T>(o: any, mappingOverrides?: any): T {
     }
 
     return rv;
+
+    function mapSubProperty(j: any, mapping: any): any {
+        if (j == null)
+            return j;
+        if (mapping instanceof Function)
+            return mapping.fromJson(j);
+        if (mapping instanceof Array) {
+            mapping = mapping[0];
+            if (!(mapping instanceof Function) || !(j instanceof Array))
+                return undefined;
+            var arr = [];
+            for (var i = 0; i < j.length; i++) {
+                arr.push(mapping.fromJson(j[i]));
+            }
+            return arr;
+        }
+        return undefined;
+    }
 };
