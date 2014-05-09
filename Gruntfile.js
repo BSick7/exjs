@@ -4,6 +4,7 @@
     grunt.loadNpmTasks('grunt-shell');
 
     grunt.initConfig({
+        nuget: grunt.file.readJSON('./nuget.json'),
         pkg: grunt.file.readJSON('./package.json'),
         typescript: {
             build: {
@@ -37,6 +38,13 @@
                     stderr: true
                 },
                 command: 'powershell ./package.ps1 <%= pkg.version %>'
+            },
+            publish: {
+                options: {
+                    stdout: true,
+                    stderr: true
+                },
+                command: 'nuget push "./nuget/exjs.<%= pkg.version %>.nupkg" <%= nuget.apiKey %>'
             }
         }
     });
@@ -44,4 +52,5 @@
     grunt.registerTask('default', ['typescript:build']);
     grunt.registerTask('test', ['typescript:build', 'typescript:test', 'qunit']);
     grunt.registerTask('package', ['shell:package']);
+    grunt.registerTask('publish', ['shell:package', 'shell:publish']);
 };

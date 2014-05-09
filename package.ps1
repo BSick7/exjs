@@ -19,5 +19,7 @@ $specxml.Load($specfile)
 $specxml.package.metadata.version = $version
 Set-Content $specfile $specxml.OuterXml
 
+New-Item -ItemType Directory -Force -Path ".\nuget"
+
 # Package
 nuget pack $specfile -Version $version -OutputDirectory ".\nuget"

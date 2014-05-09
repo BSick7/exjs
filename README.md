@@ -3,6 +3,16 @@ exjs
 
 Extension library for Javascript.
 
-This project is intended to provide deferred monads (LINQ) to javascript with strong Typescript support.
+This is a lightweight library to aid in data manipulation and transformation.
 
-This is a work-in-progress.  Please see our tests to view usage.
+The monad support is based off LINQ extension methods.
+
+
+Installation
+=========
+
+Bower
+```bower install git://github.com/BSick7/exjs.git --save-dev```
+
+Nuget
+```Install-Package exjs```
