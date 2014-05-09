@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>exjs</id>
+        <version>0.1.4</version>
+        <title>exjs</title>
+        <authors>Brad Sickles</authors>
+        <projectUrl>https://github.com/BSick7/exjs</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Extension library for Javascript with strong Typescript support.
+This is a lightweight library to aid in data manipulation and transformation.</description>
+        <summary>Extension library for Javascript.</summary>
+        <tags>linq typescript</tags>
+    </metadata>
+    <files>
+        <file src="dist\ex.d.ts" target="content\lib\exjs\ex.d.ts" />
+        <file src="dist\ex.js" target="content\lib\exjs\ex.js" />
+    </files>
+</package>
+
+
+
+
