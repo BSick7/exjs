@@ -71,9 +71,12 @@ test("all", () => {
 });
 
 test("any", () => {
+    ok(![].en().any());
+    ok([1].en().any());
+
     var arr = [];
-    ok(arr.en().any());
-    ok(arr.en().any(n => n > 0));
+    ok(!arr.en().any());
+    ok(!arr.en().any(n => n > 0));
 
     arr = [1, 2, 3];
     ok(arr.en().any(n => n < 2));

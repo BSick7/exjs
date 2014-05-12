@@ -2,7 +2,7 @@ declare module exjs {
     interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
         aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate;
-        all(predicate?: (t: T, index?: number) => boolean): boolean;
+        all(predicate: (t: T, index?: number) => boolean): boolean;
         any(predicate?: (t: T, index?: number) => boolean): boolean;
         apply<T>(action: (t: T, index?: number) => void): IEnumerable<T>;
         at(index: number): T;
@@ -55,7 +55,7 @@ declare module exjs {
         constructor();
         public getEnumerator(): IEnumerator<T>;
         public aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate;
-        public all(predicate?: (t: T, index?: number) => boolean): boolean;
+        public all(predicate: (t: T, index?: number) => boolean): boolean;
         public any(predicate?: (t: T, index?: number) => boolean): boolean;
         public apply<T>(action: (t: T, index?: number) => void): IEnumerable<T>;
         public at(index: number): T;

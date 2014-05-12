@@ -33,17 +33,16 @@ var exjs;
             return true;
         };
         Enumerable.prototype.any = function (predicate) {
-            predicate = predicate || function () {
-                return true;
-            };
             var e = this.getEnumerator();
             var i = 0;
             while (e.moveNext()) {
+                if (!predicate)
+                    return true;
                 if (predicate(e.current, i))
                     return true;
                 i++;
             }
-            return i === 0;
+            return false;
         };
         Enumerable.prototype.apply = function (action) {
             throw new Error("Not implemented");
