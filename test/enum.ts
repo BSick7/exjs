@@ -26,6 +26,20 @@ test("array", () => {
     strictEqual(arr2[4], 5);
 });
 
+test("list", () => {
+    var arr = [1, 2, 3, 4, 5];
+    var list = arr.en().toList();
+    notStrictEqual(arr, list);
+    ok(list instanceof Array);
+    strictEqual(list.length, 5);
+    strictEqual(list[0], 1);
+    strictEqual(list[1], 2);
+    strictEqual(list[2], 3);
+    strictEqual(list[3], 4);
+    strictEqual(list[4], 5);
+    ok(list.select instanceof Function);
+});
+
 test("range", () => {
     var arr = exjs.range(0, 1).toArray();
     strictEqual(arr.length, 1, "#1");

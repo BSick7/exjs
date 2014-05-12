@@ -34,6 +34,7 @@ module exjs {
         take(count: number): IEnumerable<T>;
         takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         toArray(): T[];
+        toList(): IList<T>;
         //toDictionary();
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
@@ -53,6 +54,11 @@ module exjs {
 
     export interface IGrouping<TKey, TElement> extends IEnumerable<TElement> {
         key: TKey;
+    }
+
+    export interface IList<T> extends IEnumerable<T> {
+        length: number;
+        [n: number]: T;
     }
 
     export class Enumerable<T> implements IEnumerable<T> {
@@ -232,6 +238,7 @@ module exjs {
             }
             return arr;
         }
+        toList(): IList<T> { throw new Error("Not implemented"); }
         //toDictionary() {
         //}
 
