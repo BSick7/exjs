@@ -20,4 +20,4 @@ Include in html.
 
 ### Documentation
 
-Usage and Documentation is coming
+Usage and Documentation can be found on the wiki: https://github.com/BSick7/exjs/wiki.
