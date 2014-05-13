@@ -39,4 +39,6 @@ module exjs {
         e.getEnumerator = () => distinctEnumerator(<IEnumerable<T>>this, comparer);
         return e;
     };
+    if (List)
+        List.prototype.distinct = Enumerable.prototype.distinct;
 }

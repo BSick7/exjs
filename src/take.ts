@@ -52,4 +52,8 @@ module exjs {
         e.getEnumerator = () => takeWhileEnumerator(<IEnumerable<T>>this, predicate);
         return e;
     };
+    if (List) {
+        List.prototype.take = Enumerable.prototype.take;
+        List.prototype.takeWhile = Enumerable.prototype.takeWhile;
+    }
 }

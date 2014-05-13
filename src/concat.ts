@@ -31,4 +31,6 @@ module exjs {
         e.getEnumerator = () => concatEnumerator<T>(<IEnumerable<T>>this, en);
         return e;
     };
+    if (List)
+        List.prototype.concat = Enumerable.prototype.concat;
 }

@@ -62,4 +62,8 @@ module exjs {
         e.getEnumerator = () => skipWhileEnumerator(<IEnumerable<T>>this, predicate);
         return e;
     };
+    if (List) {
+        List.prototype.skip = Enumerable.prototype.skip;
+        List.prototype.skipWhile = Enumerable.prototype.skipWhile;
+    }
 }

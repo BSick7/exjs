@@ -69,4 +69,8 @@ module exjs {
     fn.orderByDescending = function<T,TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
         return orderByEnumerable(<IEnumerable<T>>this, keySelector, true, comparer);
     };
+    if (List) {
+        List.prototype.orderBy = Enumerable.prototype.orderBy;
+        List.prototype.orderByDescending = Enumerable.prototype.orderByDescending;
+    }
 } 

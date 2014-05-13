@@ -39,4 +39,6 @@ module exjs {
         e.getEnumerator = () => unionEnumerator(<IEnumerable<T>>this, en, comparer);
         return e;
     };
-}   
+    if (List)
+        List.prototype.union = Enumerable.prototype.union;
+}

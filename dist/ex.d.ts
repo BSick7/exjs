@@ -34,6 +34,7 @@ declare module exjs {
         take(count: number): IEnumerable<T>;
         takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         toArray(): T[];
+        toList(): IList<T>;
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         where(filter: (t: T) => boolean): IEnumerable<T>;
@@ -50,6 +51,31 @@ declare module exjs {
     }
     interface IGrouping<TKey, TElement> extends IEnumerable<TElement> {
         key: TKey;
+    }
+    interface IList<T> extends IEnumerable<T> {
+        toString(): string;
+        toLocaleString(): string;
+        pop(): T;
+        push(...items: T[]): number;
+        shift(): T;
+        slice(start: number, end?: number): T[];
+        sort(compareFn?: (a: T, b: T) => number): T[];
+        splice(start: number): T[];
+        splice(start: number, deleteCount: number, ...items: T[]): T[];
+        unshift(...items: T[]): number;
+        indexOf(searchElement: T, fromIndex?: number): number;
+        lastIndexOf(searchElement: T, fromIndex?: number): number;
+        every(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean;
+        some(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean;
+        forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;
+        map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
+        filter(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): T[];
+        reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T;
+        reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
+        reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T;
+        reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
+        length: number;
+        [n: number]: T;
     }
     class Enumerable<T> implements IEnumerable<T> {
         constructor();
@@ -87,6 +113,7 @@ declare module exjs {
         public take(count: number): IEnumerable<T>;
         public takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         public toArray(): T[];
+        public toList(): IList<T>;
         public union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         public union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         public where(filter: (t: T) => boolean): IEnumerable<T>;
@@ -116,6 +143,31 @@ declare module exjs {
 declare module exjs {
 }
 declare module exjs {
+}
+declare module exjs {
+    class List<T> extends Enumerable<T> implements IList<T> {
+        public toString(): string;
+        public toLocaleString(): string;
+        public pop(): T;
+        public push(...items: T[]): number;
+        public shift(): T;
+        public slice(start: number, end?: number): T[];
+        public sort(compareFn?: (a: T, b: T) => number): T[];
+        public splice(start: number): T[];
+        public splice(start: number, deleteCount: number, ...items: T[]): T[];
+        public unshift(...items: T[]): number;
+        public indexOf(searchElement: T, fromIndex?: number): number;
+        public lastIndexOf(searchElement: T, fromIndex?: number): number;
+        public every(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean;
+        public some(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): boolean;
+        public forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;
+        public map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
+        public filter(callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any): T[];
+        public reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
+        public reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
+        public length: number;
+        [n: number]: T;
+    }
 }
 declare module exjs {
 }

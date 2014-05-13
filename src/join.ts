@@ -43,4 +43,6 @@ module exjs {
         e.getEnumerator = () => joinEnumerator<T, TInner, TKey, TResult>(<IEnumerable<T>>this, en, outerKeySelector, innerKeySelector, resultSelector, comparer);
         return e;
     };
+    if (List)
+        List.prototype.join = Enumerable.prototype.join;
 }

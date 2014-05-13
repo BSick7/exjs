@@ -25,4 +25,6 @@ module exjs {
         e.getEnumerator = () => whereEnumerator(<IEnumerable<T>>this, filter);
         return e;
     };
+    if (List)
+        List.prototype.where = Enumerable.prototype.where;
 }

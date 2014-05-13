@@ -22,4 +22,6 @@ module exjs {
         e.getEnumerator = () => applyEnumerator(<IEnumerable<T>>this, action);
         return e;
     };
+    if (List)
+        List.prototype.apply = Enumerable.prototype.apply;
 }

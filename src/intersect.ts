@@ -30,4 +30,6 @@ module exjs {
         e.getEnumerator = () => intersectEnumerator(<IEnumerable<T>>this, en, comparer);
         return e;
     };
+    if (List)
+        List.prototype.intersect = Enumerable.prototype.intersect;
 }  
