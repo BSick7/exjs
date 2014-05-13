@@ -190,6 +190,26 @@ test("count", () => {
     strictEqual(arr.en().count(n => n > 1), 2);
 });
 
+test("difference", () => {
+    var arr1 = [1, 2, 3, 4, 5];
+    var arr2 = [4, 5, 6, 7, 8];
+    var diff = arr1.en().difference(arr2);
+
+    strictEqual(diff.intersection.count(), 2);
+    strictEqual(diff.intersection.at(0), 4);
+    strictEqual(diff.intersection.at(1), 5);
+
+    strictEqual(diff.aNotB.count(), 3);
+    strictEqual(diff.aNotB.at(0), 1);
+    strictEqual(diff.aNotB.at(1), 2);
+    strictEqual(diff.aNotB.at(2), 3);
+
+    strictEqual(diff.bNotA.count(), 3);
+    strictEqual(diff.bNotA.at(0), 6);
+    strictEqual(diff.bNotA.at(1), 7);
+    strictEqual(diff.bNotA.at(2), 8);
+});
+
 test("distinct", () => {
     var arr = [];
     var res = arr.en().distinct().toArray();

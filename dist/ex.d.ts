@@ -10,6 +10,8 @@ declare module exjs {
         concat(second: IEnumerable<T>): IEnumerable<T>;
         concat(second: T[]): IEnumerable<T>;
         count(predicate?: (t: T) => boolean): number;
+        difference(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IDifference<T>;
+        difference(second: T[], comparer?: (f: T, s: T) => boolean): IDifference<T>;
         distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         except(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
@@ -52,6 +54,11 @@ declare module exjs {
     interface IGrouping<TKey, TElement> extends IEnumerable<TElement> {
         key: TKey;
     }
+    interface IDifference<T> {
+        intersection: IEnumerable<T>;
+        aNotB: IEnumerable<T>;
+        bNotA: IEnumerable<T>;
+    }
     interface IList<T> extends IEnumerable<T> {
         toString(): string;
         toLocaleString(): string;
@@ -89,6 +96,8 @@ declare module exjs {
         public concat(second: IEnumerable<T>): IEnumerable<T>;
         public concat(second: T[]): IEnumerable<T>;
         public count(predicate?: (t: T) => boolean): number;
+        public difference(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IDifference<T>;
+        public difference(second: T[], comparer?: (f: T, s: T) => boolean): IDifference<T>;
         public distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         public except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         public except(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;

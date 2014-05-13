@@ -88,6 +88,20 @@ var exjs;
             }
             return count;
         };
+
+        Enumerable.prototype.difference = function (second, comparer) {
+            comparer = comparer || function (f2, s2) {
+                return f2 === s2;
+            };
+            if (second instanceof Array)
+                second = second.en();
+            return {
+                intersection: this.intersect(second, comparer).toArray().en(),
+                aNotB: this.except(second, comparer).toArray().en(),
+                bNotA: second.except(this, comparer).toArray().en()
+            };
+        };
+
         Enumerable.prototype.distinct = function (comparer) {
             throw new Error("Not implemented");
         };

@@ -10,6 +10,8 @@ module exjs {
         concat(second: IEnumerable<T>): IEnumerable<T>;
         concat(second: T[]): IEnumerable<T>;
         count(predicate?: (t: T) => boolean): number;
+        difference(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IDifference<T>;
+        difference(second: T[], comparer?: (f: T, s: T) => boolean): IDifference<T>;
         distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         except(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
@@ -54,6 +56,12 @@ module exjs {
 
     export interface IGrouping<TKey, TElement> extends IEnumerable<TElement> {
         key: TKey;
+    }
+
+    export interface IDifference<T> {
+        intersection: IEnumerable<T>;
+        aNotB: IEnumerable<T>;
+        bNotA: IEnumerable<T>;
     }
 
     export interface IList<T> extends IEnumerable<T> {
@@ -166,6 +174,20 @@ module exjs {
             }
             return count;
         }
+
+        difference(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IDifference<T>;
+        difference(second: T[], comparer?: (f: T, s: T) => boolean): IDifference<T>;
+        difference(second: any, comparer?: (f: T, s: T) => boolean): IDifference<T> {
+            comparer = comparer || function (f2: T, s2: T) { return f2 === s2; };
+            if (second instanceof Array)
+                second = second.en();
+            return {
+                intersection: this.intersect(second, comparer).toArray().en(),
+                aNotB: this.except(second, comparer).toArray().en(),
+                bNotA: second.except(this, comparer).toArray().en()
+            };
+        }
+
         distinct(comparer?: (f: T, s: T) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
 
         except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
