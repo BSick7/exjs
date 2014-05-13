@@ -25,4 +25,6 @@ module exjs {
         e.getEnumerator = () => zipEnumerator<T, TSecond, TResult>(<IEnumerable<T>>this, en, resultSelector);
         return e;
     };
+    if (List)
+        List.prototype.zip = Enumerable.prototype.zip;
 }

@@ -24,4 +24,6 @@ module exjs {
         e.getEnumerator = () => reverseEnumerator(<IEnumerable<T>>this);
         return e;
     };
+    if (List)
+        List.prototype.reverse = Enumerable.prototype.reverse;
 }

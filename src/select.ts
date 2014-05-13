@@ -47,9 +47,13 @@ module exjs {
         e.getEnumerator = () => selectEnumerator(<IEnumerable<T>>this, selector);
         return e;
     };
-    (<any>Enumerable.prototype).selectMany = function<T,TResult>(selector: (t: T) => any): IEnumerable<TResult> {
+    Enumerable.prototype.selectMany = function<T,TResult>(selector: (t: T) => any): IEnumerable<TResult> {
         var e = new Enumerable<TResult>();
         e.getEnumerator = () => selectManyEnumerator<T, TResult>(<IEnumerable<T>>this, selector);
         return e;
     };
+    if (List) {
+        List.prototype.select = Enumerable.prototype.select;
+        List.prototype.selectMany = Enumerable.prototype.selectMany;
+    }
 }

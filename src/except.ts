@@ -32,4 +32,6 @@ module exjs {
         e.getEnumerator = () => exceptEnumerator(<IEnumerable<T>>this, en, comparer);
         return e;
     };
+    if (List)
+        List.prototype.except = Enumerable.prototype.except;
 } 

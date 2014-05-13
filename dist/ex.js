@@ -206,6 +206,9 @@ var exjs;
             }
             return arr;
         };
+        Enumerable.prototype.toList = function () {
+            throw new Error("Not implemented");
+        };
 
         Enumerable.prototype.union = function (second, comparer) {
             throw new Error("Not implemented");
@@ -250,6 +253,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.apply = exjs.Enumerable.prototype.apply;
 })(exjs || (exjs = {}));
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -341,6 +346,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.concat = exjs.Enumerable.prototype.concat;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -386,6 +393,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.distinct = exjs.Enumerable.prototype.distinct;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -424,6 +433,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.except = exjs.Enumerable.prototype.except;
 })(exjs || (exjs = {}));
 Function.prototype.fromJson = function (o, mappingOverrides) {
     var rv = new this();
@@ -543,8 +554,7 @@ var exjs;
         return Group;
     })(exjs.Enumerable);
 
-    var fn = exjs.Enumerable.prototype;
-    fn.groupBy = function (keySelector, comparer) {
+    exjs.Enumerable.prototype.groupBy = function (keySelector, comparer) {
         var _this = this;
         var e = new exjs.Enumerable();
         e.getEnumerator = function () {
@@ -552,6 +562,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.groupBy = exjs.Enumerable.prototype.groupBy;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -590,6 +602,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.intersect = exjs.Enumerable.prototype.intersect;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -635,6 +649,125 @@ var exjs;
         var e = new exjs.Enumerable();
         e.getEnumerator = function () {
             return joinEnumerator(_this, en, outerKeySelector, innerKeySelector, resultSelector, comparer);
+        };
+        return e;
+    };
+    if (exjs.List)
+        exjs.List.prototype.join = exjs.Enumerable.prototype.join;
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
+    exjs.Enumerable.prototype.toList = function () {
+        var l = new List();
+
+        var enumerator = this.getEnumerator();
+        while (enumerator.moveNext()) {
+            l.push(enumerator.current);
+        }
+
+        return l;
+    };
+
+    var List = (function (_super) {
+        __extends(List, _super);
+        function List() {
+            _super.apply(this, arguments);
+        }
+        List.prototype.toString = function () {
+            throw new Error("Not implemented");
+        };
+        List.prototype.toLocaleString = function () {
+            throw new Error("Not implemented");
+        };
+        List.prototype.pop = function () {
+            throw new Error("Not implemented");
+        };
+        List.prototype.push = function () {
+            var items = [];
+            for (var _i = 0; _i < (arguments.length - 0); _i++) {
+                items[_i] = arguments[_i + 0];
+            }
+            throw new Error("Not implemented");
+        };
+        List.prototype.shift = function () {
+            throw new Error("Not implemented");
+        };
+        List.prototype.slice = function (start, end) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.sort = function (compareFn) {
+            throw new Error("Not implemented");
+        };
+
+        List.prototype.splice = function () {
+            throw new Error("Not implemented");
+        };
+
+        List.prototype.unshift = function () {
+            var items = [];
+            for (var _i = 0; _i < (arguments.length - 0); _i++) {
+                items[_i] = arguments[_i + 0];
+            }
+            throw new Error("Not implemented");
+        };
+        List.prototype.indexOf = function (searchElement, fromIndex) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.lastIndexOf = function (searchElement, fromIndex) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.every = function (callbackfn, thisArg) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.some = function (callbackfn, thisArg) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.forEach = function (callbackfn, thisArg) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.map = function (callbackfn, thisArg) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.filter = function (callbackfn, thisArg) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.reduce = function (callbackfn, initialValue) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.reduceRight = function (callbackfn, initialValue) {
+            throw new Error("Not implemented");
+        };
+        return List;
+    })(exjs.Enumerable);
+    exjs.List = List;
+
+    for (var p in Array)
+        if (List.hasOwnProperty(p))
+            List[p] = Array[p];
+    function __() {
+        this.constructor = List;
+    }
+    __.prototype = Array.prototype;
+    List.prototype = new __();
+    for (var key in exjs.Enumerable.prototype) {
+        if (key === "getEnumerator")
+            continue;
+        List.prototype[key] = exjs.Enumerable.prototype[key];
+    }
+
+    List.prototype.getEnumerator = function () {
+        var list = this;
+        var len = list.length;
+        var e = { moveNext: undefined, current: undefined };
+        var index = -1;
+        e.moveNext = function () {
+            index++;
+            if (index >= len) {
+                e.current = undefined;
+                return false;
+            }
+            e.current = list[index];
+            return true;
         };
         return e;
     };
@@ -713,6 +846,10 @@ var exjs;
     fn.orderByDescending = function (keySelector, comparer) {
         return orderByEnumerable(this, keySelector, true, comparer);
     };
+    if (exjs.List) {
+        exjs.List.prototype.orderBy = exjs.Enumerable.prototype.orderBy;
+        exjs.List.prototype.orderByDescending = exjs.Enumerable.prototype.orderByDescending;
+    }
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -774,6 +911,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.reverse = exjs.Enumerable.prototype.reverse;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -836,6 +975,10 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List) {
+        exjs.List.prototype.select = exjs.Enumerable.prototype.select;
+        exjs.List.prototype.selectMany = exjs.Enumerable.prototype.selectMany;
+    }
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -907,6 +1050,10 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List) {
+        exjs.List.prototype.skip = exjs.Enumerable.prototype.skip;
+        exjs.List.prototype.skipWhile = exjs.Enumerable.prototype.skipWhile;
+    }
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -969,6 +1116,10 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List) {
+        exjs.List.prototype.take = exjs.Enumerable.prototype.take;
+        exjs.List.prototype.takeWhile = exjs.Enumerable.prototype.takeWhile;
+    }
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -1014,6 +1165,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.union = exjs.Enumerable.prototype.union;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -1045,6 +1198,8 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.where = exjs.Enumerable.prototype.where;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -1077,5 +1232,7 @@ var exjs;
         };
         return e;
     };
+    if (exjs.List)
+        exjs.List.prototype.zip = exjs.Enumerable.prototype.zip;
 })(exjs || (exjs = {}));
 //# sourceMappingURL=ex.js.map
