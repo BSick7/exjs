@@ -13,8 +13,8 @@ module exjs {
         return <IList<T>>l;
     };
 
-
     export class List<T> extends Enumerable<T> implements IList<T> {
+        //Array<T> methods
         toString (): string { throw new Error("Not implemented"); }
         toLocaleString (): string { throw new Error("Not implemented"); }
         pop (): T { throw new Error("Not implemented"); }
@@ -39,9 +39,13 @@ module exjs {
         reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U { throw new Error("Not implemented"); }
         length: number;
         [n: number]: T;
+
+        //List<T> methods
+        remove(item: T): boolean { throw new Error("Not implemented"); }
+        removeWhere(predicate: (t: T, index?: number) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
     }
 
-    for (var p in Array) if (List.hasOwnProperty(p)) List[p] = Array[p];
+    for (var p in Array) if (Array.hasOwnProperty(p)) List[p] = Array[p];
     function __ () { this.constructor = List; }
     __.prototype = Array.prototype;
     List.prototype = new __();
@@ -66,5 +70,20 @@ module exjs {
             return true;
         };
         return e;
+    };
+    List.prototype.remove = function<T>(item: T): boolean {
+        return this.removeWhere(t => t === item).any();
+    }
+    List.prototype.removeWhere = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
+        var removed = [];
+        var cur: T;
+        for (var i = this.length - 1; i >= 0; i--) {
+            cur = this[i];
+            if (predicate(cur, i) === true) {
+                this.splice(i, 1);
+                removed.push(cur);
+            }
+        }
+        return removed.en().reverse();
     };
 }

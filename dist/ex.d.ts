@@ -83,6 +83,8 @@ declare module exjs {
         reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
         length: number;
         [n: number]: T;
+        remove(item: T): boolean;
+        removeWhere(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
     }
     class Enumerable<T> implements IEnumerable<T> {
         constructor();
@@ -176,6 +178,8 @@ declare module exjs {
         public reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
         public length: number;
         [n: number]: T;
+        public remove(item: T): boolean;
+        public removeWhere(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
     }
 }
 declare module exjs {

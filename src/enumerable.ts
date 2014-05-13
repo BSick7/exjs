@@ -65,6 +65,7 @@ module exjs {
     }
 
     export interface IList<T> extends IEnumerable<T> {
+        //Array<T> methods
         toString(): string;
         toLocaleString(): string;
         pop(): T;
@@ -88,6 +89,19 @@ module exjs {
         reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;
         length: number;
         [n: number]: T;
+
+        //List<T> methods
+        /**
+         * Removes item from list.
+         * @param item - item to remove
+         */
+        remove(item: T): boolean;
+        /**
+         * Removes items that match predicate.
+         * Returns items that were removed.
+         * @param predicate - function to match items that should be removed (index parameter is based on original list)
+         */
+        removeWhere(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
     }
 
     export class Enumerable<T> implements IEnumerable<T> {

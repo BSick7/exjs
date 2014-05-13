@@ -750,12 +750,19 @@ var exjs;
         List.prototype.reduceRight = function (callbackfn, initialValue) {
             throw new Error("Not implemented");
         };
+
+        List.prototype.remove = function (item) {
+            throw new Error("Not implemented");
+        };
+        List.prototype.removeWhere = function (predicate) {
+            throw new Error("Not implemented");
+        };
         return List;
     })(exjs.Enumerable);
     exjs.List = List;
 
     for (var p in Array)
-        if (List.hasOwnProperty(p))
+        if (Array.hasOwnProperty(p))
             List[p] = Array[p];
     function __() {
         this.constructor = List;
@@ -783,6 +790,23 @@ var exjs;
             return true;
         };
         return e;
+    };
+    List.prototype.remove = function (item) {
+        return this.removeWhere(function (t) {
+            return t === item;
+        }).any();
+    };
+    List.prototype.removeWhere = function (predicate) {
+        var removed = [];
+        var cur;
+        for (var i = this.length - 1; i >= 0; i--) {
+            cur = this[i];
+            if (predicate(cur, i) === true) {
+                this.splice(i, 1);
+                removed.push(cur);
+            }
+        }
+        return removed.en().reverse();
     };
 })(exjs || (exjs = {}));
 var exjs;
