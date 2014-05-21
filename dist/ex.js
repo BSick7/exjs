@@ -192,6 +192,24 @@ var exjs;
         Enumerable.prototype.skipWhile = function (predicate) {
             throw new Error("Not implemented");
         };
+
+        Enumerable.prototype.standardDeviation = function (selector) {
+            var avg = this.average(selector);
+            var sum = 0;
+            var count = 0;
+            selector = selector || function (t) {
+                if (typeof t !== "number")
+                    throw new Error("Object is not a number.");
+                return t;
+            };
+            var e = this.getEnumerator();
+            while (e.moveNext()) {
+                var diff = selector(e.current) - avg;
+                sum += (diff * diff);
+                count++;
+            }
+            return Math.sqrt(sum / count);
+        };
         Enumerable.prototype.sum = function (selector) {
             var sum = 0;
             selector = selector || function (t) {
@@ -205,6 +223,7 @@ var exjs;
             }
             return sum;
         };
+
         Enumerable.prototype.take = function (count) {
             throw new Error("Not implemented");
         };
@@ -950,6 +969,17 @@ var exjs;
     };
     if (exjs.List)
         exjs.List.prototype.reverse = exjs.Enumerable.prototype.reverse;
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
+    function round(value, digits) {
+        digits = digits || 0;
+        if (digits === 0)
+            return Math.round(value);
+        var shift = Math.pow(10, digits);
+        return Math.round(value * shift) / shift;
+    }
+    exjs.round = round;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {

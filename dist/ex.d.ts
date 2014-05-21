@@ -32,6 +32,7 @@ declare module exjs {
         selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerable<TResult>;
         skip(count: number): IEnumerable<T>;
         skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
+        standardDeviation(selector?: (t: T) => number): number;
         sum(selector?: (t: T) => number): number;
         take(count: number): IEnumerable<T>;
         takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
@@ -120,6 +121,7 @@ declare module exjs {
         public selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerable<TResult>;
         public skip(count: number): IEnumerable<T>;
         public skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
+        public standardDeviation(selector?: (t: T) => number): number;
         public sum(selector?: (t: T) => number): number;
         public take(count: number): IEnumerable<T>;
         public takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
@@ -188,6 +190,9 @@ declare module exjs {
     function range(start: number, end: number, increment?: number): IEnumerable<number>;
 }
 declare module exjs {
+}
+declare module exjs {
+    function round(value: number, digits?: number): number;
 }
 declare module exjs {
 }

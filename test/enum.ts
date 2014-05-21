@@ -513,6 +513,11 @@ test("skipWhile", () => {
     strictEqual(res[1], 3);
 });
 
+test("standardDeviation", () => {
+    var arr = [1, 3, 4, 5, 76, 345, 123, 12, 1, 2, 3];
+    strictEqual(arr.en().standardDeviation(), 100.0373483973869);
+});
+
 test("sum", () => {
     var arr = [];
     strictEqual(arr.en().sum(), 0);

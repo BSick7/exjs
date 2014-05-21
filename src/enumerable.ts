@@ -32,6 +32,7 @@ module exjs {
         selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerable<TResult>;
         skip(count: number): IEnumerable<T>;
         skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
+        standardDeviation(selector?: (t: T) => number): number;
         sum(selector?: (t: T) => number): number;
         take(count: number): IEnumerable<T>;
         takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
@@ -274,6 +275,23 @@ module exjs {
 
         skip(count: number): IEnumerable<T> { throw new Error("Not implemented"); }
         skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+
+        standardDeviation(selector?: (t: T) => number): number {
+            var avg = this.average(selector);
+            var sum = 0;
+            var count = 0;
+            selector = selector || function (t: T): number {
+                if (typeof t !== "number") throw new Error("Object is not a number.");
+                return <number><any>t;
+            };
+            var e = this.getEnumerator();
+            while (e.moveNext()) {
+                var diff = selector(e.current) - avg;
+                sum += (diff * diff);
+                count++;
+            }
+            return Math.sqrt(sum / count);
+        }
         sum(selector?: (t: T) => number): number {
             var sum = 0;
             selector = selector || function (t: T): number {
@@ -286,6 +304,7 @@ module exjs {
             }
             return sum;
         }
+
         take(count: number): IEnumerable<T> { throw new Error("Not implemented"); }
         takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
         toArray(): T[] {
