@@ -1,6 +1,7 @@
 ﻿module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-shell');
 
     grunt.initConfig({
@@ -27,6 +28,17 @@
         qunit: {
             all: ['test/**/*.html']
         },
+        uglify: {
+            dist: {
+                options: {
+                    sourceMap: true,
+                    sourceMapName: 'dist/ex.min.js.map'
+                },
+                files: {
+                    'dist/ex.min.js': ['dist/ex.js']
+                }
+            }
+        },
         watch: {
             files: '**/*.ts',
             tasks: ['typescript:build']
@@ -49,8 +61,8 @@
         }
     });
 
-    grunt.registerTask('default', ['typescript:build']);
-    grunt.registerTask('test', ['typescript:build', 'typescript:test', 'qunit']);
+    grunt.registerTask('default', ['typescript:build', 'uglify:dist']);
+    grunt.registerTask('test', ['typescript:build', 'uglify:dist', 'typescript:test', 'qunit']);
     grunt.registerTask('package', ['shell:package']);
     grunt.registerTask('publish', ['shell:package', 'shell:publish']);
 };

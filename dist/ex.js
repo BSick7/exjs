@@ -843,7 +843,7 @@ var exjs;
             keyComparer = keyComparer || function (f, s) {
                 return f > s ? 1 : (f < s ? -1 : 0);
             };
-            var factor = (isDescending == true) ? -1 : 1;
+            var factor = (isDescending === true) ? -1 : 1;
             this.Sorter = function (a, b) {
                 return factor * keyComparer(keySelector(a), keySelector(b));
             };

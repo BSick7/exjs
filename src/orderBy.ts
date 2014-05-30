@@ -16,7 +16,7 @@ module exjs {
             keyComparer = keyComparer || function (f: TKey, s: TKey) {
                 return f > s ? 1 : (f < s ? -1 : 0);
             };
-            var factor = (isDescending == true) ? -1 : 1;
+            var factor = (isDescending === true) ? -1 : 1;
             this.Sorter = (a, b) => factor * keyComparer(keySelector(a), keySelector(b));
         }
 
