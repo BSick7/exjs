@@ -32,7 +32,8 @@
             dist: {
                 options: {
                     sourceMap: true,
-                    sourceMapName: 'dist/ex.min.js.map'
+                    sourceMapName: 'dist/ex.min.js.map',
+                    sourceMapIn: 'dist/ex.js.map'
                 },
                 files: {
                     'dist/ex.min.js': ['dist/ex.js']
