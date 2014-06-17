@@ -238,6 +238,13 @@ var exjs;
             }
             return arr;
         };
+        Enumerable.prototype.toMap = function (keySelector, valueSelector) {
+            var m = new exjs.Map();
+            for (var en = this.getEnumerator(); en.moveNext();) {
+                m.set(keySelector(en.current), valueSelector(en.current));
+            }
+            return m;
+        };
         Enumerable.prototype.toList = function () {
             throw new Error("Not implemented");
         };
@@ -827,6 +834,95 @@ var exjs;
         }
         return removed.en().reverse();
     };
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
+    var Map = (function () {
+        function Map(enumerable) {
+            this._keys = [];
+            this._values = [];
+            var enu;
+            if (enumerable instanceof Array) {
+                enu = enumerable.en();
+            } else if (enumerable && enumerable.getEnumerator instanceof Function) {
+                enu = enumerable;
+            }
+
+            if (!enu)
+                return;
+            for (var en = enu.getEnumerator(); en && en.moveNext();) {
+                this.set(en.current[0], en.current[1]);
+            }
+        }
+        Object.defineProperty(Map.prototype, "size", {
+            get: function () {
+                return this._keys.length;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Map.prototype.clear = function () {
+            this._keys.length = 0;
+            this._values.length = 0;
+        };
+
+        Map.prototype.delete = function (key) {
+            var index = this._keys.indexOf(key);
+            if (!(index > -1))
+                return false;
+            this._keys.splice(index, 1);
+            this._values.splice(index, 1);
+            return true;
+        };
+
+        Map.prototype.entries = function () {
+            var _this = this;
+            return exjs.range(0, this.size).select(function (i) {
+                return [_this._keys[i], _this._values[i]];
+            });
+        };
+
+        Map.prototype.forEach = function (callbackFn, thisArg) {
+            if (thisArg == null)
+                thisArg = this;
+            for (var i = 0, keys = this._keys, vals = this._values, len = keys.length; i < len; i++) {
+                callbackFn.call(thisArg, vals[i], keys[i], this);
+            }
+        };
+
+        Map.prototype.get = function (key) {
+            var index = this._keys.indexOf(key);
+            return this._values[index];
+        };
+
+        Map.prototype.has = function (key) {
+            return this._keys.indexOf(key) > -1;
+        };
+
+        Map.prototype.keys = function () {
+            return this._keys.en();
+        };
+
+        Map.prototype.set = function (key, value) {
+            var index = this._keys.indexOf(key);
+            if (index > -1) {
+                this._values[index] = value;
+            } else {
+                this._keys.push(key);
+                this._values.push(value);
+            }
+            return undefined;
+        };
+
+        Map.prototype.values = function () {
+            return this._values.en();
+        };
+        return Map;
+    })();
+    exjs.Map = Map;
+    if (!window.Map)
+        window.Map = Map;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {

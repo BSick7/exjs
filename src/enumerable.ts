@@ -38,6 +38,7 @@ module exjs {
         takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         toArray(): T[];
         toList(): IList<T>;
+        toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): IMap<TKey, TValue>;
         //toDictionary();
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
@@ -314,6 +315,13 @@ module exjs {
                 arr.push(enumerator.current);
             }
             return arr;
+        }
+        toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): Map<TKey, TValue> {
+            var m = new Map<TKey, TValue>();
+            for (var en = this.getEnumerator(); en.moveNext();) {
+                m.set(keySelector(en.current), valueSelector(en.current));
+            }
+            return m;
         }
         toList(): IList<T> { throw new Error("Not implemented"); }
         //toDictionary() {

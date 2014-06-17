@@ -38,6 +38,7 @@ declare module exjs {
         takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         toArray(): T[];
         toList(): IList<T>;
+        toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): IMap<TKey, TValue>;
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         where(filter: (t: T) => boolean): IEnumerable<T>;
@@ -126,6 +127,7 @@ declare module exjs {
         public take(count: number): IEnumerable<T>;
         public takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
         public toArray(): T[];
+        public toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): Map<TKey, TValue>;
         public toList(): IList<T>;
         public union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
         public union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerable<T>;
@@ -182,6 +184,37 @@ declare module exjs {
         [n: number]: T;
         public remove(item: T): boolean;
         public removeWhere(predicate: (t: T, index?: number) => boolean): IEnumerable<T>;
+    }
+}
+declare module exjs {
+    interface IMap<TKey, TValue> {
+        size: number;
+        clear(): any;
+        delete(key: TKey): boolean;
+        entries(): IEnumerable<any[]>;
+        forEach(callbackFn: (value: TValue, key: TKey, map?: IMap<TKey, TValue>) => void, thisArg?: any): any;
+        get(key: TKey): TValue;
+        has(key: TKey): boolean;
+        keys(): IEnumerable<TKey>;
+        set(key: TKey, value: TValue): any;
+        values(): IEnumerable<TValue>;
+    }
+    class Map<TKey, TValue> implements IMap<TKey, TValue> {
+        private _keys;
+        private _values;
+        public size : number;
+        constructor();
+        constructor(enumerable: any[][]);
+        constructor(enumerable: IEnumerable<any[]>);
+        public clear(): void;
+        public delete(key: TKey): boolean;
+        public entries(): IEnumerable<any[]>;
+        public forEach(callbackFn: (value: TValue, key: TKey, map?: IMap<TKey, TValue>) => void, thisArg?: any): void;
+        public get(key: TKey): TValue;
+        public has(key: TKey): boolean;
+        public keys(): IEnumerable<TKey>;
+        public set(key: TKey, value: TValue): any;
+        public values(): IEnumerable<TValue>;
     }
 }
 declare module exjs {
