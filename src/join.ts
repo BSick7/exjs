@@ -16,7 +16,7 @@ module exjs {
                     s = prev.getEnumerator();
                     if (!s.moveNext())
                         return false;
-                    ins = inner.toArray();
+                    ins = en(inner).toArray();
                 }
 
                 var cur: TInner;
@@ -37,8 +37,8 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.join = function<T,TInner,TKey,TResult>(inner: any, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<TResult> {
-        var en:IEnumerable<TInner> = inner instanceof Array ? inner.en() : inner;
+    Enumerable.prototype.join = function<T,TInner,TKey,TResult>(inner: any, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<TResult> {
+        var en: IEnumerable<TInner> = inner instanceof Array ? inner.en() : inner;
         var e = new Enumerable<TResult>();
         e.getEnumerator = () => joinEnumerator<T, TInner, TKey, TResult>(<IEnumerable<T>>this, en, outerKeySelector, innerKeySelector, resultSelector, comparer);
         return e;

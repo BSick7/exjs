@@ -64,7 +64,7 @@ module exjs {
         }
     }
 
-    Enumerable.prototype.groupBy = function<T, TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerable<IGrouping<TKey, T>> {
+    Enumerable.prototype.groupBy = function<T, TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<IGrouping<TKey, T>> {
         var e = new Enumerable<IGrouping<TKey, T>>();
         e.getEnumerator = () => groupByEnumerator<T, TKey>(<IEnumerable<T>>this, keySelector, comparer);
         return e;

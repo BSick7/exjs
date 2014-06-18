@@ -42,7 +42,7 @@ module exjs {
 
         //List<T> methods
         remove(item: T): boolean { throw new Error("Not implemented"); }
-        removeWhere(predicate: (t: T, index?: number) => boolean): IEnumerable<T> { throw new Error("Not implemented"); }
+        removeWhere(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> { throw new Error("Not implemented"); }
     }
 
     for (var p in Array) if (Array.hasOwnProperty(p)) List[p] = Array[p];
@@ -74,7 +74,7 @@ module exjs {
     List.prototype.remove = function<T>(item: T): boolean {
         return this.removeWhere(t => t === item).any();
     }
-    List.prototype.removeWhere = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
+    List.prototype.removeWhere = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> {
         var removed = [];
         var cur: T;
         for (var i = this.length - 1; i >= 0; i--) {

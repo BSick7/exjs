@@ -42,12 +42,12 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.take = function<T>(count: number): IEnumerable<T> {
+    Enumerable.prototype.take = function<T>(count: number): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => takeEnumerator(<IEnumerable<T>>this, count);
         return e;
     };
-    Enumerable.prototype.takeWhile = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
+    Enumerable.prototype.takeWhile = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => takeWhileEnumerator(<IEnumerable<T>>this, predicate);
         return e;

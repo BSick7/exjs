@@ -42,12 +42,12 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.select = function<T,TResult>(selector: (t: T, index?: number) => TResult): IEnumerable<TResult> {
+    Enumerable.prototype.select = function<T,TResult>(selector: (t: T, index?: number) => TResult): IEnumerableEx<TResult> {
         var e = new Enumerable<TResult>();
         e.getEnumerator = () => selectEnumerator(<IEnumerable<T>>this, selector);
         return e;
     };
-    Enumerable.prototype.selectMany = function<T,TResult>(selector: (t: T) => any): IEnumerable<TResult> {
+    Enumerable.prototype.selectMany = function<T,TResult>(selector: (t: T) => any): IEnumerableEx<TResult> {
         var e = new Enumerable<TResult>();
         e.getEnumerator = () => selectManyEnumerator<T, TResult>(<IEnumerable<T>>this, selector);
         return e;

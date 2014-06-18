@@ -8,7 +8,7 @@ module exjs {
             current: undefined,
             moveNext: function (): boolean {
                 if (!a) {
-                    a = prev.toArray();
+                    a = en(prev).toArray();
                     i = a.length;
                 }
                 i--;
@@ -19,7 +19,7 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.reverse = function<T>(): IEnumerable<T> {
+    Enumerable.prototype.reverse = function<T>(): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => reverseEnumerator(<IEnumerable<T>>this);
         return e;

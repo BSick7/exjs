@@ -3,13 +3,13 @@ module exjs {
         size: number;
         clear();
         delete(key: TKey): boolean;
-        entries(): IEnumerable<any[]>;
+        entries(): IEnumerableEx<any[]>;
         forEach(callbackFn: (value: TValue, key: TKey, map?: IMap<TKey, TValue>) => void, thisArg?: any);
         get(key: TKey): TValue;
         has(key: TKey): boolean;
-        keys(): IEnumerable<TKey>;
+        keys(): IEnumerableEx<TKey>;
         set(key: TKey, value: TValue): any;
-        values(): IEnumerable<TValue>;
+        values(): IEnumerableEx<TValue>;
     }
 
     export class Map<TKey, TValue> implements IMap<TKey, TValue> {
@@ -52,7 +52,7 @@ module exjs {
             return true;
         }
 
-        entries (): IEnumerable<any[]> {
+        entries (): IEnumerableEx<any[]> {
             return exjs.range(0, this.size).select(i => [this._keys[i], this._values[i]]);
         }
 
@@ -73,7 +73,7 @@ module exjs {
             return this._keys.indexOf(key) > -1;
         }
 
-        keys (): IEnumerable<TKey> {
+        keys (): IEnumerableEx<TKey> {
             return this._keys.en();
         }
 
@@ -88,7 +88,7 @@ module exjs {
             return undefined;
         }
 
-        values (): IEnumerable<TValue> {
+        values (): IEnumerableEx<TValue> {
             return this._values.en();
         }
     }

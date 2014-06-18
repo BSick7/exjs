@@ -17,7 +17,7 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.apply = function<T>(action: (t: T, index?: number) => void): IEnumerable<T> {
+    Enumerable.prototype.apply = function<T>(action: (t: T, index?: number) => void): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => applyEnumerator(<IEnumerable<T>>this, action);
         return e;

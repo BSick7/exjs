@@ -34,7 +34,7 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.distinct = function<T>(comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+    Enumerable.prototype.distinct = function<T>(comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => distinctEnumerator(<IEnumerable<T>>this, comparer);
         return e;

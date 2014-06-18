@@ -16,7 +16,7 @@ module exjs {
         return e;
     }
 
-    export function range (start: number, end: number, increment?: number): IEnumerable<number> {
+    export function range (start: number, end: number, increment?: number): IEnumerableEx<number> {
         start = start || 0;
         end = end || 0;
         if (start > end)

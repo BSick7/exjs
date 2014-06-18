@@ -264,8 +264,8 @@ test("groupBy", () => {
     ];
     var res = arr.en().groupBy<number>(t => t.i).toArray();
     strictEqual(res.length, 2);
-    var r1 = (<exjs.IEnumerable<IMock3>>res[0]).toArray();
-    var r2 = (<exjs.IEnumerable<IMock3>>res[1]).toArray();
+    var r1 = res[0].toArray();
+    var r2 = res[1].toArray();
     strictEqual(r1.length, 3);
     strictEqual(r1[0].j, "a");
     strictEqual(r1[1].j, "b");
@@ -281,8 +281,8 @@ test("groupBy", () => {
     ];
     res = arr.en().groupBy<number>(t => t.i,(k1, k2) => k1 % 2 === k2 % 2).toArray();
     strictEqual(res.length, 2);
-    r1 = (<exjs.IEnumerable<IMock3>>res[0]).toArray();
-    r2 = (<exjs.IEnumerable<IMock3>>res[1]).toArray();
+    r1 = res[0].toArray();
+    r2 = res[1].toArray();
     strictEqual(r1.length, 2);
     strictEqual(r1[0].j, "a");
     strictEqual(r1[1].j, "c");

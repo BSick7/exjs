@@ -26,8 +26,8 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.except = function<T>(second: any, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
-        var en:IEnumerable<T> = second instanceof Array ? second.en() : second;
+    Enumerable.prototype.except = function<T>(second: any, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> {
+        var en: IEnumerable<T> = second instanceof Array ? second.en() : second;
         var e = new Enumerable<T>();
         e.getEnumerator = () => exceptEnumerator(<IEnumerable<T>>this, en, comparer);
         return e;

@@ -25,7 +25,7 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.concat = function<T>(second:any):IEnumerable<T> {
+    Enumerable.prototype.concat = function<T>(second:any):IEnumerableEx<T> {
         var en:IEnumerable<T> = second instanceof Array ? second.en() : second;
         var e = new Enumerable<T>();
         e.getEnumerator = () => concatEnumerator<T>(<IEnumerable<T>>this, en);

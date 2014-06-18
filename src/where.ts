@@ -20,7 +20,7 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.where = function<T>(filter: (t: T) => boolean): IEnumerable<T> {
+    Enumerable.prototype.where = function<T>(filter: (t: T) => boolean): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => whereEnumerator(<IEnumerable<T>>this, filter);
         return e;

@@ -52,12 +52,12 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.skip = function<T>(count: number): IEnumerable<T> {
+    Enumerable.prototype.skip = function<T>(count: number): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => skipEnumerator(<IEnumerable<T>>this, count);
         return e;
     };
-    Enumerable.prototype.skipWhile = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerable<T> {
+    Enumerable.prototype.skipWhile = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => skipWhileEnumerator(<IEnumerable<T>>this, predicate);
         return e;

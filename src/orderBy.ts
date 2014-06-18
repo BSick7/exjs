@@ -29,7 +29,7 @@ module exjs {
                 current: undefined,
                 moveNext: function (): boolean {
                     if (!arr) {
-                        arr = source.toArray();
+                        arr = en(source).toArray();
                         arr.sort(sorter);
                     }
                     e.current = undefined;

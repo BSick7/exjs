@@ -11,13 +11,13 @@ module exjs {
         var e = {
             current: undefined,
             moveNext: function (): boolean {
-                if (!t) t = prev.distinct().getEnumerator();
+                if (!t) t = en(prev).distinct().getEnumerator();
                 e.current = undefined;
                 if (!s && t.moveNext()) {
                     visited.push(e.current = t.current);
                     return true;
                 }
-                s = s || second.distinct().getEnumerator();
+                s = s || en(second).distinct().getEnumerator();
                 while (s.moveNext()) {
                     for (var i = 0, hit = false, len = visited.length; i < len && !hit; i++) {
                         hit = comparer(visited[i], s.current);
@@ -33,7 +33,7 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.union = function<T>(second: any, comparer?: (f: T, s: T) => boolean): IEnumerable<T> {
+    Enumerable.prototype.union = function<T>(second: any, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> {
         var en:IEnumerable<T> = second instanceof Array ? second.en() : second;
         var e = new Enumerable<T>();
         e.getEnumerator = () => unionEnumerator(<IEnumerable<T>>this, en, comparer);

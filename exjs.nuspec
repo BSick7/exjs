@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>exjs</id>
-        <version>0.1.8</version>
+        <version>0.1.9</version>
         <title>exjs</title>
         <authors>Brad Sickles</authors>
         <licenseUrl>https://raw.githubusercontent.com/BSick7/exjs/master/LICENSE</licenseUrl>
@@ -19,6 +19,8 @@ This is a lightweight library to aid in data manipulation and transformation.</d
 		<file src="dist\ex.min.js" target="content\lib\exjs\ex.min.js" />
     </files>
 </package>
+
+
 
 
 

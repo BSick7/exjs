@@ -1,7 +1,7 @@
 /// <reference path="enumerable.ts" />
 
 interface Array<T> {
-    en():exjs.IEnumerable<T>;
+    en(): exjs.IEnumerableEx<T>;
 }
 
 module exjs {
@@ -34,13 +34,7 @@ module exjs {
         }
     }
 
-    export function _<T>(o: any): IEnumerable<T> {
-        if (o && o instanceof Array)
-            return new ArrayEnumerable<T>(o);
-        return new Enumerable<T>();
-    }
-
-    Array.prototype.en = function<T>() {
+    Array.prototype.en = function<T>(): IEnumerableEx<T> {
         if (this && this instanceof Array)
             return new ArrayEnumerable<T>(this);
         return new Enumerable<T>();

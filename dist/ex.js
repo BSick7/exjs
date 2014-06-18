@@ -335,13 +335,6 @@ var exjs;
         return ArrayEnumerable;
     })(exjs.Enumerable);
 
-    function _(o) {
-        if (o && o instanceof Array)
-            return new ArrayEnumerable(o);
-        return new exjs.Enumerable();
-    }
-    exjs._ = _;
-
     Array.prototype.en = function () {
         if (this && this instanceof Array)
             return new ArrayEnumerable(this);
@@ -615,7 +608,7 @@ var exjs;
             current: undefined,
             moveNext: function () {
                 if (!t)
-                    t = prev.distinct().getEnumerator();
+                    t = exjs.en(prev).distinct().getEnumerator();
                 e.current = undefined;
                 while (t.moveNext()) {
                     for (var hit = false, x = second.getEnumerator(); x.moveNext() && !hit;) {
@@ -661,7 +654,7 @@ var exjs;
                     s = prev.getEnumerator();
                     if (!s.moveNext())
                         return false;
-                    ins = inner.toArray();
+                    ins = exjs.en(inner).toArray();
                 }
 
                 var cur;
@@ -953,7 +946,7 @@ var exjs;
                 current: undefined,
                 moveNext: function () {
                     if (!arr) {
-                        arr = source.toArray();
+                        arr = exjs.en(source).toArray();
                         arr.sort(sorter);
                     }
                     e.current = undefined;
@@ -1044,7 +1037,7 @@ var exjs;
             current: undefined,
             moveNext: function () {
                 if (!a) {
-                    a = prev.toArray();
+                    a = exjs.en(prev).toArray();
                     i = a.length;
                 }
                 i--;
@@ -1297,13 +1290,13 @@ var exjs;
             current: undefined,
             moveNext: function () {
                 if (!t)
-                    t = prev.distinct().getEnumerator();
+                    t = exjs.en(prev).distinct().getEnumerator();
                 e.current = undefined;
                 if (!s && t.moveNext()) {
                     visited.push(e.current = t.current);
                     return true;
                 }
-                s = s || second.distinct().getEnumerator();
+                s = s || exjs.en(second).distinct().getEnumerator();
                 while (s.moveNext()) {
                     for (var i = 0, hit = false, len = visited.length; i < len && !hit; i++) {
                         hit = comparer(visited[i], s.current);
@@ -1363,6 +1356,31 @@ var exjs;
     };
     if (exjs.List)
         exjs.List.prototype.where = exjs.Enumerable.prototype.where;
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
+    function en(enu) {
+        var x = new exjs.Enumerable();
+        x.getEnumerator = function () {
+            return wrapEnumerator(enu);
+        };
+        return x;
+    }
+    exjs.en = en;
+
+    function wrapEnumerator(enu) {
+        var wrapped = enu.getEnumerator();
+        var x = { current: undefined, moveNext: undefined };
+        x.moveNext = function () {
+            if (wrapped.moveNext()) {
+                x.current = wrapped.current;
+                return true;
+            }
+            x.current = undefined;
+            return false;
+        };
+        return x;
+    }
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
