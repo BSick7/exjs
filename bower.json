@@ -1,6 +1,6 @@
 {
   "name": "exjs",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "homepage": "https://github.com/BSick7/exjs",
   "authors": [
     "BSick7 <brad.sickles@gmail.com>"
@@ -13,7 +13,6 @@
     "typescript"
   ],
   "license": "MIT",
-  "private": true,
   "ignore": [
       "node_modules"
   ]
