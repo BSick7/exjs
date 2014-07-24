@@ -34,9 +34,16 @@ module exjs {
         }
     }
 
-    Array.prototype.en = function<T>(): IEnumerableEx<T> {
+    function en<T>(): IEnumerableEx<T> {
         if (this && this instanceof Array)
             return new ArrayEnumerable<T>(this);
         return new Enumerable<T>();
-    };
+    }
+
+    Object.defineProperty(Array.prototype, "en", {
+        value: en,
+        enumerable: false,
+        writable: false,
+        configurable: false
+    });
 }

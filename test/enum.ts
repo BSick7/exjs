@@ -24,6 +24,16 @@ test("array", () => {
     strictEqual(arr2[2], 3);
     strictEqual(arr2[3], 4);
     strictEqual(arr2[4], 5);
+
+    (function () {
+        for (var key in []) {
+            if (key === "en") {
+                ok(false, 'Array should not have enumerable en()');
+                return;
+            }
+        }
+        ok(true, 'Array does not have enumerable en()');
+    })();
 });
 
 test("range", () => {
@@ -239,7 +249,7 @@ test("except", () => {
         { i: 1 },
         { i: 4 }
     ];
-    var res2 = ar1.en().except(ar2,(f, s) => f.i === s.i).toArray();
+    var res2 = ar1.en().except(ar2, (f, s) => f.i === s.i).toArray();
     strictEqual(res2.length, 2);
     strictEqual(res2[0].i, 2);
     strictEqual(res2[1].i, 3);
@@ -279,7 +289,7 @@ test("groupBy", () => {
         { i: 2, j: "c" },
         { i: 3, j: "d" }
     ];
-    res = arr.en().groupBy<number>(t => t.i,(k1, k2) => k1 % 2 === k2 % 2).toArray();
+    res = arr.en().groupBy<number>(t => t.i, (k1, k2) => k1 % 2 === k2 % 2).toArray();
     strictEqual(res.length, 2);
     r1 = res[0].toArray();
     r2 = res[1].toArray();
@@ -319,7 +329,7 @@ test("intersect", () => {
         { i: 2 },
         { i: 3 }
     ];
-    var res2 = ar1.en().intersect(ar2,(f, s) => f.i === s.i).toArray();
+    var res2 = ar1.en().intersect(ar2, (f, s) => f.i === s.i).toArray();
     strictEqual(res2.length, 2);
     strictEqual(res2[0].i, 1);
     strictEqual(res2[1].i, 2);
@@ -330,7 +340,7 @@ test("join", () => {
     var arr2: IMock3[] = [
         { i: 0, j: "a" }
     ];
-    var res = arr1.en().join(arr2,t => t.j,t => t.j,(o, i) => {
+    var res = arr1.en().join(arr2, t => t.j, t => t.j, (o, i) => {
         return { i1: o.i, i2: i.i };
     }).toArray();
     strictEqual(res.length, 0);
@@ -346,7 +356,7 @@ test("join", () => {
         { i: 2, j: "c" },
         { i: 3, j: "e" }
     ];
-    res = arr1.en().join(arr2,t => t.j,t => t.j,(o, i) => {
+    res = arr1.en().join(arr2, t => t.j, t => t.j, (o, i) => {
         return { i1: o.i, i2: i.i };
     }).toArray();
     strictEqual(res.length, 2);
@@ -615,7 +625,7 @@ test("union", () => {
         { i: 1 },
         { i: 2 }
     ];
-    var res2 = ar1.en().union(ar2,(f, s) => f.i === s.i).toArray();
+    var res2 = ar1.en().union(ar2, (f, s) => f.i === s.i).toArray();
     strictEqual(res2.length, 3);
     strictEqual(res2[0].i, 0);
     strictEqual(res2[1].i, 1);
@@ -633,21 +643,21 @@ test("where", () => {
 test("zip", () => {
     var arr1 = [1, 2, 3];
     var arr2 = ["a"];
-    var res = arr1.en().zip<string, IMock3>(arr2,(f, s) => ({ i: f, j: s })).toArray();
+    var res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({ i: f, j: s })).toArray();
     strictEqual(res.length, 1);
     strictEqual(res[0].i, 1);
     strictEqual(res[0].j, "a");
 
     arr1 = [1];
     arr2 = ["a", "b", "c"];
-    res = arr1.en().zip<string, IMock3>(arr2,(f, s) => ({ i: f, j: s })).toArray();
+    res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({ i: f, j: s })).toArray();
     strictEqual(res.length, 1);
     strictEqual(res[0].i, 1);
     strictEqual(res[0].j, "a");
 
     arr1 = [1, 2, 3];
     arr2 = ["a", "b", "c"];
-    res = arr1.en().zip<string, IMock3>(arr2,(f, s) => ({ i: f, j: s })).toArray();
+    res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({ i: f, j: s })).toArray();
     strictEqual(res.length, 3);
     strictEqual(res[0].i, 1);
     strictEqual(res[0].j, "a");

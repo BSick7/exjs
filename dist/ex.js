@@ -335,11 +335,18 @@ var exjs;
         return ArrayEnumerable;
     })(exjs.Enumerable);
 
-    Array.prototype.en = function () {
+    function en() {
         if (this && this instanceof Array)
             return new ArrayEnumerable(this);
         return new exjs.Enumerable();
-    };
+    }
+
+    Object.defineProperty(Array.prototype, "en", {
+        value: en,
+        enumerable: false,
+        writable: false,
+        configurable: false
+    });
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {

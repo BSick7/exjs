@@ -9,7 +9,7 @@ The monad support is based off LINQ extension methods.
 
 
 ### Bower Installation
-```bower install git://github.com/BSick7/exjs.git --save-dev```  
+```bower install exjs --save```  
 Include in html.  
 ```<script src="bower_components/exjs/dist/ex.js"></script>```
 
