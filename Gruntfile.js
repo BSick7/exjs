@@ -2,10 +2,9 @@
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-nuget');
 
     grunt.initConfig({
-        nuget: grunt.file.readJSON('./nuget.json'),
         pkg: grunt.file.readJSON('./package.json'),
         typescript: {
             build: {
@@ -44,26 +43,24 @@
             files: '**/*.ts',
             tasks: ['typescript:build']
         },
-        shell: {
-            package: {
+        nugetpack: {
+            dist: {
+                src: './nuget/exjs.nuspec',
+                dest: './nuget/',
                 options: {
-                    stdout: true,
-                    stderr: true
-                },
-                command: 'powershell ./package.ps1 <%= pkg.version %>'
-            },
-            publish: {
-                options: {
-                    stdout: true,
-                    stderr: true
-                },
-                command: 'nuget push "./nuget/exjs.<%= pkg.version %>.nupkg" <%= nuget.apiKey %>'
+                    version: '<%= pkg.version %>'
+                }
+            }
+        },
+        nugetpush: {
+            dist: {
+                src: './nuget/exjs.<%= pkg.version %>.nupkg'
             }
         }
     });
 
     grunt.registerTask('default', ['typescript:build', 'uglify:dist']);
     grunt.registerTask('test', ['typescript:build', 'uglify:dist', 'typescript:test', 'qunit']);
-    grunt.registerTask('package', ['shell:package']);
-    grunt.registerTask('publish', ['shell:package', 'shell:publish']);
+    grunt.registerTask('package', ['nugetpack:dist']);
+    grunt.registerTask('publish', ['nugetpack:dist', 'nugetpush:dist']);
 };

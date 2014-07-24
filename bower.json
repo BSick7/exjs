@@ -6,7 +6,7 @@
     "BSick7 <brad.sickles@gmail.com>"
   ],
   "description": "Extension library",
-  "main": "ex.js",
+  "main": "dist/ex.min.js",
   "keywords": [
     "array",
     "linq",
