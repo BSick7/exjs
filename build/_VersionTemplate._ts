@@ -1,0 +1,3 @@
+module exjs {
+    export var Version = '%VERSION%';
+}

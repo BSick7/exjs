@@ -9,3 +9,4 @@ node_modules/**/*
 test/*.js
 test/*.js.map
 dist/*.js.map
+src/_Version.ts

@@ -1,4 +1,7 @@
 declare module exjs {
+    var Version: string;
+}
+declare module exjs {
     interface IEnumerable<T> {
         getEnumerator(): IEnumerator<T>;
     }

@@ -1,4 +1,6 @@
-﻿module.exports = function (grunt) {
+﻿var version = require('./build/version');
+
+module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -43,6 +45,14 @@
             files: '**/*.ts',
             tasks: ['typescript:build']
         },
+        version: {
+            bump: {
+            },
+            apply: {
+                src: './build/_VersionTemplate._ts',
+                dest: './src/_Version.ts'
+            }
+        },
         nugetpack: {
             dist: {
                 src: './nuget/exjs.nuspec',
@@ -59,8 +69,9 @@
         }
     });
 
-    grunt.registerTask('default', ['typescript:build', 'uglify:dist']);
-    grunt.registerTask('test', ['typescript:build', 'uglify:dist', 'typescript:test', 'qunit']);
+    grunt.registerTask('default', ['version:apply', 'typescript:build', 'uglify:dist']);
+    grunt.registerTask('test', ['version:apply', 'typescript:build', 'uglify:dist', 'typescript:test', 'qunit']);
+    version(grunt);
     grunt.registerTask('package', ['nugetpack:dist']);
     grunt.registerTask('publish', ['nugetpack:dist', 'nugetpush:dist']);
 };

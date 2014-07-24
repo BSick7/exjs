@@ -1,5 +1,9 @@
 var exjs;
 (function (exjs) {
+    exjs.Version = '0.1.12';
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
     var Enumerable = (function () {
         function Enumerable() {
         }
