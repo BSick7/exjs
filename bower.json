@@ -16,6 +16,7 @@
   "ignore": [
     "build",
     "node_modules",
+    "lib",
     "nuget",
     "src",
     "test",
