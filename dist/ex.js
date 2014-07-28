@@ -481,6 +481,8 @@ var exjs;
 })(exjs || (exjs = {}));
 Function.prototype.fromJson = function (o, mappingOverrides) {
     var rv = new this();
+    if (o == null)
+        return rv;
 
     var mapped = [];
 

@@ -71,3 +71,8 @@ test("fromJson", () => {
     ok(batch.entries[1] instanceof Entry);
     strictEqual(batch.entries[1].id, 2);
 });
+
+test("fromJson - null", () => {
+    var batch = Batch.fromJson<Batch>(null);
+    ok(batch instanceof Batch);
+});

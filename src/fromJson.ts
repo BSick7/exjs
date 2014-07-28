@@ -4,6 +4,8 @@ interface Function {
 
 Function.prototype.fromJson = function<T>(o: any, mappingOverrides?: any): T {
     var rv = new this();
+    if (o == null)
+        return rv;
 
     var mapped: string[] = [];
 
