@@ -1,6 +1,6 @@
 var exjs;
 (function (exjs) {
-    exjs.Version = '0.1.12';
+    exjs.Version = '0.2.0';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
