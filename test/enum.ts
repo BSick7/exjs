@@ -100,12 +100,12 @@ test("any", () => {
 
 test("apply", () => {
     var arr: IMock3[] = [
-        { i: 0, j: "0" },
-        { i: 1, j: "0" },
-        { i: 2, j: "0" },
-        { i: 3, j: "0" },
-        { i: 4, j: "0" },
-        { i: 5, j: "0" }
+        {i: 0, j: "0"},
+        {i: 1, j: "0"},
+        {i: 2, j: "0"},
+        {i: 3, j: "0"},
+        {i: 4, j: "0"},
+        {i: 5, j: "0"}
     ];
     arr.en().apply((m: IMock3) => m.j = m.i.toString()).toArray();
     strictEqual(arr[0].j, "0");
@@ -133,9 +133,9 @@ test("average", () => {
     strictEqual(arr.en().average(), 2);
 
     var arr2: IMock[] = [
-        { i: 1 },
-        { i: 2 },
-        { i: 3 }
+        {i: 1},
+        {i: 2},
+        {i: 3}
     ];
     strictEqual(arr2.en().average(t => t.i), 2);
 });
@@ -208,9 +208,9 @@ test("distinct", () => {
     strictEqual(res[3], 4);
 
     var arr2: IMock[] = [
-        { i: 0 },
-        { i: 0 },
-        { i: 1 }
+        {i: 0},
+        {i: 0},
+        {i: 1}
     ];
     var res2 = arr2.en().distinct((f, s) => f.i === s.i).toArray();
     strictEqual(res2.length, 2);
@@ -240,14 +240,14 @@ test("except", () => {
     strictEqual(res[1], 3);
 
     var ar1: IMock[] = [
-        { i: 1 },
-        { i: 2 },
-        { i: 3 },
-        { i: 4 }
+        {i: 1},
+        {i: 2},
+        {i: 3},
+        {i: 4}
     ];
     var ar2: IMock[] = [
-        { i: 1 },
-        { i: 4 }
+        {i: 1},
+        {i: 4}
     ];
     var res2 = ar1.en().except(ar2, (f, s) => f.i === s.i).toArray();
     strictEqual(res2.length, 2);
@@ -265,12 +265,22 @@ test("first", () => {
     strictEqual(arr.en().first(n => n > 5), undefined);
 });
 
+test("firstIndex", () => {
+    var arr = [];
+    strictEqual(arr.en().firstIndex(t => t === 1), -1);
+
+    arr = [1, 2, 3, 4];
+    strictEqual(arr.en().firstIndex(), 0);
+    strictEqual(arr.en().firstIndex(t => t % 2 === 0), 1);
+    strictEqual(arr.en().firstIndex(t => t > 2), 2);
+});
+
 test("groupBy", () => {
     var arr: IMock3[] = [
-        { i: 0, j: "a" },
-        { i: 0, j: "b" },
-        { i: 0, j: "c" },
-        { i: 1, j: "d" }
+        {i: 0, j: "a"},
+        {i: 0, j: "b"},
+        {i: 0, j: "c"},
+        {i: 1, j: "d"}
     ];
     var res = arr.en().groupBy<number>(t => t.i).toArray();
     strictEqual(res.length, 2);
@@ -284,10 +294,10 @@ test("groupBy", () => {
     strictEqual(r2[0].j, "d");
 
     arr = [
-        { i: 0, j: "a" },
-        { i: 1, j: "b" },
-        { i: 2, j: "c" },
-        { i: 3, j: "d" }
+        {i: 0, j: "a"},
+        {i: 1, j: "b"},
+        {i: 2, j: "c"},
+        {i: 3, j: "d"}
     ];
     res = arr.en().groupBy<number>(t => t.i, (k1, k2) => k1 % 2 === k2 % 2).toArray();
     strictEqual(res.length, 2);
@@ -320,14 +330,14 @@ test("intersect", () => {
     strictEqual(res[1], 5);
 
     var ar1: IMock[] = [
-        { i: 0 },
-        { i: 1 },
-        { i: 2 }
+        {i: 0},
+        {i: 1},
+        {i: 2}
     ];
     var ar2: IMock[] = [
-        { i: 1 },
-        { i: 2 },
-        { i: 3 }
+        {i: 1},
+        {i: 2},
+        {i: 3}
     ];
     var res2 = ar1.en().intersect(ar2, (f, s) => f.i === s.i).toArray();
     strictEqual(res2.length, 2);
@@ -338,26 +348,26 @@ test("intersect", () => {
 test("join", () => {
     var arr1: IMock3[] = [];
     var arr2: IMock3[] = [
-        { i: 0, j: "a" }
+        {i: 0, j: "a"}
     ];
     var res = arr1.en().join(arr2, t => t.j, t => t.j, (o, i) => {
-        return { i1: o.i, i2: i.i };
+        return {i1: o.i, i2: i.i};
     }).toArray();
     strictEqual(res.length, 0);
 
     arr1 = [
-        { i: 9, j: "a" },
-        { i: 8, j: "b" },
-        { i: 7, j: "c" },
-        { i: 6, j: "d" }
+        {i: 9, j: "a"},
+        {i: 8, j: "b"},
+        {i: 7, j: "c"},
+        {i: 6, j: "d"}
     ];
     arr2 = [
-        { i: 1, j: "a" },
-        { i: 2, j: "c" },
-        { i: 3, j: "e" }
+        {i: 1, j: "a"},
+        {i: 2, j: "c"},
+        {i: 3, j: "e"}
     ];
     res = arr1.en().join(arr2, t => t.j, t => t.j, (o, i) => {
-        return { i1: o.i, i2: i.i };
+        return {i1: o.i, i2: i.i};
     }).toArray();
     strictEqual(res.length, 2);
     strictEqual(res[0].i1, 9);
@@ -376,6 +386,16 @@ test("last", () => {
     strictEqual(arr.en().last(n => n > 5), undefined);
 });
 
+test("lastIndex", () => {
+    var arr = [];
+    strictEqual(arr.en().lastIndex(t => t === 1), -1);
+
+    arr = [1, 2, 3, 4];
+    strictEqual(arr.en().lastIndex(), 3);
+    strictEqual(arr.en().lastIndex(t => t % 2 === 0), 3);
+    strictEqual(arr.en().lastIndex(t => t > 2), 3);
+});
+
 test("orderBy", () => {
     var arr = [5, 12, 5, 6346, 2, 1];
     var res = arr.en().orderBy(x => x).toArray();
@@ -388,12 +408,12 @@ test("orderBy", () => {
     strictEqual(res[5], 6346);
 
     var arr2: IMock[] = [
-        { i: 5 },
-        { i: 12 },
-        { i: 5 },
-        { i: 6346 },
-        { i: 2 },
-        { i: 1 }
+        {i: 5},
+        {i: 12},
+        {i: 5},
+        {i: 6346},
+        {i: 2},
+        {i: 1}
     ];
     var res2 = arr2.en().orderBy(x => x.i).toArray();
     strictEqual(res2.length, 6);
@@ -413,9 +433,9 @@ test("max", () => {
     strictEqual(arr.en().max(), 3);
 
     var arr2: IMock[] = [
-        { i: 1 },
-        { i: 2 },
-        { i: 3 }
+        {i: 1},
+        {i: 2},
+        {i: 3}
     ];
     strictEqual(arr2.en().max(t => t.i), 3);
 });
@@ -428,9 +448,9 @@ test("min", () => {
     strictEqual(arr.en().min(), 1);
 
     var arr2: IMock[] = [
-        { i: 1 },
-        { i: 2 },
-        { i: 3 }
+        {i: 1},
+        {i: 2},
+        {i: 3}
     ];
     strictEqual(arr2.en().min(t => t.i), 1);
 });
@@ -467,11 +487,11 @@ test("selectMany", () => {
     strictEqual(res.length, 0);
 
     var arr2: IMock2[] = [
-        { i: [1, 2, 3] },
-        { i: [] },
-        { i: [4] },
-        { i: [] },
-        { i: [5, 6] }
+        {i: [1, 2, 3]},
+        {i: []},
+        {i: [4]},
+        {i: []},
+        {i: [5, 6]}
     ];
     var res2 = arr2.en().selectMany(t => t.i.en()).toArray();
     strictEqual(res2.length, 6);
@@ -536,9 +556,9 @@ test("sum", () => {
     strictEqual(arr.en().sum(), 6);
 
     var arr2: IMock[] = [
-        { i: 1 },
-        { i: 2 },
-        { i: 3 }
+        {i: 1},
+        {i: 2},
+        {i: 3}
     ];
     strictEqual(arr2.en().sum(t => t.i), 6);
 });
@@ -575,13 +595,13 @@ test("takeWhile", () => {
 });
 
 test("thenBy", () => {
-    var m0: IMock5 = { i: 5, j: "aa", k: new Date("1/1/2013") };
-    var m1: IMock5 = { i: 12, j: "a", k: new Date("6/1/2013") };
-    var m2: IMock5 = { i: 5, j: "a", k: new Date("1/1/2013") };
-    var m3: IMock5 = { i: 12, j: "a", k: new Date("12/1/2013") };
-    var m4: IMock5 = { i: 2, j: "aa", k: new Date("1/1/2013") };
-    var m5: IMock5 = { i: 2, j: "a", k: new Date("1/1/2013") };
-    var m6: IMock5 = { i: 12, j: "a", k: new Date("1/1/2013") };
+    var m0: IMock5 = {i: 5, j: "aa", k: new Date("1/1/2013")};
+    var m1: IMock5 = {i: 12, j: "a", k: new Date("6/1/2013")};
+    var m2: IMock5 = {i: 5, j: "a", k: new Date("1/1/2013")};
+    var m3: IMock5 = {i: 12, j: "a", k: new Date("12/1/2013")};
+    var m4: IMock5 = {i: 2, j: "aa", k: new Date("1/1/2013")};
+    var m5: IMock5 = {i: 2, j: "a", k: new Date("1/1/2013")};
+    var m6: IMock5 = {i: 12, j: "a", k: new Date("1/1/2013")};
     var arr: IMock5[] = [m0, m1, m2, m3, m4, m5, m6];
     var res = arr.en()
         .orderBy(x => x.i)
@@ -618,12 +638,12 @@ test("union", () => {
     strictEqual(res[3], 4);
 
     var ar1: IMock[] = [
-        { i: 0 },
-        { i: 1 }
+        {i: 0},
+        {i: 1}
     ];
     var ar2: IMock[] = [
-        { i: 1 },
-        { i: 2 }
+        {i: 1},
+        {i: 2}
     ];
     var res2 = ar1.en().union(ar2, (f, s) => f.i === s.i).toArray();
     strictEqual(res2.length, 3);
@@ -643,21 +663,21 @@ test("where", () => {
 test("zip", () => {
     var arr1 = [1, 2, 3];
     var arr2 = ["a"];
-    var res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({ i: f, j: s })).toArray();
+    var res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({i: f, j: s})).toArray();
     strictEqual(res.length, 1);
     strictEqual(res[0].i, 1);
     strictEqual(res[0].j, "a");
 
     arr1 = [1];
     arr2 = ["a", "b", "c"];
-    res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({ i: f, j: s })).toArray();
+    res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({i: f, j: s})).toArray();
     strictEqual(res.length, 1);
     strictEqual(res[0].i, 1);
     strictEqual(res[0].j, "a");
 
     arr1 = [1, 2, 3];
     arr2 = ["a", "b", "c"];
-    res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({ i: f, j: s })).toArray();
+    res = arr1.en().zip<string, IMock3>(arr2, (f, s) => ({i: f, j: s})).toArray();
     strictEqual(res.length, 3);
     strictEqual(res[0].i, 1);
     strictEqual(res[0].j, "a");

@@ -1,6 +1,6 @@
 var exjs;
 (function (exjs) {
-    exjs.Version = '0.2.0';
+    exjs.Version = '0.2.2';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -36,6 +36,7 @@ var exjs;
             }
             return true;
         };
+
         Enumerable.prototype.any = function (predicate) {
             var e = this.getEnumerator();
             var i = 0;
@@ -48,9 +49,11 @@ var exjs;
             }
             return false;
         };
+
         Enumerable.prototype.apply = function (action) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.at = function (index) {
             var e = this.getEnumerator();
             var i = 0;
@@ -61,6 +64,7 @@ var exjs;
             }
             return undefined;
         };
+
         Enumerable.prototype.average = function (selector) {
             var count = 0;
             var total = 0;
@@ -122,6 +126,15 @@ var exjs;
             }
             return undefined;
         };
+
+        Enumerable.prototype.firstIndex = function (match) {
+            for (var e = this.getEnumerator(), i = 0; e.moveNext(); i++) {
+                if (!match || match(e.current))
+                    return i;
+            }
+            return -1;
+        };
+
         Enumerable.prototype.groupBy = function (keySelector, comparer) {
             throw new Error("Not implemented");
         };
@@ -143,6 +156,16 @@ var exjs;
             }
             return l;
         };
+
+        Enumerable.prototype.lastIndex = function (match) {
+            var j = -1;
+            for (var e = this.getEnumerator(), i = 0; e.moveNext(); i++) {
+                if (!match || match(e.current))
+                    j = i;
+            }
+            return j;
+        };
+
         Enumerable.prototype.max = function (selector) {
             var e = this.getEnumerator();
             if (!e.moveNext())
@@ -158,6 +181,7 @@ var exjs;
             }
             return max;
         };
+
         Enumerable.prototype.min = function (selector) {
             var e = this.getEnumerator();
             if (!e.moveNext())
@@ -173,15 +197,19 @@ var exjs;
             }
             return min;
         };
+
         Enumerable.prototype.orderBy = function (keySelector, comparer) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.orderByDescending = function (keySelector, comparer) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.reverse = function () {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.select = function (selector) {
             throw new Error("Not implemented");
         };
@@ -193,6 +221,7 @@ var exjs;
         Enumerable.prototype.skip = function (count) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.skipWhile = function (predicate) {
             throw new Error("Not implemented");
         };
@@ -214,6 +243,7 @@ var exjs;
             }
             return Math.sqrt(sum / count);
         };
+
         Enumerable.prototype.sum = function (selector) {
             var sum = 0;
             selector = selector || function (t) {
@@ -231,9 +261,11 @@ var exjs;
         Enumerable.prototype.take = function (count) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.takeWhile = function (predicate) {
             throw new Error("Not implemented");
         };
+
         Enumerable.prototype.toArray = function () {
             var arr = [];
             var enumerator = this.getEnumerator();
@@ -242,6 +274,7 @@ var exjs;
             }
             return arr;
         };
+
         Enumerable.prototype.toMap = function (keySelector, valueSelector) {
             var m = new exjs.Map();
             for (var en = this.getEnumerator(); en.moveNext();) {
@@ -249,6 +282,7 @@ var exjs;
             }
             return m;
         };
+
         Enumerable.prototype.toList = function () {
             throw new Error("Not implemented");
         };

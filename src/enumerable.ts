@@ -18,12 +18,14 @@ module exjs {
         except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         except(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         first(match?: (t: T) => boolean): T;
+        firstIndex(match?: (t: T) => boolean): number;
         groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<IGrouping<TKey, T>>;
         intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         intersect(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<TResult>;
         join<TInner, TKey, TResult>(inner: TInner[], outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<TResult>;
         last(match?: (t: T) => boolean): T;
+        lastIndex(match?: (t: T) => boolean): number;
         max(selector?: (t: T) => number): number;
         min(selector?: (t: T) => number): number;
         orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
@@ -109,9 +111,10 @@ module exjs {
     }
 
     export class Enumerable<T> implements IEnumerableEx<T> {
-        constructor() { }
+        constructor () {
+        }
 
-        getEnumerator(): IEnumerator<T> {
+        getEnumerator (): IEnumerator<T> {
             return {
                 moveNext: function () {
                     return false;
@@ -122,13 +125,13 @@ module exjs {
 
         aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate {
             var active = seed;
-            for (var enumerator = this.getEnumerator(); enumerator.moveNext(); ) {
+            for (var enumerator = this.getEnumerator(); enumerator.moveNext();) {
                 active = accumulator(active, enumerator.current);
             }
             return active;
         }
 
-        all(predicate: (t: T, index?: number) => boolean): boolean {
+        all (predicate: (t: T, index?: number) => boolean): boolean {
             if (predicate) {
                 var e = this.getEnumerator();
                 var i = 0;
@@ -140,7 +143,8 @@ module exjs {
             }
             return true;
         }
-        any(predicate?: (t: T, index?: number) => boolean): boolean {
+
+        any (predicate?: (t: T, index?: number) => boolean): boolean {
             var e = this.getEnumerator();
             var i = 0;
             while (e.moveNext()) {
@@ -152,8 +156,12 @@ module exjs {
             }
             return false;
         }
-        apply<T>(action: (t: T, index?: number) => void): IEnumerableEx<T> { throw new Error("Not implemented"); }
-        at(index: number): T {
+
+        apply<T>(action: (t: T, index?: number) => void): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
+
+        at (index: number): T {
             var e = this.getEnumerator();
             var i = 0;
             while (e.moveNext()) {
@@ -163,7 +171,8 @@ module exjs {
             }
             return undefined;
         }
-        average(selector?: (t: T) => number): number {
+
+        average (selector?: (t: T) => number): number {
             var count = 0;
             var total = 0;
             selector = selector || function (t: T): number {
@@ -179,11 +188,13 @@ module exjs {
             return total / count;
         }
 
-        concat(second: IEnumerable<T>): IEnumerableEx<T>;
-        concat(second: T[]): IEnumerableEx<T>;
-        concat(second: any): IEnumerableEx<T> { throw new Error("Not implemented"); }
+        concat (second: IEnumerable<T>): IEnumerableEx<T>;
+        concat (second: T[]): IEnumerableEx<T>;
+        concat (second: any): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
 
-        count(predicate?: (t: T) => boolean): number {
+        count (predicate?: (t: T) => boolean): number {
             var count = 0;
             var e = this.getEnumerator();
             while (e.moveNext()) {
@@ -193,10 +204,12 @@ module exjs {
             return count;
         }
 
-        difference(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IDifference<T>;
-        difference(second: T[], comparer?: (f: T, s: T) => boolean): IDifference<T>;
-        difference(second: any, comparer?: (f: T, s: T) => boolean): IDifference<T> {
-            comparer = comparer || function (f2: T, s2: T) { return f2 === s2; };
+        difference (second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IDifference<T>;
+        difference (second: T[], comparer?: (f: T, s: T) => boolean): IDifference<T>;
+        difference (second: any, comparer?: (f: T, s: T) => boolean): IDifference<T> {
+            comparer = comparer || function (f2: T, s2: T) {
+                return f2 === s2;
+            };
             if (second instanceof Array)
                 second = second.en();
             return {
@@ -206,13 +219,17 @@ module exjs {
             };
         }
 
-        distinct(comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> { throw new Error("Not implemented"); }
+        distinct (comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
 
-        except(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
-        except(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
-        except(second: any, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> { throw new Error("Not implemented"); }
+        except (second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
+        except (second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
+        except (second: any, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
 
-        first(match?: (t: T) => boolean): T {
+        first (match?: (t: T) => boolean): T {
             var e = this.getEnumerator();
             while (e.moveNext()) {
                 if (!match || match(e.current))
@@ -220,17 +237,32 @@ module exjs {
             }
             return undefined;
         }
-        groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<IGrouping<TKey, T>> { throw new Error("Not implemented"); }
 
-        intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
-        intersect(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
-        intersect(second: any, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> { throw new Error("Not implemented"); }
+        firstIndex (match?: (t: T) => boolean): number {
+            for (var e = this.getEnumerator(), i = 0; e.moveNext(); i++) {
+                if (!match || match(e.current))
+                    return i;
+            }
+            return -1;
+        }
+
+        groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<IGrouping<TKey, T>> {
+            throw new Error("Not implemented");
+        }
+
+        intersect (second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
+        intersect (second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
+        intersect (second: any, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
 
         join<TInner, TKey, TResult>(inner: IEnumerable<TInner>, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<TResult>;
         join<TInner, TKey, TResult>(inner: TInner[], outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<TResult>;
-        join<TInner, TKey, TResult>(inner: any, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<TResult> { throw new Error("Not implemented"); }
+        join<TInner, TKey, TResult>(inner: any, outerKeySelector: (t: T) => TKey, innerKeySelector: (t: TInner) => TKey, resultSelector: (o: T, i: TInner) => TResult, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<TResult> {
+            throw new Error("Not implemented");
+        }
 
-        last(match?: (t: T) => boolean): T {
+        last (match?: (t: T) => boolean): T {
             var e = this.getEnumerator();
             var l: T;
             while (e.moveNext()) {
@@ -239,7 +271,17 @@ module exjs {
             }
             return l;
         }
-        max(selector?: (t: T) => number): number {
+
+        lastIndex (match?: (t: T) => boolean): number {
+            var j = -1;
+            for (var e = this.getEnumerator(), i = 0; e.moveNext(); i++) {
+                if (!match || match(e.current))
+                    j = i;
+            }
+            return j;
+        }
+
+        max (selector?: (t: T) => number): number {
             var e = this.getEnumerator();
             if (!e.moveNext())
                 return 0;
@@ -253,7 +295,8 @@ module exjs {
             }
             return max;
         }
-        min(selector?: (t: T) => number): number {
+
+        min (selector?: (t: T) => number): number {
             var e = this.getEnumerator();
             if (!e.moveNext())
                 return 0;
@@ -267,19 +310,38 @@ module exjs {
             }
             return min;
         }
-        orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> { throw new Error("Not implemented"); }
-        orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> { throw new Error("Not implemented"); }
-        reverse(): IEnumerableEx<T> { throw new Error("Not implemented"); }
-        select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerableEx<TResult> { throw new Error("Not implemented"); }
+
+        orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
+            throw new Error("Not implemented");
+        }
+
+        orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
+            throw new Error("Not implemented");
+        }
+
+        reverse (): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
+
+        select<TResult>(selector: (t: T, index?: number) => TResult): IEnumerableEx<TResult> {
+            throw new Error("Not implemented");
+        }
 
         selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerableEx<TResult>;
         selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerableEx<TResult>;
-        selectMany<TResult>(selector: (t: T) => any): IEnumerableEx<TResult> { throw new Error("Not implemented"); }
+        selectMany<TResult>(selector: (t: T) => any): IEnumerableEx<TResult> {
+            throw new Error("Not implemented");
+        }
 
-        skip(count: number): IEnumerableEx<T> { throw new Error("Not implemented"); }
-        skipWhile(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> { throw new Error("Not implemented"); }
+        skip (count: number): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
 
-        standardDeviation(selector?: (t: T) => number): number {
+        skipWhile (predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
+
+        standardDeviation (selector?: (t: T) => number): number {
             var avg = this.average(selector);
             var sum = 0;
             var count = 0;
@@ -295,7 +357,8 @@ module exjs {
             }
             return Math.sqrt(sum / count);
         }
-        sum(selector?: (t: T) => number): number {
+
+        sum (selector?: (t: T) => number): number {
             var sum = 0;
             selector = selector || function (t: T): number {
                 if (typeof t !== "number") throw new Error("Object is not a number.");
@@ -308,9 +371,15 @@ module exjs {
             return sum;
         }
 
-        take(count: number): IEnumerableEx<T> { throw new Error("Not implemented"); }
-        takeWhile(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> { throw new Error("Not implemented"); }
-        toArray(): T[] {
+        take (count: number): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
+
+        takeWhile (predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
+
+        toArray (): T[] {
             var arr: T[] = [];
             var enumerator = this.getEnumerator();
             while (enumerator.moveNext()) {
@@ -318,6 +387,7 @@ module exjs {
             }
             return arr;
         }
+
         toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): Map<TKey, TValue> {
             var m = new Map<TKey, TValue>();
             for (var en = this.getEnumerator(); en.moveNext();) {
@@ -325,18 +395,28 @@ module exjs {
             }
             return m;
         }
-        toList(): IList<T> { throw new Error("Not implemented"); }
+
+        toList (): IList<T> {
+            throw new Error("Not implemented");
+        }
+
         //toDictionary() {
         //}
 
-        union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
-        union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
-        union(second: any, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> { throw new Error("Not implemented"); }
+        union (second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
+        union (second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
+        union (second: any, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
 
-        where(filter: (t: T) => boolean): IEnumerableEx<T> { throw new Error("Not implemented"); }
+        where (filter: (t: T) => boolean): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
 
         zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerableEx<TResult>;
         zip<TSecond, TResult>(second: TSecond[], resultSelector: (f: T, s: TSecond) => TResult): IEnumerableEx<TResult>;
-        zip<TSecond, TResult>(second: any, resultSelector: (f: T, s: TSecond) => TResult): IEnumerableEx<TResult> { throw new Error("Not implemented"); }
+        zip<TSecond, TResult>(second: any, resultSelector: (f: T, s: TSecond) => TResult): IEnumerableEx<TResult> {
+            throw new Error("Not implemented");
+        }
     }
 }
