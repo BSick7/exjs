@@ -15,6 +15,6 @@ module wrap {
 
     test("en", () => {
         var t = new TestCollection<number>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-        strictEqual(exjs.en(t).sum(), 45);
+        strictEqual(ex(t).sum(), 45);
     });
 }

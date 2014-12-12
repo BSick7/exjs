@@ -1,6 +1,6 @@
 var exjs;
 (function (exjs) {
-    exjs.Version = '0.2.2';
+    exjs.Version = '0.2.3';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -1429,6 +1429,7 @@ var exjs;
         return x;
     }
 })(exjs || (exjs = {}));
+var ex = exjs.en;
 var exjs;
 (function (exjs) {
     function zipEnumerator(prev, second, resultSelector) {

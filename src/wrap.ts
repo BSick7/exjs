@@ -21,3 +21,4 @@ module exjs {
         return x;
     }
 }
+var ex = exjs.en;

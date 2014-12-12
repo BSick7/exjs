@@ -248,5 +248,6 @@ declare module exjs {
 declare module exjs {
     function en<T>(enu: IEnumerable<T>): IEnumerableEx<T>;
 }
+declare var ex: typeof exjs.en;
 declare module exjs {
 }
