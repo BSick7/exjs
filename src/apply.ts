@@ -1,7 +1,7 @@
 /// <reference path="enumerable.ts" />
 
 module exjs {
-    function applyEnumerator<T>(prev: IEnumerable<T>, action: (t: T, index?: number) => void): IEnumerator<T> {
+    function applyEnumerator<T>(prev: IEnumerable<T>, action: IProjectionIndexFunc<T, any>): IEnumerator<T> {
         var t: IEnumerator<T>;
         var i = 0;
         var e = {
@@ -9,7 +9,7 @@ module exjs {
             moveNext: function (): boolean {
                 if (!t) t = prev.getEnumerator();
                 if (!t.moveNext()) return false;
-                action(e.current = t.current, i)
+                action(e.current = t.current, i);
                 i++;
                 return true;
             }
@@ -17,7 +17,7 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.apply = function<T>(action: (t: T, index?: number) => void): IEnumerableEx<T> {
+    Enumerable.prototype.apply = function<T>(action: IProjectionIndexFunc<T, any>): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => applyEnumerator(<IEnumerable<T>>this, action);
         return e;

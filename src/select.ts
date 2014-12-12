@@ -2,7 +2,7 @@
 /// <reference path="array.ts" />
 
 module exjs {
-    function selectEnumerator<T, TResult>(prev: IEnumerable<T>, selector: (t: T, index?: number) => TResult): IEnumerator<TResult> {
+    function selectEnumerator<T, TResult>(prev: IEnumerable<T>, selector: IProjectionIndexFunc<T, TResult>): IEnumerator<TResult> {
         var t: IEnumerator<T>;
         var i = 0;
         var e = {
@@ -30,7 +30,7 @@ module exjs {
                     if (!t.moveNext())
                         return false;
                     var selected = selector(t.current);
-                    var en:IEnumerable<TResult> = selected;
+                    var en: IEnumerable<TResult> = selected;
                     if (en instanceof Array)
                         en = (<TResult[]><any>en).en();
                     active = en.getEnumerator();
@@ -42,7 +42,7 @@ module exjs {
         return e;
     }
 
-    Enumerable.prototype.select = function<T,TResult>(selector: (t: T, index?: number) => TResult): IEnumerableEx<TResult> {
+    Enumerable.prototype.select = function<T,TResult>(selector: IProjectionIndexFunc<T, TResult>): IEnumerableEx<TResult> {
         var e = new Enumerable<TResult>();
         e.getEnumerator = () => selectEnumerator(<IEnumerable<T>>this, selector);
         return e;

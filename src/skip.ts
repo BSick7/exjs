@@ -25,7 +25,7 @@ module exjs {
         return e;
     }
 
-    function skipWhileEnumerator<T>(prev: IEnumerable<T>, predicate: (t: T, index?: number) => boolean): IEnumerator<T> {
+    function skipWhileEnumerator<T>(prev: IEnumerable<T>, predicate: IProjectionIndexFunc<T, boolean>): IEnumerator<T> {
         var t: IEnumerator<T>;
         var e = {
             current: undefined,
@@ -57,7 +57,7 @@ module exjs {
         e.getEnumerator = () => skipEnumerator(<IEnumerable<T>>this, count);
         return e;
     };
-    Enumerable.prototype.skipWhile = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> {
+    Enumerable.prototype.skipWhile = function<T>(predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => skipWhileEnumerator(<IEnumerable<T>>this, predicate);
         return e;

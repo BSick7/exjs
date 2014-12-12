@@ -478,7 +478,7 @@ test("select", () => {
     strictEqual(res.length, 0);
 
     arr = [1, 2, 3];
-    res = arr.en().select(t => t * 2).toArray();
+    res = arr.en().select((t, i) => t * 2).toArray();
     strictEqual(res.length, 3);
     strictEqual(res[0], 2);
     strictEqual(res[1], 4);
@@ -541,7 +541,7 @@ test("skipWhile", () => {
     strictEqual(res[2], 3);
 
     arr = [1, 2, 3];
-    res = arr.en().skipWhile(t => t < 2).toArray();
+    res = arr.en().skipWhile((t, i) => t < 2).toArray();
     strictEqual(res.length, 2);
     strictEqual(res[0], 2);
     strictEqual(res[1], 3);
@@ -592,7 +592,7 @@ test("takeWhile", () => {
     strictEqual(res[2], 3);
 
     arr = [1, 2, 3];
-    res = arr.en().takeWhile(t => t < 3).toArray();
+    res = arr.en().takeWhile((t, i) => t < 3).toArray();
     strictEqual(res.length, 2);
     strictEqual(res[0], 1);
     strictEqual(res[1], 2);

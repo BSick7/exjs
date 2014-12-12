@@ -21,7 +21,7 @@ module exjs {
         return e;
     }
 
-    function takeWhileEnumerator<T>(prev: IEnumerable<T>, predicate: (t: T, index?: number) => boolean): IEnumerator<T> {
+    function takeWhileEnumerator<T>(prev: IEnumerable<T>, predicate: IProjectionIndexFunc<T, boolean>): IEnumerator<T> {
         var t: IEnumerator<T>;
         var i = 0;
         var e = {
@@ -47,7 +47,7 @@ module exjs {
         e.getEnumerator = () => takeEnumerator(<IEnumerable<T>>this, count);
         return e;
     };
-    Enumerable.prototype.takeWhile = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> {
+    Enumerable.prototype.takeWhile = function<T>(predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T> {
         var e = new Enumerable<T>();
         e.getEnumerator = () => takeWhileEnumerator(<IEnumerable<T>>this, predicate);
         return e;

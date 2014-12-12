@@ -4,6 +4,8 @@ declare module exjs {
 declare module exjs {
     interface IProjectionFunc<T, TResult> {
         (t: T): TResult;
+    }
+    interface IProjectionIndexFunc<T, TResult> {
         (t: T, index: number): TResult;
     }
     interface IEnumerable<T> {
@@ -12,8 +14,11 @@ declare module exjs {
     interface IEnumerableEx<T> extends IEnumerable<T> {
         aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate;
         all(predicate: IProjectionFunc<T, boolean>): boolean;
+        all(predicate: IProjectionIndexFunc<T, boolean>): boolean;
         any(predicate?: IProjectionFunc<T, boolean>): boolean;
+        any(predicate?: IProjectionIndexFunc<T, boolean>): boolean;
         apply<T>(action: IProjectionFunc<T, any>): IEnumerableEx<T>;
+        apply<T>(action: IProjectionIndexFunc<T, any>): IEnumerableEx<T>;
         at(index: number): T;
         average(selector?: (t: T) => number): number;
         concat(second: IEnumerable<T>): IEnumerableEx<T>;
@@ -40,14 +45,17 @@ declare module exjs {
         orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         reverse(): IEnumerableEx<T>;
         select<TResult>(selector: IProjectionFunc<T, TResult>): IEnumerableEx<TResult>;
+        select<TResult>(selector: IProjectionIndexFunc<T, TResult>): IEnumerableEx<TResult>;
         selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerableEx<TResult>;
         selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerableEx<TResult>;
         skip(count: number): IEnumerableEx<T>;
         skipWhile(predicate: IProjectionFunc<T, boolean>): IEnumerableEx<T>;
+        skipWhile(predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T>;
         standardDeviation(selector?: (t: T) => number): number;
         sum(selector?: (t: T) => number): number;
         take(count: number): IEnumerableEx<T>;
         takeWhile(predicate: IProjectionFunc<T, boolean>): IEnumerableEx<T>;
+        takeWhile(predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T>;
         toArray(): T[];
         toList(): IList<T>;
         toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): IMap<TKey, TValue>;
@@ -104,9 +112,9 @@ declare module exjs {
         constructor();
         public getEnumerator(): IEnumerator<T>;
         public aggregate<TAccumulate>(seed: TAccumulate, accumulator: (acc: TAccumulate, cur: T) => TAccumulate): TAccumulate;
-        public all(predicate: IProjectionFunc<T, boolean>): boolean;
-        public any(predicate?: IProjectionFunc<T, boolean>): boolean;
-        public apply<T>(action: IProjectionFunc<T, any>): IEnumerableEx<T>;
+        public all(predicate: IProjectionIndexFunc<T, boolean>): boolean;
+        public any(predicate?: IProjectionIndexFunc<T, boolean>): boolean;
+        public apply<T>(action: IProjectionIndexFunc<T, any>): IEnumerableEx<T>;
         public at(index: number): T;
         public average(selector?: (t: T) => number): number;
         public concat(second: IEnumerable<T>): IEnumerableEx<T>;
@@ -132,15 +140,15 @@ declare module exjs {
         public orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         public orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         public reverse(): IEnumerableEx<T>;
-        public select<TResult>(selector: IProjectionFunc<T, TResult>): IEnumerableEx<TResult>;
+        public select<TResult>(selector: IProjectionIndexFunc<T, TResult>): IEnumerableEx<TResult>;
         public selectMany<TResult>(selector: (t: T) => IEnumerable<TResult>): IEnumerableEx<TResult>;
         public selectMany<TResult>(selector: (t: T) => TResult[]): IEnumerableEx<TResult>;
         public skip(count: number): IEnumerableEx<T>;
-        public skipWhile(predicate: IProjectionFunc<T, boolean>): IEnumerableEx<T>;
+        public skipWhile(predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T>;
         public standardDeviation(selector?: (t: T) => number): number;
         public sum(selector?: (t: T) => number): number;
         public take(count: number): IEnumerableEx<T>;
-        public takeWhile(predicate: IProjectionFunc<T, boolean>): IEnumerableEx<T>;
+        public takeWhile(predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T>;
         public toArray(): T[];
         public toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): Map<TKey, TValue>;
         public toList(): IList<T>;
