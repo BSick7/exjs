@@ -73,7 +73,7 @@ module exjs {
     };
     List.prototype.remove = function<T>(item: T): boolean {
         return this.removeWhere(t => t === item).any();
-    }
+    };
     List.prototype.removeWhere = function<T>(predicate: (t: T, index?: number) => boolean): IEnumerableEx<T> {
         var removed = [];
         var cur: T;

@@ -272,6 +272,13 @@ test("firstIndex", () => {
     strictEqual(arr.en().firstIndex(t => t > 2), 2);
 });
 
+test("forEach", () => {
+    var arr = [1, 2, 3];
+    var sum = 0;
+    arr.en().forEach(i => sum += i);
+    strictEqual(sum, 6);
+});
+
 test("groupBy", () => {
     var arr: IMock3[] = [
         {i: 0, j: "a"},

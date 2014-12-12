@@ -1,6 +1,6 @@
 var exjs;
 (function (exjs) {
-    exjs.Version = '0.2.3';
+    exjs.Version = '0.2.4';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -133,6 +133,12 @@ var exjs;
                     return i;
             }
             return -1;
+        };
+
+        Enumerable.prototype.forEach = function (action) {
+            for (var en = this.getEnumerator(); en.moveNext();) {
+                action(en.current);
+            }
         };
 
         Enumerable.prototype.groupBy = function (keySelector, comparer) {

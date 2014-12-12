@@ -19,6 +19,7 @@ module exjs {
         except(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         first(match?: (t: T) => boolean): T;
         firstIndex(match?: (t: T) => boolean): number;
+        forEach (action: (t: T) => any);
         groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<IGrouping<TKey, T>>;
         intersect(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         intersect(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
@@ -244,6 +245,12 @@ module exjs {
                     return i;
             }
             return -1;
+        }
+
+        forEach (action: (t: T) => any) {
+            for (var en = this.getEnumerator(); en.moveNext();) {
+                action(en.current);
+            }
         }
 
         groupBy<TKey>(keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerableEx<IGrouping<TKey, T>> {
