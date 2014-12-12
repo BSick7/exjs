@@ -21,5 +21,8 @@
     "src",
     "test",
     "Gruntfile.js"
-  ]
+  ],
+  "devDependencies": {
+    "qunit": "~1.16.0"
+  }
 }

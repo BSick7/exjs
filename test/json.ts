@@ -1,6 +1,3 @@
-/// <reference path="../lib/qunit/qunit.d.ts" />
-/// <reference path="../dist/ex.d.ts" />
-
 QUnit.module("json");
 
 var msToYears = 31536000000;
