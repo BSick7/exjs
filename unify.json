@@ -10,5 +10,6 @@
   "library": {
     "type": "export",
     "exports": "exjs"
-  }
+  },
+  "themes": "none"
 }
