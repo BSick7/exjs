@@ -29,11 +29,7 @@ module exjs {
                 while (!active || !active.moveNext()) {
                     if (!t.moveNext())
                         return false;
-                    var selected = selector(t.current);
-                    var en: IEnumerable<TResult> = selected;
-                    if (en instanceof Array)
-                        en = (<TResult[]><any>en).en();
-                    active = en.getEnumerator();
+                    active = selectorEnumerator<T, TResult>(selector(t.current));
                 }
                 e.current = active.current;
                 return true;
