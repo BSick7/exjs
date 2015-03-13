@@ -1,14 +1,31 @@
 QUnit.module("enumerable");
 
-interface IMock { i: number;
+interface IMock {
+    i: number;
 }
-interface IMock2 { i: number[];
+interface IMock2 {
+    i: number[];
 }
-interface IMock3 { i: number; j: string;
+interface IMock3 {
+    i: number;
+    j: string;
 }
-interface IMock4 { i1: number; i2: number;
+interface IMock4 {
+    i1: number;
+    i2: number;
 }
-interface IMock5 { i: number; j: string; k: Date;
+interface IMock5 {
+    i: number;
+    j: string;
+    k: Date;
+}
+interface IMock6 {
+    name: string;
+    children: IMock6[];
+}
+interface IMock7 {
+    name: string;
+    children: exjs.IEnumerable<IMock7>;
 }
 
 test("array", () => {
@@ -620,6 +637,62 @@ test("thenBy", () => {
     strictEqual(res[4], m3);
     strictEqual(res[5], m1);
     strictEqual(res[6], m6);
+});
+
+test("traverse (Array)", () => {
+    var t1: IMock6;
+    var t11: IMock6;
+    var t111: IMock6;
+    var t12: IMock6;
+    var t121: IMock6;
+    var t2: IMock6;
+
+    t1 = {name: 'test1', children: null};
+    var arr = [t1];
+    var result = arr.en().traverse(t => t.children).toArray();
+    deepEqual(result, [t1]);
+
+
+    t1 = {name: 'test1', children: [
+        t11 = {name: 'test1.1', children: [
+            t111 = {name: 'test1.1.1', children: null}
+        ]},
+        t12 = {name: 'test1.2', children: [
+            t121 = {name: 'test1.2.1', children: null}
+        ]}
+    ]};
+    t2 = {name: 'test2', children: null};
+    arr = [t1, t2];
+    result = arr.en().traverse(t => t.children).toArray();
+    deepEqual(result, [t1, t11, t111, t12, t121, t2]);
+});
+
+test("traverse (IEnumerable)", () => {
+    var t1: IMock7;
+    var t11: IMock7;
+    var t111: IMock7;
+    var t12: IMock7;
+    var t121: IMock7;
+    var t2: IMock7;
+
+    t1 = {name: 'test1', children: null};
+    var list = [t1].en().toList();
+    var result = list.traverse(t => t.children).toArray();
+    deepEqual(result, [t1]);
+
+
+    t1 = {name: 'test1', children: [
+        t11 = {name: 'test1.1', children: [
+            t111 = {name: 'test1.1.1', children: null}
+        ].en().toList()},
+        t12 = {name: 'test1.2', children: [
+            t121 = {name: 'test1.2.1', children: null}
+        ].en().toList()}
+    ].en().toList()};
+    t2 = {name: 'test2', children: null};
+    list = [t1, t2].en().toList();
+    result = list.traverse(t => t.children).toArray();
+    deepEqual(result, [t1, t11, t111, t12, t121, t2]);
 });
 
 test("union", () => {

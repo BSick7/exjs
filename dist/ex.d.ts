@@ -1,4 +1,6 @@
 declare module exjs {
+}
+declare module exjs {
     var Version: string;
 }
 declare module exjs {
@@ -59,6 +61,8 @@ declare module exjs {
         toArray(): T[];
         toList(): IList<T>;
         toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): IMap<TKey, TValue>;
+        traverse(selector: (t: T) => T[]): IEnumerableEx<T>;
+        traverse(selector: (t: T) => IEnumerable<T>): IEnumerableEx<T>;
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         where(filter: (t: T) => boolean): IEnumerableEx<T>;
@@ -149,6 +153,8 @@ declare module exjs {
         public sum(selector?: (t: T) => number): number;
         public take(count: number): IEnumerableEx<T>;
         public takeWhile(predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T>;
+        public traverse(selector: (t: T) => T[]): IEnumerableEx<T>;
+        public traverse(selector: (t: T) => IEnumerable<T>): IEnumerableEx<T>;
         public toArray(): T[];
         public toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): Map<TKey, TValue>;
         public toList(): IList<T>;
@@ -248,6 +254,12 @@ declare module exjs {
 }
 declare module exjs {
     function round(value: number, digits?: number): number;
+}
+declare module exjs {
+}
+declare module exjs {
+    function selectorEnumerator<T, TResult>(en: IEnumerable<T>): IEnumerator<TResult>;
+    function selectorEnumerator<T, TResult>(arr: T[]): IEnumerator<TResult>;
 }
 declare module exjs {
 }

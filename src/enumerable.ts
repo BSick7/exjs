@@ -57,6 +57,8 @@ module exjs {
         toList(): IList<T>;
         toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): IMap<TKey, TValue>;
         //toDictionary();
+        traverse (selector: (t: T) => T[]): IEnumerableEx<T>;
+        traverse (selector: (t: T) => IEnumerable<T>): IEnumerableEx<T>;
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         where(filter: (t: T) => boolean): IEnumerableEx<T>;
@@ -395,6 +397,12 @@ module exjs {
         }
 
         takeWhile (predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
+
+        traverse (selector: (t: T) => T[]): IEnumerableEx<T>;
+        traverse (selector: (t: T) => IEnumerable<T>): IEnumerableEx<T>;
+        traverse (selector: any): IEnumerableEx<T> {
             throw new Error("Not implemented");
         }
 
