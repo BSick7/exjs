@@ -42,7 +42,7 @@ module.exports = function (grunt) {
         },
         typescript: {
             build: {
-                src: ['src/**/*.ts'],
+                src: ['src/polyfill/**/*.ts', 'src/**/*.ts'],
                 dest: 'dist/ex.js',
                 options: {
                     target: 'es5',

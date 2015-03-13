@@ -35,7 +35,7 @@ module exjs {
     }
 
     function en<T>(): IEnumerableEx<T> {
-        if (this && this instanceof Array)
+        if (this && Array.isArray(this))
             return new ArrayEnumerable<T>(this);
         return new Enumerable<T>();
     }
