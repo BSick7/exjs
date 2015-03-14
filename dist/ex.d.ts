@@ -63,6 +63,8 @@ declare module exjs {
         toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): IMap<TKey, TValue>;
         traverse(selector: (t: T) => T[]): IEnumerableEx<T>;
         traverse(selector: (t: T) => IEnumerable<T>): IEnumerableEx<T>;
+        traverseUnique(selector: (t: T) => T[], matcher?: (t1: T, t2: T) => boolean): IEnumerableEx<T>;
+        traverseUnique(selector: (t: T) => IEnumerable<T>, matcher?: (t1: T, t2: T) => boolean): IEnumerableEx<T>;
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         where(filter: (t: T) => boolean): IEnumerableEx<T>;
@@ -155,6 +157,8 @@ declare module exjs {
         public takeWhile(predicate: IProjectionIndexFunc<T, boolean>): IEnumerableEx<T>;
         public traverse(selector: (t: T) => T[]): IEnumerableEx<T>;
         public traverse(selector: (t: T) => IEnumerable<T>): IEnumerableEx<T>;
+        public traverseUnique(selector: (t: T) => T[], uniqueMatch?: (t1: T, t2: T) => boolean): IEnumerableEx<T>;
+        public traverseUnique(selector: (t: T) => IEnumerable<T>, matcher?: (t1: T, t2: T) => boolean): IEnumerableEx<T>;
         public toArray(): T[];
         public toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): Map<TKey, TValue>;
         public toList(): IList<T>;

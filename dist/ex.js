@@ -8,7 +8,7 @@ var exjs;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
-    exjs.Version = '0.2.9';
+    exjs.Version = '0.2.10';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -281,6 +281,10 @@ var exjs;
         };
 
         Enumerable.prototype.traverse = function (selector) {
+            throw new Error("Not implemented");
+        };
+
+        Enumerable.prototype.traverseUnique = function (selector, matcher) {
             throw new Error("Not implemented");
         };
 
@@ -1374,12 +1378,40 @@ var exjs;
                     t = enstack.pop();
                 }
 
-                if (t == null || t.current === undefined) {
-                    e.current = undefined;
+                e.current = t == null ? undefined : t.current;
+                return e.current !== undefined;
+            }
+        };
+        return e;
+    }
+
+    function traverseUniqueEnumerator(prev, selector, turnstile) {
+        var started = false;
+        var enstack = [];
+        var t;
+        var e = {
+            current: undefined,
+            moveNext: function () {
+                if (!started) {
+                    t = prev.getEnumerator();
+                    started = true;
+                } else if (t == null) {
                     return false;
+                } else {
+                    enstack.push(t);
+                    t = exjs.selectorEnumerator(selector(e.current));
                 }
-                e.current = t.current;
-                return true;
+
+                do {
+                    while (!t || !t.moveNext()) {
+                        if (enstack.length < 1)
+                            break;
+                        t = enstack.pop();
+                    }
+                    e.current = t == null ? undefined : t.current;
+                } while(turnstile(e.current));
+
+                return e.current !== undefined;
             }
         };
         return e;
@@ -1393,8 +1425,36 @@ var exjs;
         };
         return e;
     };
+    exjs.Enumerable.prototype.traverseUnique = function (selector, matcher) {
+        var _this = this;
+        var existing = [];
+        var e = new exjs.Enumerable();
+        if (matcher) {
+            e.getEnumerator = function () {
+                return traverseUniqueEnumerator(_this, selector, function (x) {
+                    if (existing.some(function (e) {
+                        return matcher(x, e);
+                    }))
+                        return true;
+                    existing.push(x);
+                    return false;
+                });
+            };
+        } else {
+            e.getEnumerator = function () {
+                return traverseUniqueEnumerator(_this, selector, function (x) {
+                    if (existing.indexOf(x) > -1)
+                        return true;
+                    existing.push(x);
+                    return false;
+                });
+            };
+        }
+        return e;
+    };
     if (exjs.List) {
         exjs.List.prototype.traverse = exjs.Enumerable.prototype.traverse;
+        exjs.List.prototype.traverseUnique = exjs.Enumerable.prototype.traverseUnique;
     }
 })(exjs || (exjs = {}));
 var exjs;

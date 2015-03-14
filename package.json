@@ -1,6 +1,6 @@
 {
   "name": "exjs",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Extension library",
   "main": "Gruntfile.js",
   "directories": {

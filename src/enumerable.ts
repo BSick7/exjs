@@ -59,6 +59,8 @@ module exjs {
         //toDictionary();
         traverse (selector: (t: T) => T[]): IEnumerableEx<T>;
         traverse (selector: (t: T) => IEnumerable<T>): IEnumerableEx<T>;
+        traverseUnique (selector: (t: T) => T[], matcher?: (t1: T, t2: T) => boolean): IEnumerableEx<T>;
+        traverseUnique (selector: (t: T) => IEnumerable<T>, matcher?: (t1: T, t2: T) => boolean): IEnumerableEx<T>;
         union(second: IEnumerable<T>, comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         union(second: T[], comparer?: (f: T, s: T) => boolean): IEnumerableEx<T>;
         where(filter: (t: T) => boolean): IEnumerableEx<T>;
@@ -403,6 +405,12 @@ module exjs {
         traverse (selector: (t: T) => T[]): IEnumerableEx<T>;
         traverse (selector: (t: T) => IEnumerable<T>): IEnumerableEx<T>;
         traverse (selector: any): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
+
+        traverseUnique (selector: (t: T) => T[], uniqueMatch?: (t1: T, t2: T) => boolean): IEnumerableEx<T>;
+        traverseUnique (selector: (t: T) => IEnumerable<T>, matcher?: (t1: T, t2: T) => boolean): IEnumerableEx<T>;
+        traverseUnique (selector: any, matcher?: (t1: T, t2: T) => boolean): IEnumerableEx<T> {
             throw new Error("Not implemented");
         }
 

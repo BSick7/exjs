@@ -652,7 +652,6 @@ test("traverse (Array)", () => {
     var result = arr.en().traverse(t => t.children).toArray();
     deepEqual(result, [t1]);
 
-
     t1 = {name: 'test1', children: [
         t11 = {name: 'test1.1', children: [
             t111 = {name: 'test1.1.1', children: null}
@@ -692,6 +691,76 @@ test("traverse (IEnumerable)", () => {
     t2 = {name: 'test2', children: null};
     list = [t1, t2].en().toList();
     result = list.traverse(t => t.children).toArray();
+    deepEqual(result, [t1, t11, t111, t12, t121, t2]);
+});
+
+test("traverseUnique (Array)", () => {
+    var t1: IMock6;
+    var t11: IMock6;
+    var t111: IMock6;
+    var t12: IMock6;
+    var t121: IMock6;
+    var t2: IMock6;
+
+    t1 = {name: 'test1', children: [t1]};
+    var arr = [t1];
+    var result = arr.en().traverseUnique(t => t.children).toArray();
+    deepEqual(result, [t1]);
+
+    result = arr.en().traverseUnique(t => t.children, (t1, t2) => t1 === t2).toArray();
+    deepEqual(result, [t1]);
+
+    t1 = {name: 'test1', children: [
+        t11 = {name: 'test1.1', children: [
+            t111 = {name: 'test1.1.1', children: null}
+        ]},
+        t12 = {name: 'test1.2', children: [
+            t121 = {name: 'test1.2.1', children: null}
+        ]}
+    ]};
+    t2 = {name: 'test2', children: [t1]};
+    t111.children = [t11];
+    t121.children = [t12];
+    arr = [t1, t2];
+    result = arr.en().traverseUnique(t => t.children).toArray();
+    deepEqual(result, [t1, t11, t111, t12, t121, t2]);
+
+    result = arr.en().traverseUnique(t => t.children, (t1, t2) => t1 === t2).toArray();
+    deepEqual(result, [t1, t11, t111, t12, t121, t2]);
+});
+
+test("traverseUnique (IEnumerable)", () => {
+    var t1: IMock7;
+    var t11: IMock7;
+    var t111: IMock7;
+    var t12: IMock7;
+    var t121: IMock7;
+    var t2: IMock7;
+
+    t1 = {name: 'test1', children: [t1].en().toList()};
+    var list = [t1].en().toList();
+    var result = list.traverseUnique(t => t.children).toArray();
+    deepEqual(result, [t1]);
+
+    result = list.traverseUnique(t => t.children, (t1, t2) => t1 === t2).toArray();
+    deepEqual(result, [t1]);
+
+    t1 = {name: 'test1', children: [
+        t11 = {name: 'test1.1', children: [
+            t111 = {name: 'test1.1.1', children: null}
+        ].en().toList()},
+        t12 = {name: 'test1.2', children: [
+            t121 = {name: 'test1.2.1', children: null}
+        ].en().toList()}
+    ].en().toList()};
+    t2 = {name: 'test2', children: [t1].en().toList()};
+    t111.children = [t11].en().toList();
+    t121.children = [t12].en().toList();
+    list = [t1, t2].en().toList();
+    result = list.traverseUnique(t => t.children).toArray();
+    deepEqual(result, [t1, t11, t111, t12, t121, t2]);
+
+    result = list.traverseUnique(t => t.children, (t1, t2) => t1 === t2).toArray();
     deepEqual(result, [t1, t11, t111, t12, t121, t2]);
 });
 
