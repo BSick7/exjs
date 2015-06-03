@@ -11,5 +11,8 @@
     "type": "export",
     "exports": "exjs"
   },
-  "themes": "none"
+  "themes": "none",
+  "typings": [
+    "dist/ex.d.ts"
+  ]
 }
