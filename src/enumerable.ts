@@ -193,9 +193,9 @@ module exjs {
             var count = 0;
             var total = 0;
             selector = selector || function (t: T): number {
-                if (typeof t !== "number") throw new Error("Object is not a number.");
-                return <number><any>t;
-            };
+                    if (typeof t !== "number") throw new Error("Object is not a number.");
+                    return <number><any>t;
+                };
             var e = this.getEnumerator();
             while (e.moveNext()) {
                 total += selector(e.current);
@@ -225,8 +225,8 @@ module exjs {
         difference (second: T[], comparer?: (f: T, s: T) => boolean): IDifference<T>;
         difference (second: any, comparer?: (f: T, s: T) => boolean): IDifference<T> {
             comparer = comparer || function (f2: T, s2: T) {
-                return f2 === s2;
-            };
+                    return f2 === s2;
+                };
             if (second instanceof Array)
                 second = second.en();
             return {
@@ -309,9 +309,9 @@ module exjs {
             if (!e.moveNext())
                 return 0;
             selector = selector || function (t: T): number {
-                if (typeof t !== "number") throw new Error("Object is not a number.");
-                return <number><any>t;
-            };
+                    if (typeof t !== "number") throw new Error("Object is not a number.");
+                    return <number><any>t;
+                };
             var max = selector(e.current);
             while (e.moveNext()) {
                 max = Math.max(max, selector(e.current));
@@ -324,9 +324,9 @@ module exjs {
             if (!e.moveNext())
                 return 0;
             selector = selector || function (t: T): number {
-                if (typeof t !== "number") throw new Error("Object is not a number.");
-                return <number><any>t;
-            };
+                    if (typeof t !== "number") throw new Error("Object is not a number.");
+                    return <number><any>t;
+                };
             var min = selector(e.current);
             while (e.moveNext()) {
                 min = Math.min(min, selector(e.current));
@@ -369,9 +369,9 @@ module exjs {
             var sum = 0;
             var count = 0;
             selector = selector || function (t: T): number {
-                if (typeof t !== "number") throw new Error("Object is not a number.");
-                return <number><any>t;
-            };
+                    if (typeof t !== "number") throw new Error("Object is not a number.");
+                    return <number><any>t;
+                };
             var e = this.getEnumerator();
             while (e.moveNext()) {
                 var diff = selector(e.current) - avg;
@@ -384,9 +384,9 @@ module exjs {
         sum (selector?: (t: T) => number): number {
             var sum = 0;
             selector = selector || function (t: T): number {
-                if (typeof t !== "number") throw new Error("Object is not a number.");
-                return <number><any>t;
-            };
+                    if (typeof t !== "number") throw new Error("Object is not a number.");
+                    return <number><any>t;
+                };
             var e = this.getEnumerator();
             while (e.moveNext()) {
                 sum += selector(e.current);
