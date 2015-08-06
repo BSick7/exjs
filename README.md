@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bsick7/exjs.svg?branch=master)](https://travis-ci.org/bsick7/exjs)
+
 exjs
 =========
 
