@@ -8,10 +8,6 @@ var exjs;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
-    exjs.Version = '0.2.11';
-})(exjs || (exjs = {}));
-var exjs;
-(function (exjs) {
     var Enumerable = (function () {
         function Enumerable() {
         }
@@ -323,6 +319,40 @@ var exjs;
         return Enumerable;
     })();
     exjs.Enumerable = Enumerable;
+})(exjs || (exjs = {}));
+var Symbol;
+
+var exjs;
+(function (exjs) {
+    if (Symbol && Symbol.iterator) {
+        exjs.Enumerable.prototype[Symbol.iterator] = function () {
+            return iteratorFromEnumerable(this);
+        };
+    }
+
+    function iteratorFromEnumerable(enu) {
+        var en;
+        return {
+            next: function () {
+                var res = {
+                    done: true,
+                    value: undefined
+                };
+                if (!enu)
+                    return res;
+                en = en || enu.getEnumerator();
+                if (!en)
+                    return res;
+                res.done = !en.moveNext();
+                res.value = en.current;
+                return res;
+            }
+        };
+    }
+})(exjs || (exjs = {}));
+var exjs;
+(function (exjs) {
+    exjs.Version = '0.2.11';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {

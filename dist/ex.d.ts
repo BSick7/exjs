@@ -1,9 +1,6 @@
 declare module exjs {
 }
 declare module exjs {
-    var Version: string;
-}
-declare module exjs {
     interface IProjectionFunc<T, TResult> {
         (t: T): TResult;
     }
@@ -168,6 +165,19 @@ declare module exjs {
         public zip<TSecond, TResult>(second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerableEx<TResult>;
         public zip<TSecond, TResult>(second: TSecond[], resultSelector: (f: T, s: TSecond) => TResult): IEnumerableEx<TResult>;
     }
+}
+declare var Symbol: any;
+interface Iterator<T> {
+    next(): IteratorResult<T>;
+}
+interface IteratorResult<T> {
+    done: boolean;
+    value: T;
+}
+declare module exjs {
+}
+declare module exjs {
+    var Version: string;
 }
 declare module exjs {
 }
