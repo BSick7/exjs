@@ -2,8 +2,8 @@ QUnit.module("iterator");
 
 test("iterator", (assert) => {
     if (!Symbol || !Symbol.iterator) {
-        assert.ok(true, "Not testing iterator as browser does not support.");
-        console.warn("Not testing iterator as browser does not support.");
+        assert.ok(true, "Browser does not support Symbol.iterator, not testing.");
+        console.warn("Browser does not support Symbol.iterator, not testing.");
         return;
     }
     var enu = [1, 2, 3].en();

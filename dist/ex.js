@@ -352,7 +352,7 @@ var exjs;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
-    exjs.Version = '0.2.11';
+    exjs.Version = '0.2.12';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
