@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.org/BSick7/exjs.svg?branch=master)](https://travis-ci.org/BSick7/exjs)
-
 exjs
 =========
+[![Build Status](https://travis-ci.org/BSick7/exjs.svg?branch=master)](https://travis-ci.org/BSick7/exjs)
 
 Extension library for Javascript.
 
