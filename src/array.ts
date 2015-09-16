@@ -40,14 +40,15 @@ module exjs {
         return new Enumerable<T>();
     }
 
-    if (typeof Object.defineProperty === "function") {
+    try {
         Object.defineProperty(Array.prototype, "en", {
             value: en,
             enumerable: false,
             writable: false,
             configurable: false
         });
-    } else {
+    } catch (e) {
+        //IE8 supports Object.defineProperty only for DOM objects
         (<any>Array.prototype).en = en;
     }
 }

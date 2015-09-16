@@ -1,6 +1,6 @@
 var exjs;
 (function (exjs) {
-    exjs.version = '0.2.14';
+    exjs.version = '0.2.15';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -384,7 +384,7 @@ var exjs;
             return new ArrayEnumerable(this);
         return new exjs.Enumerable();
     }
-    if (typeof Object.defineProperty === "function") {
+    try {
         Object.defineProperty(Array.prototype, "en", {
             value: en,
             enumerable: false,
@@ -392,7 +392,7 @@ var exjs;
             configurable: false
         });
     }
-    else {
+    catch (e) {
         Array.prototype.en = en;
     }
 })(exjs || (exjs = {}));
