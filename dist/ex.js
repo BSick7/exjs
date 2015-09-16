@@ -1,6 +1,6 @@
 var exjs;
 (function (exjs) {
-    exjs.version = '0.2.13';
+    exjs.version = '0.2.14';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -384,12 +384,17 @@ var exjs;
             return new ArrayEnumerable(this);
         return new exjs.Enumerable();
     }
-    Object.defineProperty(Array.prototype, "en", {
-        value: en,
-        enumerable: false,
-        writable: false,
-        configurable: false
-    });
+    if (typeof Object.defineProperty === "function") {
+        Object.defineProperty(Array.prototype, "en", {
+            value: en,
+            enumerable: false,
+            writable: false,
+            configurable: false
+        });
+    }
+    else {
+        Array.prototype.en = en;
+    }
 })(exjs || (exjs = {}));
 /// <reference path="enumerable.ts" />
 var exjs;
