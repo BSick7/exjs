@@ -7,7 +7,7 @@ interface Array<T> {
 module exjs {
     function arrayEnumerator<T>(arr: T[]): IEnumerator<T> {
         var len = arr.length;
-        var e = { moveNext: undefined, current: undefined };
+        var e = {moveNext: undefined, current: undefined};
         var index = -1;
         e.moveNext = function () {
             index++;
@@ -22,7 +22,7 @@ module exjs {
     }
 
     class ArrayEnumerable<T> extends Enumerable<T> {
-        constructor (arr: T[]) {
+        constructor(arr: T[]) {
             super();
 
             this.getEnumerator = function () {
@@ -40,10 +40,14 @@ module exjs {
         return new Enumerable<T>();
     }
 
-    Object.defineProperty(Array.prototype, "en", {
-        value: en,
-        enumerable: false,
-        writable: false,
-        configurable: false
-    });
+    if (typeof Object.defineProperty === "function") {
+        Object.defineProperty(Array.prototype, "en", {
+            value: en,
+            enumerable: false,
+            writable: false,
+            configurable: false
+        });
+    } else {
+        (<any>Array.prototype).en = en;
+    }
 }
