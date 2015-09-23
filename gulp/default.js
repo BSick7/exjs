@@ -14,4 +14,16 @@ module.exports = function (meta) {
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest('dist'));
     });
+
+    gulp.task('build-es3', function () {
+        return gulp.src(meta.files.es3src)
+            .pipe(sourcemaps.init())
+            .pipe(ts({
+                target: 'ES3',
+                out: meta.name + '.es3.js',
+                removeComments: true
+            }))
+            .pipe(sourcemaps.write('./'))
+            .pipe(gulp.dest('dist'));
+    });
 };

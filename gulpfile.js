@@ -13,7 +13,15 @@ var fs = require('fs'),
                 'typings/*.d.ts',
                 'src/_version.ts',
                 'src/polyfill/**/*.ts',
-                'src/**/*.ts'
+                'src/**/*.ts',
+                '!src/**/*.es3.ts'
+            ].concat(typings({includeSelf: false})),
+            es3src: [
+                'typings/*.d.ts',
+                'src/_version.ts',
+                'src/polyfill/**/*.ts',
+                'src/**/*.ts',
+                '!src/**/*.es5.ts'
             ].concat(typings({includeSelf: false})),
             test: [
                 'typings/*.d.ts',

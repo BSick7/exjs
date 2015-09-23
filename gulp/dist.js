@@ -21,13 +21,28 @@ module.exports = function (meta) {
             .pipe(gulp.dest('dist'));
     });
 
+    gulp.task('dist-build-es3', function () {
+        return gulp.src(meta.files.es3src)
+            .pipe(sourcemaps.init())
+            .pipe(ts({
+                target: 'ES3',
+                out: meta.name + '.es3.js',
+                declaration: true,
+                removeComments: true
+            }))
+            .pipe(uglify())
+            .pipe(rename(meta.name + '.es3.min.js'))
+            .pipe(sourcemaps.write('./'))
+            .pipe(gulp.dest('dist'));
+    });
+
     gulp.task('dist', function (callback) {
-        runSequence('bump', ['default', 'dist-build'], callback);
+        runSequence('bump', ['default', 'dist-build', 'dist-build-es3'], callback);
     });
     gulp.task('dist-minor', function (callback) {
-        runSequence('bump-minor', ['default', 'dist-build'], callback);
+        runSequence('bump-minor', ['default', 'dist-build', 'dist-build-es3'], callback);
     });
     gulp.task('dist-major', function (callback) {
-        runSequence('bump-major', ['default', 'dist-build'], callback);
+        runSequence('bump-major', ['default', 'dist-build', 'dist-build-es3'], callback);
     });
 };
