@@ -423,12 +423,8 @@ module exjs {
             return arr;
         }
 
-        toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): Map<TKey, TValue> {
-            var m = new Map<TKey, TValue>();
-            for (var en = this.getEnumerator(); en.moveNext();) {
-                m.set(keySelector(en.current), valueSelector(en.current));
-            }
-            return m;
+        toMap<TKey, TValue>(keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): IMap<TKey, TValue> {
+            throw new Error("Not implemented");
         }
 
         toList (): IList<T> {

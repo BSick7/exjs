@@ -1,29 +1,20 @@
-module exjs {
-    export interface IMap<TKey, TValue> {
-        size: number;
-        clear();
-        delete(key: TKey): boolean;
-        entries(): IEnumerableEx<any[]>;
-        forEach(callbackFn: (value: TValue, key: TKey, map?: IMap<TKey, TValue>) => void, thisArg?: any);
-        get(key: TKey): TValue;
-        has(key: TKey): boolean;
-        keys(): IEnumerableEx<TKey>;
-        set(key: TKey, value: TValue): any;
-        values(): IEnumerableEx<TValue>;
-    }
+/// <reference path="../enumerable.ts" />
 
+declare var global;
+
+module exjs {
     export class Map<TKey, TValue> implements IMap<TKey, TValue> {
         private _keys: TKey[] = [];
         private _values: TValue[] = [];
 
-        get size (): number {
+        get size(): number {
             return this._keys.length;
         }
 
-        constructor ();
-        constructor (enumerable: any[][]);
-        constructor (enumerable: IEnumerable<any[]>);
-        constructor (enumerable?: any) {
+        constructor();
+        constructor(enumerable: any[][]);
+        constructor(enumerable: IEnumerable<any[]>);
+        constructor(enumerable?: any) {
             var enu: IEnumerable<any[]>;
             if (enumerable instanceof Array) {
                 enu = (<Array<any[]>>enumerable).en();
@@ -38,12 +29,12 @@ module exjs {
             }
         }
 
-        clear () {
+        clear() {
             this._keys.length = 0;
             this._values.length = 0;
         }
 
-        delete (key: TKey): boolean {
+        delete(key: TKey): boolean {
             var index = this._keys.indexOf(key);
             if (!(index > -1))
                 return false;
@@ -52,11 +43,11 @@ module exjs {
             return true;
         }
 
-        entries (): IEnumerableEx<any[]> {
+        entries(): IEnumerableEx<any[]> {
             return exjs.range(0, this.size).select(i => [this._keys[i], this._values[i]]);
         }
 
-        forEach (callbackFn: (value: TValue, key: TKey, map?: IMap<TKey, TValue>) => void, thisArg?: any) {
+        forEach(callbackFn: (value: TValue, key: TKey, map?: IMap<TKey, TValue>) => void, thisArg?: any) {
             if (thisArg == null)
                 thisArg = this;
             for (var i = 0, keys = this._keys, vals = this._values, len = keys.length; i < len; i++) {
@@ -64,20 +55,20 @@ module exjs {
             }
         }
 
-        get (key: TKey): TValue {
+        get(key: TKey): TValue {
             var index = this._keys.indexOf(key);
             return this._values[index];
         }
 
-        has (key: TKey): boolean {
+        has(key: TKey): boolean {
             return this._keys.indexOf(key) > -1;
         }
 
-        keys (): IEnumerableEx<TKey> {
+        keys(): IEnumerableEx<TKey> {
             return this._keys.en();
         }
 
-        set (key: TKey, value: TValue): any {
+        set(key: TKey, value: TValue): any {
             var index = this._keys.indexOf(key);
             if (index > -1) {
                 this._values[index] = value;
@@ -88,10 +79,23 @@ module exjs {
             return undefined;
         }
 
-        values (): IEnumerableEx<TValue> {
+        values(): IEnumerableEx<TValue> {
             return this._values.en();
         }
     }
-    if (!(<any>window).Map)
-        (<any>window).Map = Map;
+
+    Enumerable.prototype.toMap = function<T, TKey, TValue> (keySelector: (t: T) => TKey, valueSelector: (t: T) => TValue): Map<TKey, TValue> {
+        var m = new Map<TKey, TValue>();
+        for (var en = this.getEnumerator(); en.moveNext();) {
+            m.set(keySelector(en.current), valueSelector(en.current));
+        }
+        return m;
+    };
+    if (List)
+        List.prototype.toMap = Enumerable.prototype.toMap;
 }
+
+(function (_global) {
+    if (!_global.Map)
+        _global.Map = exjs.Map;
+})(typeof window === "undefined" ? global : window);
