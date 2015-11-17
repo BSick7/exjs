@@ -8,4 +8,7 @@ before_install:
 install:
   - npm install
 before_script: gulp reset
-script: gulp test
+script:
+  - gulp version
+  - gulp
+  - gulp test

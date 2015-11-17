@@ -1,6 +1,6 @@
 var exjs;
 (function (exjs) {
-    exjs.version = '0.3.0';
+    exjs.version = '0.3.1';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -400,6 +400,21 @@ var exjs;
     if (!_global.Map)
         _global.Map = exjs.Map;
 })(typeof window === "undefined" ? global : window);
+var exjs;
+(function (exjs) {
+    function anonymous(iterator) {
+        var enumerable = new exjs.Enumerable();
+        enumerable.getEnumerator = function () {
+            var enumerator = {
+                current: undefined,
+                moveNext: function () { return iterator(enumerator); }
+            };
+            return enumerator;
+        };
+        return enumerable;
+    }
+    exjs.anonymous = anonymous;
+})(exjs || (exjs = {}));
 /// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
@@ -433,8 +448,7 @@ var exjs;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var exjs;
 (function (exjs) {
