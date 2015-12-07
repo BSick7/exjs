@@ -476,6 +476,12 @@ test("min", () => {
     strictEqual(arr2.en().min(t => t.i), 1);
 });
 
+test("prepend", () => {
+    deepEqual([2, 3, 4].en().prepend(1).toArray(), [1, 2, 3, 4]);
+    deepEqual([2, 3, 4].en().prepend(undefined).toArray(), [2, 3, 4]);
+    deepEqual([].en().prepend(1).toArray(), [1]);
+});
+
 test("reverse", () => {
     var arr = [];
     var res = arr.en().reverse().toArray();

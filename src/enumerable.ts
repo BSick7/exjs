@@ -40,6 +40,7 @@ module exjs {
         min(selector?: (t: T) => number): number;
         orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
+        prepend(item: T): IEnumerableEx<T>;
         reverse(): IEnumerableEx<T>;
         select<TResult>(selector: IProjectionFunc<T, TResult>): IEnumerableEx<TResult>;
         select<TResult>(selector: IProjectionIndexFunc<T, TResult>): IEnumerableEx<TResult>;
@@ -339,6 +340,10 @@ module exjs {
         }
 
         orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
+            throw new Error("Not implemented");
+        }
+
+        prepend (item: T): IEnumerableEx<T> {
             throw new Error("Not implemented");
         }
 
