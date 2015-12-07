@@ -14,6 +14,7 @@ module exjs {
         all(predicate: IProjectionIndexFunc<T, boolean>): boolean;
         any(predicate?: IProjectionFunc<T, boolean>): boolean;
         any(predicate?: IProjectionIndexFunc<T, boolean>): boolean;
+        append(...items: T[]): IEnumerableEx<T>;
         apply<T>(action: IProjectionFunc<T, any>): IEnumerableEx<T>;
         apply<T>(action: IProjectionIndexFunc<T, any>): IEnumerableEx<T>;
         at(index: number): T;
@@ -173,6 +174,10 @@ module exjs {
                 i++;
             }
             return false;
+        }
+
+        append(...items: T[]): IEnumerableEx<T> {
+            throw new Error("Not implemented");
         }
 
         apply<T>(action: IProjectionIndexFunc<T, any>): IEnumerableEx<T> {
