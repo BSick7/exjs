@@ -14,6 +14,7 @@ module exjs {
         all(predicate: IProjectionIndexFunc<T, boolean>): boolean;
         any(predicate?: IProjectionFunc<T, boolean>): boolean;
         any(predicate?: IProjectionIndexFunc<T, boolean>): boolean;
+        append(...items: T[]): IEnumerableEx<T>;
         apply<T>(action: IProjectionFunc<T, any>): IEnumerableEx<T>;
         apply<T>(action: IProjectionIndexFunc<T, any>): IEnumerableEx<T>;
         at(index: number): T;
@@ -40,6 +41,7 @@ module exjs {
         min(selector?: (t: T) => number): number;
         orderBy<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
         orderByDescending<TKey>(keySelector: (t: T) => TKey, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T>;
+        prepend(...items: T[]): IEnumerableEx<T>;
         reverse(): IEnumerableEx<T>;
         select<TResult>(selector: IProjectionFunc<T, TResult>): IEnumerableEx<TResult>;
         select<TResult>(selector: IProjectionIndexFunc<T, TResult>): IEnumerableEx<TResult>;
@@ -172,6 +174,10 @@ module exjs {
                 i++;
             }
             return false;
+        }
+
+        append(...items: T[]): IEnumerableEx<T> {
+            throw new Error("Not implemented");
         }
 
         apply<T>(action: IProjectionIndexFunc<T, any>): IEnumerableEx<T> {
@@ -342,7 +348,11 @@ module exjs {
             throw new Error("Not implemented");
         }
 
-        reverse (): IEnumerableEx<T> {
+        prepend(...items: T[]): IEnumerableEx<T> {
+            throw new Error("Not implemented");
+        }
+
+        reverse(): IEnumerableEx<T> {
             throw new Error("Not implemented");
         }
 

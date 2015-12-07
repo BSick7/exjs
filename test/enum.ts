@@ -112,6 +112,12 @@ test("any", () => {
     ok(arr.en().any((n, i?) => n === i));
 });
 
+test("append", () => {
+    deepEqual([2, 3, 4].en().append(undefined).toArray(), [2, 3, 4, undefined]);
+    deepEqual([2, 3, 4].en().append(1).toArray(), [2, 3, 4, 1]);
+    deepEqual([3, 4, 5].en().append(1, 2).toArray(), [3, 4, 5, 1, 2]);
+});
+
 test("apply", () => {
     var arr: IMock3[] = [
         {i: 0, j: "0"},
@@ -474,6 +480,12 @@ test("min", () => {
         {i: 3}
     ];
     strictEqual(arr2.en().min(t => t.i), 1);
+});
+
+test("prepend", () => {
+    deepEqual([2, 3, 4].en().prepend(undefined).toArray(), [undefined, 2, 3, 4]);
+    deepEqual([2, 3, 4].en().prepend(1).toArray(), [1, 2, 3, 4]);
+    deepEqual([3, 4, 5].en().prepend(1, 2).toArray(), [1, 2, 3, 4, 5]);
 });
 
 test("reverse", () => {

@@ -1,6 +1,6 @@
 var exjs;
 (function (exjs) {
-    exjs.version = '0.3.1';
+    exjs.version = '0.4.0';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -53,6 +53,13 @@ var exjs;
                 i++;
             }
             return false;
+        };
+        Enumerable.prototype.append = function () {
+            var items = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                items[_i - 0] = arguments[_i];
+            }
+            throw new Error("Not implemented");
         };
         Enumerable.prototype.apply = function (action) {
             throw new Error("Not implemented");
@@ -194,6 +201,13 @@ var exjs;
             throw new Error("Not implemented");
         };
         Enumerable.prototype.orderByDescending = function (keySelector, comparer) {
+            throw new Error("Not implemented");
+        };
+        Enumerable.prototype.prepend = function () {
+            var items = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                items[_i - 0] = arguments[_i];
+            }
             throw new Error("Not implemented");
         };
         Enumerable.prototype.reverse = function () {
@@ -414,6 +428,48 @@ var exjs;
         return enumerable;
     }
     exjs.anonymous = anonymous;
+})(exjs || (exjs = {}));
+/// <reference path="enumerable.ts" />
+var exjs;
+(function (exjs) {
+    function appendEnumerator(prev, items) {
+        var stage = 1;
+        var firstit;
+        var secondit;
+        var e = {
+            current: undefined,
+            moveNext: function () {
+                if (stage < 2) {
+                    firstit = firstit || prev.getEnumerator();
+                    if (firstit.moveNext()) {
+                        e.current = firstit.current;
+                        return true;
+                    }
+                    stage++;
+                }
+                secondit = secondit || items.en().getEnumerator();
+                if (secondit.moveNext()) {
+                    e.current = secondit.current;
+                    return true;
+                }
+                e.current = undefined;
+                return false;
+            }
+        };
+        return e;
+    }
+    exjs.Enumerable.prototype.append = function () {
+        var _this = this;
+        var items = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            items[_i - 0] = arguments[_i];
+        }
+        var e = new exjs.Enumerable();
+        e.getEnumerator = function () { return appendEnumerator(_this, items); };
+        return e;
+    };
+    if (exjs.List)
+        exjs.List.prototype.append = exjs.Enumerable.prototype.append;
 })(exjs || (exjs = {}));
 /// <reference path="enumerable.ts" />
 var exjs;
@@ -982,6 +1038,48 @@ var exjs;
         exjs.List.prototype.orderBy = exjs.Enumerable.prototype.orderBy;
         exjs.List.prototype.orderByDescending = exjs.Enumerable.prototype.orderByDescending;
     }
+})(exjs || (exjs = {}));
+/// <reference path="enumerable.ts" />
+var exjs;
+(function (exjs) {
+    function prependEnumerator(prev, items) {
+        var stage = 1;
+        var firstit;
+        var secondit;
+        var e = {
+            current: undefined,
+            moveNext: function () {
+                if (stage < 2) {
+                    firstit = firstit || items.en().getEnumerator();
+                    if (firstit.moveNext()) {
+                        e.current = firstit.current;
+                        return true;
+                    }
+                    stage++;
+                }
+                secondit = secondit || prev.getEnumerator();
+                if (secondit.moveNext()) {
+                    e.current = secondit.current;
+                    return true;
+                }
+                e.current = undefined;
+                return false;
+            }
+        };
+        return e;
+    }
+    exjs.Enumerable.prototype.prepend = function () {
+        var _this = this;
+        var items = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            items[_i - 0] = arguments[_i];
+        }
+        var e = new exjs.Enumerable();
+        e.getEnumerator = function () { return prependEnumerator(_this, items); };
+        return e;
+    };
+    if (exjs.List)
+        exjs.List.prototype.prepend = exjs.Enumerable.prototype.prepend;
 })(exjs || (exjs = {}));
 /// <reference path="enumerable.ts" />
 var exjs;
