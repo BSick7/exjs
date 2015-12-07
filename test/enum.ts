@@ -477,9 +477,9 @@ test("min", () => {
 });
 
 test("prepend", () => {
+    deepEqual([2, 3, 4].en().precat(undefined).toArray(), [undefined, 2, 3, 4]);
     deepEqual([2, 3, 4].en().prepend(1).toArray(), [1, 2, 3, 4]);
-    deepEqual([2, 3, 4].en().prepend(undefined).toArray(), [2, 3, 4]);
-    deepEqual([].en().prepend(1).toArray(), [1]);
+    deepEqual([3, 4, 5].en().prepend(1, 2).toArray(), [1, 2, 3, 4, 5]);
 });
 
 test("reverse", () => {

@@ -1,29 +1,37 @@
 /// <reference path="enumerable.ts" />
 
 module exjs {
-    function prependEnumerator<T>(prev: IEnumerable<T>, item: T): IEnumerator<T> {
-        var inited = false;
-        var previt = prev.getEnumerator();
+    function prependEnumerator<T>(prev: IEnumerable<T>, items: T[]): IEnumerator<T> {
+        var stage = 1;
+        var firstit: IEnumerator<T>;
+        var secondit: IEnumerator<T>;
         var e = {
             current: undefined,
             moveNext: function (): boolean {
-                if (!inited) {
-                    inited = true;
-                    e.current = item;
-                    if (e.current !== undefined)
+                if (stage < 2) {
+                    firstit = firstit || items.en().getEnumerator();
+                    if (firstit.moveNext()) {
+                        e.current = firstit.current;
                         return true;
+                    }
+                    stage++;
                 }
-                var success = previt.moveNext();
-                e.current = previt.current;
-                return success;
+
+                secondit = secondit || prev.getEnumerator();
+                if (secondit.moveNext()) {
+                    e.current = secondit.current;
+                    return true;
+                }
+                e.current = undefined;
+                return false;
             }
         };
         return e;
     }
 
-    Enumerable.prototype.prepend = function<T>(item: T): IEnumerableEx<T> {
+    Enumerable.prototype.prepend = function<T>(...items: T[]): IEnumerableEx<T> {
         var e = new Enumerable<T>();
-        e.getEnumerator = () => prependEnumerator<T>(<IEnumerable<T>>this, item);
+        e.getEnumerator = () => prependEnumerator<T>(<IEnumerable<T>>this, items);
         return e;
     };
     if (List)
