@@ -9,3 +9,4 @@ node_modules/**/*
 src/_Version.ts
 lib/
 test/.build/
+debug.log

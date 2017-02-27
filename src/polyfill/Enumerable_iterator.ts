@@ -1,14 +1,5 @@
 /// <reference path="../enumerable.ts" />
-
-var Symbol;
-
-interface Iterator<T> {
-    next(): IteratorResult<T>;
-}
-interface IteratorResult<T> {
-    done: boolean;
-    value: T;
-}
+/// <reference path="../../node_modules/typescript/lib/lib.es6.d.ts"/>  
 
 module exjs {
     if (Symbol && Symbol.iterator) {
