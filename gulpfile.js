@@ -21,7 +21,7 @@ var fs = require('fs'),
                 'src/_version.ts',
                 'src/polyfill/**/*.ts',
                 'src/**/*.ts',
-                '!src/**/*.es5.ts'
+                '!src/**/*.es2015.ts'
             ].concat(typings({includeSelf: false})),
             test: [
                 'typings/*.d.ts',
