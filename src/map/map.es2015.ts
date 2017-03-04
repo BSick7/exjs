@@ -1,7 +1,7 @@
 /// <reference path="../enumerable.ts" />
 
 declare var global;
-declare var window;
+declare var window: Window;
 
 module exjs {
     export class Map<TKey, TValue> implements IMap<TKey, TValue> {
