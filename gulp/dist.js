@@ -21,6 +21,7 @@ module.exports = function (meta) {
             tsResult.dts.pipe(gulp.dest('./dist')),
             tsResult.js
                 .pipe(uglify())
+                .on('error', console.error)
                 .pipe(rename(meta.name + '.min.js'))
                 .pipe(sourcemaps.write('./'))
                 .pipe(gulp.dest('./dist'))

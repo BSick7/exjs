@@ -9,14 +9,10 @@ module.exports = function (meta) {
         var tsResult = gulp.src(meta.files.src)
             .pipe(sourcemaps.init())
             .pipe(ts({
-                target: 'ES2015',
+                target: 'ES5',
                 out: meta.name + '.js',
                 declaration: true,
-                removeComments: true,
-                lib: [
-                    'ES2015',
-                    'ES2015.Iterable'
-                ]
+                removeComments: true
             }));
 
         return merge([
