@@ -12,7 +12,7 @@ module.exports = function (meta) {
             .pipe(bump())
             .pipe(gulp.dest('./'))
             .on('end', function () {
-                versionts.apply();
+                versionts.apply({templatePath: './version_template'});
             });
     });
 
@@ -21,7 +21,7 @@ module.exports = function (meta) {
             .pipe(bump({type: 'minor'}))
             .pipe(gulp.dest('./'))
             .on('end', function () {
-                versionts.apply();
+                versionts.apply({templatePath: './version_template'});
             });
     });
 
@@ -30,7 +30,7 @@ module.exports = function (meta) {
             .pipe(bump({type: 'major'}))
             .pipe(gulp.dest('./'))
             .on('end', function () {
-                versionts.apply();
+                versionts.apply({templatePath: './version_template'});
             });
     });
 };
