@@ -21,6 +21,7 @@ module.exports = function (meta) {
             tsResult.dts.pipe(gulp.dest('./dist')),
             tsResult.js
                 .pipe(uglify())
+                .on('error', console.error)
                 .pipe(rename(meta.name + '.min.js'))
                 .pipe(sourcemaps.write('./'))
                 .pipe(gulp.dest('./dist'))
@@ -28,18 +29,26 @@ module.exports = function (meta) {
     });
 
     gulp.task('dist-build-es3', function () {
-        return gulp.src(meta.files.es3src)
+        var tsResult = gulp.src(meta.files.es3src)
             .pipe(sourcemaps.init())
             .pipe(ts({
                 target: 'ES3',
                 out: meta.name + '.es3.js',
                 declaration: true,
                 removeComments: true
-            }))
-            .pipe(uglify())
-            .pipe(rename(meta.name + '.es3.min.js'))
-            .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest('dist'));
+            }));
+
+        return merge([
+            tsResult.dts
+                .pipe(rename(meta.name + '.es3.d.ts'))
+                .pipe(gulp.dest('./dist')),
+            tsResult.js
+                .pipe(uglify())
+                .on('error', console.error)
+                .pipe(rename(meta.name + '.es3.min.js'))
+                .pipe(sourcemaps.write('./'))
+                .pipe(gulp.dest('./dist'))
+        ]);
     });
 
     gulp.task('dist', function (callback) {

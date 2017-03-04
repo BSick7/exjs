@@ -1,4 +1,4 @@
-module exjs {
+namespace exjs {
     export function selectorEnumerator<T, TResult>(en: IEnumerable<T>): IEnumerator<TResult>;
     export function selectorEnumerator<T, TResult>(arr: T[]): IEnumerator<TResult>;
     export function selectorEnumerator<T, TResult>(obj: any) {

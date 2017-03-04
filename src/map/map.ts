@@ -1,4 +1,4 @@
-module exjs {
+namespace exjs {
     export interface IMap<TKey, TValue> {
         size: number;
         clear();

@@ -173,44 +173,12 @@ declare namespace exjs {
         zip<TSecond, TResult>(second: TSecond[], resultSelector: (f: T, s: TSecond) => TResult): IEnumerableEx<TResult>;
     }
 }
-declare namespace exjs {
-}
-interface Symbol {
-    toString(): string;
-    valueOf(): symbol;
-}
-interface SymbolConstructor {
-    readonly prototype: Symbol;
-    (description?: string | number): symbol;
-    for(key: string): symbol;
-    keyFor(sym: symbol): string | undefined;
-}
-declare var Symbol: SymbolConstructor;
-interface SymbolConstructor {
-    readonly iterator: symbol;
-}
-interface IteratorResult<T> {
-    done: boolean;
-    value: T;
-}
-interface Iterator<T> {
-    next(value?: any): IteratorResult<T>;
-    return?(value?: any): IteratorResult<T>;
-    throw?(e?: any): IteratorResult<T>;
-}
-interface Iterable<T> {
-    [Symbol.iterator](): Iterator<T>;
-}
-interface IterableIterator<T> extends Iterator<T> {
-    [Symbol.iterator](): IterableIterator<T>;
-}
 declare var global: any;
-declare var window: Window;
 declare namespace exjs {
-    class Map<TKey, TValue> implements IMap<TKey, TValue> {
+    class Map3<TKey, TValue> implements IMap<TKey, TValue> {
+        size: number;
         private _keys;
         private _values;
-        readonly size: number;
         constructor();
         constructor(enumerable: any[][]);
         constructor(enumerable: IEnumerable<any[]>);

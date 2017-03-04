@@ -1,7 +1,7 @@
 /// <reference path="enumerable.ts" />
 /// <reference path="array.ts" />
 
-module exjs {
+namespace exjs {
     function selectEnumerator<T, TResult>(prev: IEnumerable<T>, selector: IProjectionIndexFunc<T, TResult>): IEnumerator<TResult> {
         var t: IEnumerator<T>;
         var i = 0;

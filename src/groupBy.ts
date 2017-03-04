@@ -1,7 +1,7 @@
 /// <reference path="enumerable.ts" />
 /// <reference path="array.ts" />
 
-module exjs {
+namespace exjs {
     function groupByEnumerator<T, TKey>(prev: IEnumerable<T>, keySelector: (t: T) => TKey, comparer?: (k1: TKey, k2: TKey) => boolean): IEnumerator<IGrouping<TKey, T>> {
         var grps: IGrouping<TKey, T>[];
         var i = 0;

@@ -2,7 +2,7 @@
 
 declare var global;
 
-module exjs {
+namespace exjs {
     export class Map3<TKey, TValue> implements IMap<TKey, TValue> {
         size: number = 0;
         private _keys: TKey[] = [];

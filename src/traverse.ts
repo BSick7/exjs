@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module exjs {
+namespace exjs {
     function traverseEnumerator<T>(prev: IEnumerable<T>, selector: (t: T) => IEnumerable<T>): IEnumerator<T> {
         var started = false;
         var enstack: IEnumerator<T>[] = [];

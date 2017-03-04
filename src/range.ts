@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module exjs {
+namespace exjs {
     function rangeEnumerator (start: number, end: number, increment: number): IEnumerator<number> {
         var i = start - increment;
         var e = {

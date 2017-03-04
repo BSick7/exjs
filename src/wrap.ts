@@ -1,4 +1,4 @@
-module exjs {
+namespace exjs {
     export function en<T>(enu: IEnumerable<T>): IEnumerableEx<T> {
         var x = new Enumerable<T>();
         x.getEnumerator = function (): IEnumerator<T> {

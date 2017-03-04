@@ -1,4 +1,4 @@
-module exjs {
+namespace exjs {
     export interface IProjectionFunc<T, TResult> {
         (t: T): TResult;
     }

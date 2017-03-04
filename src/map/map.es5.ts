@@ -1,8 +1,10 @@
 /// <reference path="../enumerable.ts" />
+/// <reference path="iterable.es5.ts" />
 
 declare var global;
+declare var window: Window;
 
-module exjs {
+namespace exjs {
     export class Map<TKey, TValue> implements IMap<TKey, TValue> {
         private _keys: TKey[] = [];
         private _values: TValue[] = [];

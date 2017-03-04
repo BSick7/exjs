@@ -1,7 +1,7 @@
 /// <reference path="enumerable.ts" />
 /// <reference path="fromJson.ts" />
 
-module exjs {
+namespace exjs {
     Enumerable.prototype.toList = function<T>() {
         var l = new List<T>();
 
