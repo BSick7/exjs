@@ -1,4 +1,4 @@
-module exjs {
+namespace exjs {
     export function round(value: number, digits?: number) {
         digits = digits || 0;
         if (digits === 0)

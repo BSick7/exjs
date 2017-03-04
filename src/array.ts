@@ -4,7 +4,7 @@ interface Array<T> {
     en(): exjs.IEnumerableEx<T>;
 }
 
-module exjs {
+namespace exjs {
     function arrayEnumerator<T>(arr: T[]): IEnumerator<T> {
         var len = arr.length;
         var e = {moveNext: undefined, current: undefined};

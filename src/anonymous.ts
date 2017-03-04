@@ -1,4 +1,4 @@
-module exjs {
+namespace exjs {
     export function anonymous<T>(iterator: (en: IEnumerator<T>) => boolean): IEnumerableEx<T> {
         var enumerable = new Enumerable<T>();
         enumerable.getEnumerator = () => {

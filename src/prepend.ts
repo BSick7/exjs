@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module exjs {
+namespace exjs {
     function prependEnumerator<T>(prev: IEnumerable<T>, items: T[]): IEnumerator<T> {
         var stage = 1;
         var firstit: IEnumerator<T>;

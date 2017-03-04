@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module exjs {
+namespace exjs {
     function orderByEnumerable<T, TKey>(source: IEnumerable<T>, keySelector: (t: T) => TKey, isDescending: boolean, comparer?: (f: TKey, s: TKey) => number): IOrderedEnumerable<T> {
         return new OrderedEnumerable<T, TKey>(source, keySelector, isDescending, comparer);
     }

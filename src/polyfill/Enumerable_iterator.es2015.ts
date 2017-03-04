@@ -1,6 +1,6 @@
 /// <reference path="../enumerable.ts" />
 
-module exjs {
+namespace exjs {
     if (Symbol && Symbol.iterator) {
         Enumerable.prototype[Symbol.iterator] = function (): Iterator<any> {
             return iteratorFromEnumerable<any>(this);

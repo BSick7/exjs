@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module exjs {
+namespace exjs {
     function applyEnumerator<T>(prev: IEnumerable<T>, action: IProjectionIndexFunc<T, any>): IEnumerator<T> {
         var t: IEnumerator<T>;
         var i = 0;

@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module exjs {
+namespace exjs {
     function takeEnumerator<T>(prev: IEnumerable<T>, count: number): IEnumerator<T> {
         var t: IEnumerator<T>;
         var i = 0;

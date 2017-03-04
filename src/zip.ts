@@ -1,6 +1,6 @@
 /// <reference path="enumerable.ts" />
 
-module exjs {
+namespace exjs {
     function zipEnumerator<T, TSecond, TResult>(prev: IEnumerable<T>, second: IEnumerable<TSecond>, resultSelector: (f: T, s: TSecond) => TResult): IEnumerator<TResult> {
         var s: IEnumerator<T>;
         var t: IEnumerator<TSecond>;
