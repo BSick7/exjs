@@ -1,15 +1,8 @@
 /// <reference path="../enumerable.ts" />
+/// <reference path="iterable.es5.ts" />
 
 declare var global;
 declare var window: Window;
-declare var Symbol;
-interface Iterator<T> {
-    next(): IteratorResult<T>;
-}
-interface IteratorResult<T> {
-    done: boolean;
-    value: T;
-}
 
 namespace exjs {
     export class Map<TKey, TValue> implements IMap<TKey, TValue> {
