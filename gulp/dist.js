@@ -35,7 +35,7 @@ module.exports = function (meta) {
                 out: meta.name + '.es3.js',
                 declaration: true,
                 removeComments: true
-            }))
+            })).js
             .pipe(uglify())
             .pipe(rename(meta.name + '.es3.min.js'))
             .pipe(sourcemaps.write('./'))
