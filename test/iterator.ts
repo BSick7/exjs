@@ -1,7 +1,7 @@
 QUnit.module("iterator");
 
 test("iterator", (assert) => {
-    if (!Symbol || !Symbol.iterator) {
+    if (!(<any>window).Symbol || !(<any>window).Symbol.iterator) {
         assert.ok(true, "Browser does not support Symbol.iterator, not testing.");
         console.warn("Browser does not support Symbol.iterator, not testing.");
         return;

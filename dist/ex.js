@@ -306,8 +306,9 @@ var exjs;
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
-    if (Symbol && Symbol.iterator) {
-        exjs.Enumerable.prototype[Symbol.iterator] = function () {
+    var sym = window.Symbol;
+    if (sym && sym.iterator) {
+        exjs.Enumerable.prototype[sym.iterator] = function () {
             return iteratorFromEnumerable(this);
         };
     }

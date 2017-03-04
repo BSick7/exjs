@@ -11,8 +11,7 @@ module.exports = function (meta) {
             .pipe(ts({
                 module: 'amd',
                 target: 'ES5',
-                declaration: true,
-                pathFilter: {'test/tests': 'tests'}
+                declaration: true
             }))
             .pipe(sourcemaps.write({sourceRoot: './src'}))
             .pipe(gulp.dest('test/.build'));
