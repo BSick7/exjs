@@ -1,6 +1,16 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var exjs;
 (function (exjs) {
-    exjs.version = '0.4.0';
+    exjs.version = '0.5.0';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
@@ -57,7 +67,7 @@ var exjs;
         Enumerable.prototype.append = function () {
             var items = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                items[_i - 0] = arguments[_i];
+                items[_i] = arguments[_i];
             }
             throw new Error("Not implemented");
         };
@@ -206,7 +216,7 @@ var exjs;
         Enumerable.prototype.prepend = function () {
             var items = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                items[_i - 0] = arguments[_i];
+                items[_i] = arguments[_i];
             }
             throw new Error("Not implemented");
         };
@@ -291,39 +301,9 @@ var exjs;
             throw new Error("Not implemented");
         };
         return Enumerable;
-    })();
+    }());
     exjs.Enumerable = Enumerable;
 })(exjs || (exjs = {}));
-/// <reference path="../enumerable.ts" />
-var Symbol;
-var exjs;
-(function (exjs) {
-    if (Symbol && Symbol.iterator) {
-        exjs.Enumerable.prototype[Symbol.iterator] = function () {
-            return iteratorFromEnumerable(this);
-        };
-    }
-    function iteratorFromEnumerable(enu) {
-        var en;
-        return {
-            next: function () {
-                var res = {
-                    done: true,
-                    value: undefined
-                };
-                if (!enu)
-                    return res;
-                en = en || enu.getEnumerator();
-                if (!en)
-                    return res;
-                res.done = !en.moveNext();
-                res.value = en.current;
-                return res;
-            }
-        };
-    }
-})(exjs || (exjs = {}));
-/// <reference path="../enumerable.ts" />
 var exjs;
 (function (exjs) {
     var Map3 = (function () {
@@ -349,7 +329,7 @@ var exjs;
             this._values.length = 0;
             this.size = 0;
         };
-        Map3.prototype.delete = function (key) {
+        Map3.prototype["delete"] = function (key) {
             var index = this._keys.indexOf(key);
             if (!(index > -1))
                 return false;
@@ -395,7 +375,7 @@ var exjs;
             return this._values.en();
         };
         return Map3;
-    })();
+    }());
     exjs.Map3 = Map3;
     exjs.Enumerable.prototype.toMap = function (keySelector, valueSelector) {
         var m = new Map3();
@@ -426,7 +406,6 @@ var exjs;
     }
     exjs.anonymous = anonymous;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function appendEnumerator(prev, items) {
@@ -459,7 +438,7 @@ var exjs;
         var _this = this;
         var items = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            items[_i - 0] = arguments[_i];
+            items[_i] = arguments[_i];
         }
         var e = new exjs.Enumerable();
         e.getEnumerator = function () { return appendEnumerator(_this, items); };
@@ -468,7 +447,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.append = exjs.Enumerable.prototype.append;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function applyEnumerator(prev, action) {
@@ -497,12 +475,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.apply = exjs.Enumerable.prototype.apply;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var exjs;
 (function (exjs) {
     function arrayEnumerator(arr) {
@@ -523,16 +495,17 @@ var exjs;
     var ArrayEnumerable = (function (_super) {
         __extends(ArrayEnumerable, _super);
         function ArrayEnumerable(arr) {
-            _super.call(this);
-            this.getEnumerator = function () {
+            var _this = _super.call(this) || this;
+            _this.getEnumerator = function () {
                 return arrayEnumerator(arr);
             };
-            this.toArray = function () {
+            _this.toArray = function () {
                 return arr.slice(0);
             };
+            return _this;
         }
         return ArrayEnumerable;
-    })(exjs.Enumerable);
+    }(exjs.Enumerable));
     function en() {
         if (this && Array.isArray(this))
             return new ArrayEnumerable(this);
@@ -550,7 +523,6 @@ var exjs;
         Array.prototype.en = en;
     }
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function concatEnumerator(prev, second) {
@@ -588,7 +560,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.concat = exjs.Enumerable.prototype.concat;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function distinctEnumerator(prev, comparer) {
@@ -632,7 +603,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.distinct = exjs.Enumerable.prototype.distinct;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function exceptEnumerator(prev, second, comparer) {
@@ -715,8 +685,6 @@ Function.prototype.fromJson = function (o, mappingOverrides) {
         return undefined;
     }
 };
-/// <reference path="enumerable.ts" />
-/// <reference path="array.ts" />
 var exjs;
 (function (exjs) {
     function groupByEnumerator(prev, keySelector, comparer) {
@@ -769,17 +737,17 @@ var exjs;
     var Group = (function (_super) {
         __extends(Group, _super);
         function Group(key) {
-            var _this = this;
-            _super.call(this);
-            this.key = key;
-            this._arr = [];
-            this.getEnumerator = function () { return _this._arr.en().getEnumerator(); };
+            var _this = _super.call(this) || this;
+            _this.key = key;
+            _this._arr = [];
+            _this.getEnumerator = function () { return _this._arr.en().getEnumerator(); };
+            return _this;
         }
         Group.prototype._add = function (e) {
             this._arr.push(e);
         };
         return Group;
-    })(exjs.Enumerable);
+    }(exjs.Enumerable));
     exjs.Enumerable.prototype.groupBy = function (keySelector, comparer) {
         var _this = this;
         var e = new exjs.Enumerable();
@@ -789,7 +757,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.groupBy = exjs.Enumerable.prototype.groupBy;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function intersectEnumerator(prev, second, comparer) {
@@ -825,7 +792,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.intersect = exjs.Enumerable.prototype.intersect;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function joinEnumerator(prev, inner, outerKeySelector, innerKeySelector, resultSelector, comparer) {
@@ -872,8 +838,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.join = exjs.Enumerable.prototype.join;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
-/// <reference path="fromJson.ts" />
 var exjs;
 (function (exjs) {
     exjs.Enumerable.prototype.toList = function () {
@@ -887,7 +851,7 @@ var exjs;
     var List = (function (_super) {
         __extends(List, _super);
         function List() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         List.prototype.toString = function () { throw new Error("Not implemented"); };
         List.prototype.toLocaleString = function () { throw new Error("Not implemented"); };
@@ -895,7 +859,7 @@ var exjs;
         List.prototype.push = function () {
             var items = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                items[_i - 0] = arguments[_i];
+                items[_i] = arguments[_i];
             }
             throw new Error("Not implemented");
         };
@@ -906,7 +870,7 @@ var exjs;
         List.prototype.unshift = function () {
             var items = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                items[_i - 0] = arguments[_i];
+                items[_i] = arguments[_i];
             }
             throw new Error("Not implemented");
         };
@@ -922,7 +886,7 @@ var exjs;
         List.prototype.remove = function (item) { throw new Error("Not implemented"); };
         List.prototype.removeWhere = function (predicate) { throw new Error("Not implemented"); };
         return List;
-    })(exjs.Enumerable);
+    }(exjs.Enumerable));
     exjs.List = List;
     for (var p in Array)
         if (Array.hasOwnProperty(p))
@@ -967,7 +931,6 @@ var exjs;
         return removed.en().reverse();
     };
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function orderByEnumerable(source, keySelector, isDescending, comparer) {
@@ -976,13 +939,14 @@ var exjs;
     var OrderedEnumerable = (function (_super) {
         __extends(OrderedEnumerable, _super);
         function OrderedEnumerable(source, keySelector, isDescending, keyComparer) {
-            _super.call(this);
-            this.Source = source;
+            var _this = _super.call(this) || this;
+            _this.Source = source;
             keyComparer = keyComparer || function (f, s) {
                 return f > s ? 1 : (f < s ? -1 : 0);
             };
             var factor = (isDescending === true) ? -1 : 1;
-            this.Sorter = function (a, b) { return factor * keyComparer(keySelector(a), keySelector(b)); };
+            _this.Sorter = function (a, b) { return factor * keyComparer(keySelector(a), keySelector(b)); };
+            return _this;
         }
         OrderedEnumerable.prototype.getEnumerator = function () {
             var source = this.Source;
@@ -1013,17 +977,18 @@ var exjs;
             return new ThenEnumerable(this, keySelector, true, comparer);
         };
         return OrderedEnumerable;
-    })(exjs.Enumerable);
+    }(exjs.Enumerable));
     var ThenEnumerable = (function (_super) {
         __extends(ThenEnumerable, _super);
         function ThenEnumerable(source, keySelector, isDescending, keyComparer) {
-            _super.call(this, source, keySelector, isDescending, keyComparer);
+            var _this = _super.call(this, source, keySelector, isDescending, keyComparer) || this;
             var parentSorter = source.Sorter;
-            var thisSorter = this.Sorter;
-            this.Sorter = function (a, b) { return parentSorter(a, b) || thisSorter(a, b); };
+            var thisSorter = _this.Sorter;
+            _this.Sorter = function (a, b) { return parentSorter(a, b) || thisSorter(a, b); };
+            return _this;
         }
         return ThenEnumerable;
-    })(OrderedEnumerable);
+    }(OrderedEnumerable));
     var fn = exjs.Enumerable.prototype;
     fn.orderBy = function (keySelector, comparer) {
         return orderByEnumerable(this, keySelector, false, comparer);
@@ -1036,7 +1001,6 @@ var exjs;
         exjs.List.prototype.orderByDescending = exjs.Enumerable.prototype.orderByDescending;
     }
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function prependEnumerator(prev, items) {
@@ -1069,7 +1033,7 @@ var exjs;
         var _this = this;
         var items = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            items[_i - 0] = arguments[_i];
+            items[_i] = arguments[_i];
         }
         var e = new exjs.Enumerable();
         e.getEnumerator = function () { return prependEnumerator(_this, items); };
@@ -1078,7 +1042,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.prepend = exjs.Enumerable.prototype.prepend;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function rangeEnumerator(start, end, increment) {
@@ -1108,7 +1071,6 @@ var exjs;
     }
     exjs.range = range;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function reverseEnumerator(prev) {
@@ -1148,8 +1110,6 @@ var exjs;
     }
     exjs.round = round;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
-/// <reference path="array.ts" />
 var exjs;
 (function (exjs) {
     function selectEnumerator(prev, selector) {
@@ -1217,7 +1177,6 @@ var exjs;
     }
     exjs.selectorEnumerator = selectorEnumerator;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function skipEnumerator(prev, count) {
@@ -1283,7 +1242,6 @@ var exjs;
         exjs.List.prototype.skipWhile = exjs.Enumerable.prototype.skipWhile;
     }
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function takeEnumerator(prev, count) {
@@ -1342,7 +1300,6 @@ var exjs;
         exjs.List.prototype.takeWhile = exjs.Enumerable.prototype.takeWhile;
     }
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function traverseEnumerator(prev, selector) {
@@ -1438,7 +1395,6 @@ var exjs;
         exjs.List.prototype.traverseUnique = exjs.Enumerable.prototype.traverseUnique;
     }
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function unionEnumerator(prev, second, comparer) {
@@ -1483,7 +1439,6 @@ var exjs;
     if (exjs.List)
         exjs.List.prototype.union = exjs.Enumerable.prototype.union;
 })(exjs || (exjs = {}));
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function whereEnumerator(prev, filter) {
@@ -1539,7 +1494,6 @@ var exjs;
     }
 })(exjs || (exjs = {}));
 var ex = exjs.en;
-/// <reference path="enumerable.ts" />
 var exjs;
 (function (exjs) {
     function zipEnumerator(prev, second, resultSelector) {
