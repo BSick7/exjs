@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "Extension library",
   "main": "Gruntfile.js",
+  "types": "./dist/ex.d.ts",
   "directories": {
     "test": "test"
   },
