@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var exjs;
 (function (exjs) {
-    exjs.version = '0.5.0';
+    exjs.version = '0.5.1';
 })(exjs || (exjs = {}));
 var exjs;
 (function (exjs) {
